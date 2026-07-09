@@ -1,4 +1,0 @@
-interface:
-  display_name: "Melix LLM Lab"
-  short_description: "Work on Melix LLM lab pipelines"
-  default_prompt: "Use $melix-llm-lab to plan or modify the Melix LLM lab pipeline."

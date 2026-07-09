@@ -1,10 +1,10 @@
 # Iteration Workflow
 
-Use this reference for planning, updating, or closing an iteration or fix. The workflow is agent-agnostic and integrates with a canonical `AGENTS.md` when one exists.
+Use this reference for planning, updating, or closing an iteration or fix. The workflow is agent-agnostic and is the detailed procedure behind the Agentic SWE planning gate.
 
 ## Local Workspace
 
-Use these directories unless the repository declares an alternative:
+Read `.agentic/config.yaml` first when it exists. Use the configured directories; otherwise use these defaults:
 
 ```text
 iterazioni/   Planned feature work
@@ -56,12 +56,12 @@ When a planned iteration depends on a flag, record the flag name, default state,
 
 ## `AGENTS.md` Integration
 
-`AGENTS.md` remains the sole canonical instruction file. Add this section only when a repository has a useful active queue:
+`AGENTS.md` remains the sole canonical instruction file. Its `Agentic Workflow` section defines the planning gate; add an active queue only when it is useful to collaborators:
 
 ```markdown
-## Iteration Workflow
+## Agentic Workflow
 
-Use `iterations-planner` before non-trivial work. Local plans live in `iterazioni/` and fixes in `fix/`; both are gitignored unless this repository explicitly says otherwise.
+Read `.agentic/config.yaml` before selecting skills or creating local workflow records. For non-trivial work, use `iterations-planner` before editing. Local plans and fixes use the configured directories and remain gitignored unless this repository explicitly says otherwise.
 
 ### Active Queue
 
@@ -104,3 +104,4 @@ Do not put full task or plan content in `AGENTS.md`. Point to the local workspac
 - Original brief or reported symptom is preserved without reinterpretation.
 - Plans identify files, order, decisions, and validation.
 - Any `AGENTS.md` update points to the local workspace and does not duplicate it.
+- Local workspace names match `.agentic/config.yaml` when that manifest exists.

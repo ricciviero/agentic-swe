@@ -1,4 +1,4 @@
 interface:
   display_name: "Agents Setup"
-  short_description: "Set up portable project agent rules"
-  default_prompt: "Use $agents-setup to create a canonical AGENTS.md and map the skills for this project."
+  short_description: "Bootstrap an Agentic SWE project contract"
+  default_prompt: "Use $agents-setup to create the AGENTS.md, .agentic/config.yaml, and focused skill map for this project."

@@ -39,14 +39,24 @@ Do not list a skill merely because it is installed. Record a concise, project-re
 
 ## Canonical File and Adapters
 
-`AGENTS.md` is the only complete project constitution. It must be versioned with the repository.
+`AGENTS.md` is the only complete project constitution. It must be versioned with the repository. `.agentic/config.yaml` is its machine-readable companion for agent selection, skill mapping, and local workflow paths.
 
-When Claude Code requires a `CLAUDE.md`, create a short adapter that points to `AGENTS.md`:
+Use these canonical templates when the Agentic SWE package is available:
+
+```text
+core/templates/project-config.yaml
+core/templates/project-agentic-section.md
+core/templates/CLAUDE.md
+```
+
+When only this skill is installed, create the equivalent concise files directly. Do not add unsupported configuration keys or invent project facts.
+
+When Claude Code is active, create a short adapter that imports `AGENTS.md`:
 
 ```markdown
 # Claude Code Adapter
 
-Read and follow [AGENTS.md](AGENTS.md). It is the canonical instruction file for this repository.
+@AGENTS.md
 
 Add only Claude Code-specific notes below this line. Do not duplicate project rules here.
 ```
@@ -86,6 +96,28 @@ description: Describe the project-specific workflow and concrete triggers that s
 State only the non-obvious, reusable procedure and project constraints.
 Link to project-owned references or scripts when they are required.
 ```
+
+## Agentic Manifest
+
+Create `.agentic/config.yaml` with these durable fields:
+
+```yaml
+version: 1
+agents:
+  - codex
+  - claude-code
+project_skills_dir: .agents/skills
+selected_skills:
+  - name: frontend-design
+    trigger: Build or revise a user-facing web interface.
+workflow:
+  planning_gate: non-trivial
+  iteration_directory: iterazioni
+  fix_directory: fix
+  local_workspaces_gitignored: true
+```
+
+Use only active agents and selected skills. Keep the paths relative to the repository root. `AGENTS.md` explains the policy; this file supplies the stable values tools and agents can inspect.
 
 ## Iteration Protocol
 
@@ -137,9 +169,14 @@ Canonical source: `.agents/skills/`.
 
 Create or update a project skill only for repeated knowledge that is specific to this repository and not already covered by a global skill.
 
-## Iteration Workflow
+## Agentic Workflow
 
-Use `iterations-planner` before non-trivial work. It owns `iterazioni/`, which is local and gitignored unless this repository explicitly says otherwise.
+Read `.agentic/config.yaml` before selecting skills or creating local workflow records.
+
+- For non-trivial work, use `iterations-planner` before editing.
+- Local plans and fixes use the configured directories and remain gitignored unless this repository explicitly says otherwise.
+- Treat the selected-skill mapping as the project-approved global-skill map.
+- Run the validation commands required by the changed surface before reporting completion.
 
 ## Delivery Rules
 
@@ -154,8 +191,10 @@ Add only project-specific rules. Do not paste generic coding advice or a complet
 ## Validation Checklist
 
 - `AGENTS.md` exists, is versioned, and has no conflicting canonical document.
-- `CLAUDE.md`, if present, points to `AGENTS.md` and contains only Claude-specific notes.
+- `.agentic/config.yaml` exists, records active agents and workflow paths, and matches `AGENTS.md`.
+- `CLAUDE.md`, if present, imports `AGENTS.md` and contains only Claude-specific notes.
 - Every mapped global skill exists in one of the discovered locations.
 - Every project-skill adapter resolves to `.agents/skills/`.
 - Local iteration, memory, or private configuration paths are ignored when appropriate.
+- Run `scripts/verify-agentic-project.sh <project-root>` when the Agentic SWE package is available.
 - No generated document contains private paths, credentials, customer data, or invented facts.

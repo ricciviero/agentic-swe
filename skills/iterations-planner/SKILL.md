@@ -1,11 +1,11 @@
 ---
 name: iterations-planner
-description: Organize non-trivial feature work and bug fixes into local, gitignored iteration folders. Create numbered iteration folders with task.md and plan.md, or fix folders with bug.md and fix.md; preserve the original brief, define acceptance criteria, and keep plans concrete. Use for multi-deliverable briefs, backlog planning, iteration planning, /iterations, /fix, regressions, bug-fix planning, or when agents-setup requires planning before non-trivial work.
+description: Execute the Agentic SWE planning gate for non-trivial feature work and bug fixes. Organize local, gitignored iteration folders with task.md and plan.md, or fix folders with bug.md and fix.md; preserve the original brief, define acceptance criteria, and keep plans concrete. Use for multi-deliverable briefs, backlog planning, iteration planning, /iterations, /fix, regressions, bug-fix planning, or when the global protocol or agents-setup classifies work as non-trivial.
 ---
 
 # iterations-planner
 
-Turn a non-trivial brief into local, structured work folders without polluting the tracked repository.
+Turn a non-trivial brief into local, structured work folders without polluting the tracked repository. The global Agentic SWE protocol decides when this workflow is required; this skill owns the records, templates, and validation.
 
 ## Load Resources
 
@@ -19,12 +19,14 @@ Use this skill for:
 - behavior changes spanning layers, migrations, refactors, or a client brief with unclear sequencing;
 - explicit iteration or backlog planning requests;
 - bug and regression planning, including `/fix`.
+- a non-trivial classification from the Agentic SWE protocol or `.agentic/config.yaml`.
 
 Do not add this overhead for a clearly mechanical microtask.
 
 ## Core Rules
 
-- `iterazioni/` and `fix/` are local developer workspaces and must be gitignored unless the repository explicitly chooses otherwise.
+- Read `.agentic/config.yaml` when present. Use its iteration and fix directories rather than assuming default names.
+- `iterazioni/` and `fix/` are the default local developer workspaces and must be gitignored unless the repository explicitly chooses otherwise.
 - Every iteration has a numbered folder containing `task.md` and `plan.md`.
 - Every fix has a numbered folder containing `bug.md` and `fix.md`.
 - Preserve the original client brief verbatim in task and bug records.
@@ -35,14 +37,14 @@ Do not add this overhead for a clearly mechanical microtask.
 
 ## Workflow
 
-1. Inspect existing `iterazioni/`, `fix/`, `AGENTS.md`, and `.gitignore`.
+1. Inspect `.agentic/config.yaml`, existing local workspaces, `AGENTS.md`, and `.gitignore`.
 2. Separate independent features from defects.
 3. Ensure the chosen local folders are ignored.
 4. Create or update numbered folders using the supplied templates.
 5. Update local indexes and the relevant `AGENTS.md` section when it exists.
 6. Before implementation, keep the task or fix record and plan aligned with any scope change.
-7. Verify folder contents, numbering, and ignore behavior before reporting the result.
+7. Verify folder contents, numbering, ignore behavior, and alignment with the Agentic Workflow section before reporting the result.
 
 ## Validation
 
-Run `git check-ignore` for local folders, verify required files in every numbered folder, and ensure generated records do not contradict the original brief. Report unresolved assumptions rather than inventing them.
+Run `git check-ignore` for local folders, verify required files in every numbered folder, and ensure generated records do not contradict the original brief. Run `scripts/verify-agentic-project.sh` when the Agentic SWE package is available and the project contract changed. Report unresolved assumptions rather than inventing them.

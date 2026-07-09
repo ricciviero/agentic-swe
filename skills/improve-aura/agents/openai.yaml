@@ -1,4 +1,0 @@
-interface:
-  display_name: "Improve Aura"
-  short_description: "Modify Aura runtime and UX"
-  default_prompt: "Use $improve-aura to safely modify Aura runtime, prompts, or extension UX."

@@ -21,6 +21,13 @@ Maintain a public, reusable, agent-agnostic skill collection. The canonical sour
 - Support Codex and Claude Code through the same canonical skill directory whenever their discovery behavior allows it.
 - Add an agent-specific adapter only when it is necessary for discovery or configuration. Keep adapters generated or minimal, never a divergent second copy of a skill.
 
+## Agentic Workflow
+
+- Read `.agentic/config.yaml` before selecting skills or creating local workflow records.
+- For non-trivial work, use `iterations-planner` before editing. Local records live in `iterazioni/` or `fix/` and remain gitignored.
+- Treat the selected-skill mapping in `.agentic/config.yaml` as the repository-approved global-skill mapping.
+- Run `scripts/verify-agentic-project.sh` after changing the project contract or behavior-layer tooling.
+
 ## Skill changes
 
 - Use `skill-creator` whenever creating or materially revising a skill.
@@ -33,3 +40,5 @@ Maintain a public, reusable, agent-agnostic skill collection. The canonical sour
 - Keep one skill focused on one durable capability.
 - Propose a project-specific skill only for repeated, project-specific knowledge not already covered by a global skill.
 - Keep root documentation accurate when installation, compatibility, licensing, or the public skill inventory changes.
+- Keep `core/agentic-protocol.md`, its templates, the bootstrap skill, and the planning skill aligned. Do not make an adapter a second behavioral source of truth.
+- Global installers must preserve unowned user configuration and expose a dry-run mode.

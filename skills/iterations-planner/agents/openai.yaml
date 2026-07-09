@@ -1,4 +1,4 @@
 interface:
   display_name: "Iterations Planner"
-  short_description: "Plan non-trivial features and fixes"
-  default_prompt: "Use $iterations-planner to organize this brief into local iteration folders."
+  short_description: "Execute the non-trivial-work planning gate"
+  default_prompt: "Use $iterations-planner to create the required local plan for this non-trivial brief."

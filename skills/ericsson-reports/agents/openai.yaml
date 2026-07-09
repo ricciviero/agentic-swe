@@ -1,4 +1,0 @@
-interface:
-  display_name: "Ericsson Reports"
-  short_description: "Build Ericsson reporting pipelines"
-  default_prompt: "Use $ericsson-reports to build or debug this Ericsson report pipeline."
