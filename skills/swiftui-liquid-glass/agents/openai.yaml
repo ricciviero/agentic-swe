@@ -1,0 +1,4 @@
+interface:
+  display_name: "SwiftUI Liquid Glass"
+  short_description: "Apply iOS Liquid Glass APIs"
+  default_prompt: "Use $swiftui-liquid-glass to adopt or review iOS Liquid Glass UI."

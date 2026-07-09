@@ -1,0 +1,4 @@
+interface:
+  display_name: "Explore Recipes"
+  short_description: "Browse ShipSwift recipe options"
+  default_prompt: "Use $explore-recipes to browse available ShipSwift recipes for this app."

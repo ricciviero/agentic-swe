@@ -1,0 +1,4 @@
+interface:
+  display_name: "Add Component"
+  short_description: "Add ShipSwift SwiftUI components"
+  default_prompt: "Use $add-component to add a SwiftUI component from available ShipSwift recipes."

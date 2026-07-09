@@ -1,0 +1,4 @@
+interface:
+  display_name: "Coding Agent Architecture"
+  short_description: "Design coding agent architecture"
+  default_prompt: "Use $coding-agent-architecture to design a terminal coding agent loop and tool system."

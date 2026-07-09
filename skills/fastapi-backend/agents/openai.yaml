@@ -1,0 +1,4 @@
+interface:
+  display_name: "FastAPI Backend"
+  short_description: "Build FastAPI backend services"
+  default_prompt: "Use $fastapi-backend to implement or review this FastAPI backend task."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Angular Developer"
+  short_description: "Build and review Angular apps"
+  default_prompt: "Use $angular-developer to implement or review this Angular feature."

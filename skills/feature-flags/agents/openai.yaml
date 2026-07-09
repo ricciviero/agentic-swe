@@ -1,0 +1,4 @@
+interface:
+  display_name: "Feature Flags"
+  short_description: "Build self-hosted feature flags"
+  default_prompt: "Use $feature-flags to add a developer-controlled kill-switch module."

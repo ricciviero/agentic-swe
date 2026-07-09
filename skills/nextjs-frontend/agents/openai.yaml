@@ -1,0 +1,4 @@
+interface:
+  display_name: "NextJS Frontend"
+  short_description: "Build Next.js App Router UIs"
+  default_prompt: "Use $nextjs-frontend to implement or review this Next.js frontend task."

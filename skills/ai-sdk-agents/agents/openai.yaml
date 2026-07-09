@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI SDK Agents"
+  short_description: "Build agents with Vercel AI SDK"
+  default_prompt: "Use $ai-sdk-agents to build a tool-calling agent loop with the Vercel AI SDK."

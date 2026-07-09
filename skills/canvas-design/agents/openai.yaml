@@ -1,0 +1,4 @@
+interface:
+  display_name: "Canvas Design"
+  short_description: "Create static visual design artifacts"
+  default_prompt: "Use $canvas-design to create a polished poster or static visual artifact."

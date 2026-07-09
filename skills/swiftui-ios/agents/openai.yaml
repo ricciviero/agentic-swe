@@ -1,0 +1,4 @@
+interface:
+  display_name: "SwiftUI iOS"
+  short_description: "Build native SwiftUI iOS apps"
+  default_prompt: "Use $swiftui-ios to implement or review this SwiftUI iOS feature."

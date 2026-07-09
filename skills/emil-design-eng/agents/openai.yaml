@@ -1,0 +1,4 @@
+interface:
+  display_name: "Emil Design Engineering"
+  short_description: "Improve UI polish and motion craft"
+  default_prompt: "Use $emil-design-eng to review and improve UI polish, animation, and component craft."

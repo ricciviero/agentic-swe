@@ -1,0 +1,4 @@
+interface:
+  display_name: "Terminal UI Ink"
+  short_description: "Build TypeScript terminal UIs"
+  default_prompt: "Use $terminal-ui-ink to build an Ink-based terminal UI."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Redesign Existing Projects"
+  short_description: "Upgrade existing app visual quality"
+  default_prompt: "Use $redesign-existing-projects to audit and upgrade this existing interface."

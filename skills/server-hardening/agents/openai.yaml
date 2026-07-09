@@ -1,0 +1,4 @@
+interface:
+  display_name: "Server Hardening"
+  short_description: "Harden Linux production servers"
+  default_prompt: "Use $server-hardening to audit and harden a Linux production server."

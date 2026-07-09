@@ -1,0 +1,4 @@
+interface:
+  display_name: "Build Feature"
+  short_description: "Build iOS features with ShipSwift"
+  default_prompt: "Use $build-feature to build this iOS feature with ShipSwift recipes when available."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Spring Boot Backend"
+  short_description: "Build Java Spring Boot APIs"
+  default_prompt: "Use $spring-boot-backend to implement or review this Spring Boot backend task."

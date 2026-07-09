@@ -1,0 +1,3 @@
+# Local working notes (per-developer iterations & fixes)
+/iterazioni
+/fix

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Design Taste Frontend"
+  short_description: "Apply high-agency UI taste rules"
+  default_prompt: "Use $design-taste-frontend to raise the design quality of this frontend."

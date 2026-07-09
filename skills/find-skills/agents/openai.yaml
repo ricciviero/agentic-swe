@@ -1,0 +1,4 @@
+interface:
+  display_name: "Find Skills"
+  short_description: "Discover installable agent skills"
+  default_prompt: "Use $find-skills to discover whether an installable skill exists for this task."

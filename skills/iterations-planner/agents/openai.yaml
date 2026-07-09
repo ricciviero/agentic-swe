@@ -1,0 +1,4 @@
+interface:
+  display_name: "Iterations Planner"
+  short_description: "Plan non-trivial features and fixes"
+  default_prompt: "Use $iterations-planner to organize this brief into local iteration folders."

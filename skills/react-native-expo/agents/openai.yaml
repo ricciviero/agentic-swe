@@ -1,0 +1,4 @@
+interface:
+  display_name: "React Native Expo"
+  short_description: "Build React Native Expo mobile apps"
+  default_prompt: "Use $react-native-expo to implement or review this React Native Expo task."

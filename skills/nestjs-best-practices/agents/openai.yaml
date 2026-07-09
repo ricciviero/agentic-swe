@@ -1,0 +1,4 @@
+interface:
+  display_name: "NestJS Best Practices"
+  short_description: "Build and review NestJS backends"
+  default_prompt: "Use $nestjs-best-practices to implement or review this NestJS backend task."

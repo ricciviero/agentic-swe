@@ -1,0 +1,4 @@
+interface:
+  display_name: "AWS"
+  short_description: "Plan and operate AWS deployments"
+  default_prompt: "Use $aws to design a secure AWS deployment and CI/CD setup."

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Docker Environments"
+  short_description: "Dockerize full-stack projects"
+  default_prompt: "Use $docker-environments to add Docker and Compose support to this project."
