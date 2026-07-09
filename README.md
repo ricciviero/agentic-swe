@@ -88,4 +88,4 @@ Keep all new repository content in English. Do not commit credentials, private m
 
 ## License
 
-This repository is licensed under the Apache License 2.0. Some bundled assets remain under their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).
+This repository is licensed under the MIT License. Some bundled assets remain under their own licenses; see [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md).

@@ -1,6 +1,6 @@
 # Third-Party Notices
 
-`agentic-swe` is distributed under Apache License 2.0. The following bundled materials retain their own license files and terms:
+`agentic-swe` is distributed under the MIT License. The following bundled materials retain their own license files and terms:
 
 - `skills/canvas-design/` includes an Apache License 2.0 file and font assets licensed under the SIL Open Font License 1.1. Each font license is kept beside the corresponding asset.
 - `skills/frontend-design/` includes an Apache License 2.0 file.
