@@ -1,0 +1,4 @@
+interface:
+  display_name: "Terraform"
+  short_description: "Plan, apply, import, and recover Terraform safely"
+  default_prompt: "Use $terraform to manage this infrastructure safely from plan through verification."
