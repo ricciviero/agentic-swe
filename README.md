@@ -19,7 +19,16 @@ The framework currently supports OpenAI Codex and Claude Code while keeping proj
 
 ## Quick Start
 
-From a source checkout:
+Install the published CLI:
+
+```bash
+npm install --global @agenticswe/cli@0.1.0
+agentic-swe --version
+agentic-swe inspect .
+agentic-swe verify .
+```
+
+To work from a source checkout instead:
 
 ```bash
 npm install
@@ -28,7 +37,7 @@ node packages/cli/dist/bin.js inspect .
 node packages/cli/dist/bin.js verify .
 ```
 
-The package names are reserved in the workspace as `@agenticswe/core`, `@agenticswe/node`, `@agenticswe/skills`, and `@agenticswe/cli`. They are release-candidate artifacts until an explicitly authorized registry publication; do not assume npm availability before a release is announced.
+Version `0.1.0` of `@agenticswe/core`, `@agenticswe/node`, `@agenticswe/skills`, and `@agenticswe/cli` is available from the public npm registry. The package line implements Agentic SWE Protocol `1.1`; package SemVer and protocol versions remain independent.
 
 [Interference](https://github.com/ricciviero/interference) is the first reference host: it integrates the framework as an authoritative behavior runtime while retaining ownership of models, tools, permissions, sessions, and terminal UI. The framework remains a separate repository and can be adopted by other coding-agent hosts.
 
@@ -106,7 +115,23 @@ agentic-swe uninstall --target all --dry-run
 
 ## Install
 
-The preferred released installation will use the CLI package. From a source checkout, build once and use the compatibility wrappers:
+Use the CLI package for the standalone framework commands:
+
+```bash
+npm install --global @agenticswe/cli@0.1.0
+agentic-swe doctor
+```
+
+Hosts can install only the runtime surfaces they integrate:
+
+```bash
+npm install --save-exact \
+  @agenticswe/core@0.1.0 \
+  @agenticswe/node@0.1.0 \
+  @agenticswe/skills@0.1.0
+```
+
+From a source checkout, build once and use the compatibility wrappers:
 
 ```bash
 git clone https://github.com/ricciviero/agentic-swe.git

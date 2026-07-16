@@ -33,6 +33,6 @@ Malformed or incompatible configuration produces structured diagnostics and a bl
 
 | Package | Core | Protocol | Config | Runtime |
 |---|---|---|---|---|
-| `0.1.x` | `0.1.x` | `1.0` | `1` | Node.js `>=20.18`, Bun `1.3+` |
+| `0.1.x` | `0.1.x` | `1.1` | `1` | Node.js `>=20.18`, Bun `1.3+` |
 
 The package is ESM-only and exports its entire supported API from the package root.

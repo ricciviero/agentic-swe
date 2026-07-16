@@ -26,6 +26,6 @@ Model output may classify or propose skill names. It never modifies gates or gra
 
 | Package | Protocol | Config | Runtime |
 |---|---|---|---|
-| `0.1.x` | `1.0` | `1` | Node.js `>=20.18`, Bun `1.3+` |
+| `0.1.x` | `1.1` | `1` | Node.js `>=20.18`, Bun `1.3+` |
 
 Package semver is independent from `protocolVersion`. The generated protocol assets are checked against `protocol/v1/` during the repository build.
