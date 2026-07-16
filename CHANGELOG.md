@@ -4,6 +4,10 @@ All notable changes to Agentic SWE are documented here. Package SemVer and proto
 
 ## Unreleased
 
+### Documentation
+
+- Documented the public `interference-agent@0.6.0` consumer path and reference-host compatibility.
+
 ## 0.1.0 - 2026-07-16
 
 ### Added
