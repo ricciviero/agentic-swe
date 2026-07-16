@@ -10,7 +10,11 @@ async function exists(path: string): Promise<boolean> {
 
 async function globalSkillExists(roots: readonly string[], name: string): Promise<boolean> {
   for (const root of roots) {
-    if ((await exists(join(root, name, "SKILL.md"))) || (await exists(join(root, `${name}.md`)))) {
+    if (
+      (await exists(join(root, name, "SKILL.md"))) ||
+      (await exists(join(root, `${name}.md`))) ||
+      (await exists(join(root, ".system", name, "SKILL.md")))
+    ) {
       return true;
     }
   }

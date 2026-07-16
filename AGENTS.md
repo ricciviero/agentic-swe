@@ -23,15 +23,15 @@ Maintain a public, reusable, agent-agnostic behavior framework for software-engi
 - A behavior change must update the protocol definition, affected schema, at least one conformance case, the specification, and any compatibility adapter whose visible semantics changed.
 - Keep `protocolVersion`, project config `version`, and future package semver independent and document their compatibility.
 - The protocol may request abstract capabilities; it must never grant permissions or encode a provider, concrete tool registry, or agent UI.
-- Regenerate embedded runtime assets with `npm run protocol:generate`; `npm run protocol:check` must reject drift from `protocol/v1/`.
+- Regenerate protocol, adapters, templates, and skill manifests with `npm run generate`; `npm run generate:check` must reject drift from their canonical sources.
 
 ## Runtime changes
 
 - Keep `@agentic-swe/core` deterministic and free of filesystem, network, shell, provider, Node, and Bun runtime dependencies.
-- Keep repository discovery, YAML parsing, path containment, skill inventory, and planning-evidence inspection in `@agentic-swe/node`; its inspect/evaluate paths must remain read-only.
+- Keep repository discovery, YAML parsing, path containment, skill inventory, and planning-evidence inspection in `@agentic-swe/node`; its inspect/evaluate/verify paths must remain read-only. Keep explicit render/install/uninstall mutations isolated behind dry-run and ownership checks.
 - A model-facing classifier or skill router is an untrusted port. Validate its output before evaluation and never derive effective permissions from model output.
 - Export supported APIs from each package root. Do not require consumers to deep-import internal files.
-- Run `npm run typecheck`, `npm test`, and `npm run pack:check` after runtime or packaging changes.
+- Run `npm run generate:check`, `npm run typecheck`, `npm test`, and `npm run pack:check` after runtime or packaging changes.
 
 ## Agent compatibility
 
@@ -44,7 +44,7 @@ Maintain a public, reusable, agent-agnostic behavior framework for software-engi
 - Read `.agentic/config.yaml` before selecting skills or creating local workflow records.
 - For non-trivial work, use `iterations-planner` before editing. Local records live in `iterazioni/` or `fix/` and remain gitignored.
 - Treat the selected-skill mapping in `.agentic/config.yaml` as the repository-approved global-skill mapping.
-- Run `scripts/verify-agentic-project.sh` after changing the project contract or behavior-layer tooling.
+- Run `agentic-swe verify <repo>` after changing the project contract or behavior-layer tooling; the tracked shell script is the source-checkout compatibility wrapper.
 
 ## Skill changes
 

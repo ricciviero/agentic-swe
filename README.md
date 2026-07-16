@@ -7,13 +7,28 @@ An open behavior framework for software-engineering agents: a versioned protocol
 - `protocol/v1/` is the normative, machine-readable behavioral contract.
 - `packages/core/` is the pure TypeScript evaluator and state machine.
 - `packages/node/` is the read-only repository adapter for Node.js and Bun hosts.
+- `packages/cli/` is the installable `agentic-swe` command-line interface.
+- `packages/skills/` distributes the public skill catalog with an integrity manifest.
 - `core/agentic-protocol.md` is the concise compatibility adapter loaded by prompt-driven agents.
 - `AGENTS.md` is the canonical, versioned contract for each configured repository.
 - `.agentic/config.yaml` records active agents, selected skills, and local workflow paths.
 - Skills provide detailed workflows, templates, and references only after the core has routed the task to them.
 - Hosts such as terminal agents retain their own models, tools, permission enforcement, sessions, and UI.
 
-The package currently supports OpenAI Codex and Claude Code while keeping project governance portable through `AGENTS.md`.
+The framework currently supports OpenAI Codex and Claude Code while keeping project governance portable through `AGENTS.md`.
+
+## Quick Start
+
+From a source checkout:
+
+```bash
+npm install
+npm run build
+node packages/cli/dist/bin.js inspect .
+node packages/cli/dist/bin.js verify .
+```
+
+The package names are reserved in the workspace as `@agentic-swe/core`, `@agentic-swe/node`, `@agentic-swe/skills`, and `@agentic-swe/cli`. They are release-candidate artifacts until an explicitly authorized registry publication; do not assume npm availability before a release is announced.
 
 ## Operating Model
 
@@ -33,7 +48,7 @@ At session start, the protocol makes the workflow decision before implementation
 
 The key security boundary is explicit: a model may classify intent or propose actions, but it never grants capabilities. A host computes effective access by intersecting protocol requests with its own permission policy and the user's selected mode; any deny wins.
 
-The existing Markdown core remains compatible for Codex and Claude Code. The TypeScript reference runtime evaluates the same contract; generated prompt adapters remain a later distribution layer and do not change the repository's agent-agnostic boundary.
+The existing Markdown core remains compatible for Codex and Claude Code. It and the project templates are generated from the protocol source; `npm run generate:check` rejects drift.
 
 ## Reference Runtime
 
@@ -41,7 +56,7 @@ The existing Markdown core remains compatible for Codex and Claude Code. The Typ
 
 `@agentic-swe/node` discovers repository instructions and configuration, validates YAML against the v1 schema, inventories approved skills, verifies planning evidence, and composes the core. Inspection and evaluation are read-only: hosts remain responsible for models, permission enforcement, persistence, and every mutating action.
 
-The packages are currently consumed from this workspace; registry publication belongs to the distribution iteration. To build and exercise the public API locally:
+To build and exercise the public APIs locally:
 
 ```bash
 npm install
@@ -50,16 +65,35 @@ npm test
 npm run pack:check
 ```
 
-The last command creates local tarballs in a temporary directory, installs both packages into isolated Node and Bun consumers, runs the public API, inspects package contents, and deletes the temporary artifacts.
+The last command creates local tarballs in a temporary directory, installs all four packages into isolated Node and Bun consumers, runs the public APIs and CLI, inspects package contents, and deletes the temporary artifacts.
+
+## CLI
+
+The CLI keeps read-only inspection separate from explicit mutation:
+
+```bash
+agentic-swe inspect <repo> [--json]
+agentic-swe evaluate <repo> --request-file request.json
+agentic-swe verify <repo>
+agentic-swe doctor
+agentic-swe render project-config
+agentic-swe install --target all --dry-run
+agentic-swe uninstall --target all --dry-run
+```
+
+`inspect`, `evaluate`, `verify`, and `doctor` do not mutate repositories. `render --output`, `install`, and `uninstall` use generated ownership markers, refuse unexpected symlinks or unowned files, and expose `--dry-run` and `--json`. See [`COMPATIBILITY.md`](COMPATIBILITY.md) for the protocol/package matrix and package support policy.
 
 ## Install
 
-Clone the repository in a stable location, then install the global routing core and whichever skill directories you use:
+The preferred released installation will use the CLI package. From a source checkout, build once and use the compatibility wrappers:
 
 ```bash
 git clone https://github.com/ricciviero/agentic-swe.git
 cd agentic-swe
+npm install
+npm run build
 
+bash scripts/install-agentic-core.sh all --dry-run
 bash scripts/install-agentic-core.sh all
 bash scripts/link-skills.sh codex
 bash scripts/link-skills.sh claude
@@ -68,9 +102,9 @@ bash scripts/link-skills.sh claude
 The core installer is non-destructive:
 
 - Codex receives a managed block in `${CODEX_HOME:-~/.codex}/AGENTS.md`. Existing personal instructions remain intact; rerun the installer after pulling core changes.
-- Claude Code receives a symlinked user rule at `${CLAUDE_HOME:-~/.claude}/rules/agentic-swe.md`, so pulls update the loaded protocol immediately.
+- Claude Code receives an entirely owned rule at `${CLAUDE_HOME:-~/.claude}/rules/agentic-swe.md`; unowned files and unexpected symlinks are refused.
 
-The skill linker never overwrites an existing skill. Resolve any reported conflict deliberately, then rerun it. Use `--dry-run` with either installer to inspect its actions first.
+The skill linker remains a source-checkout compatibility entry point and never overwrites an existing skill. Package consumers should resolve metadata and bodies through `@agentic-swe/skills`, which avoids cloning or embedding the catalog. Use `--dry-run` before either installer and `agentic-swe uninstall --target all` to remove only owned global adapters.
 
 ## Project Bootstrap
 
@@ -86,7 +120,7 @@ CLAUDE.md                Thin Claude Code adapter importing AGENTS.md
 The project manifest selects only skills relevant to that repository. It also declares the local iteration and fix directories, which remain gitignored by default. Run the portable verifier after changing the setup:
 
 ```bash
-path/to/agentic-swe/scripts/verify-agentic-project.sh .
+agentic-swe verify .
 ```
 
 ## Included Skills
@@ -107,16 +141,18 @@ Notable workflow skills:
 protocol/               Normative protocol definitions, schemas, and conformance cases
 packages/core/          Pure evaluator, state machine, ports, capability policy, state serialization
 packages/node/          Read-only repository/config/skill/evidence adapter
+packages/cli/           CLI for inspect/evaluate/verify/render/install/uninstall
+packages/skills/        Generated manifest API and packaged public skill assets
 core/                   Global protocol and project-contract templates
 skills/                 Canonical reusable skill directories
-scripts/                Core installation, project verification, skill linking
+scripts/                Generation, package smoke tests, and compatibility wrappers
 AGENTS.md               Contributor instructions for this repository
 THIRD_PARTY_NOTICES.md  Licenses that apply to bundled third-party material
 ```
 
 ## Contributing
 
-Keep all new repository content in English. Do not commit credentials, private machine paths, customer information, or material that cannot be published under a compatible license. Validate changed Codex skills with the `skill-creator` validator before opening a change.
+Keep all new repository content in English. Do not commit credentials, private machine paths, customer information, or material that cannot be published under a compatible license. Validate changed Codex skills with the `skill-creator` validator before opening a change. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md).
 
 A protocol behavior change must update `protocol.yaml`, affected schemas, at least one conformance case, the v1 specification, generated runtime assets, and any compatibility adapter whose visible semantics changed. Runtime changes must pass typecheck, unit/integration tests, all normative conformance cases, and Node/Bun package smoke tests.
 

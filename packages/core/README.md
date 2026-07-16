@@ -9,7 +9,7 @@ Pure TypeScript reference evaluator for Agentic SWE Protocol v1. The package has
 - `createBehaviorState`, `serializeBehaviorState`, and `restoreBehaviorState` support host-owned persistence.
 - `intersectCapabilities` applies the deny-wins intersection between protocol requests, host policy, and user mode.
 - `runTaskClassifier` and `runSkillRouter` validate host ports and apply conservative fallbacks.
-- `protocolV1` and `protocolSchemasV1` expose the embedded, generated v1 contract without a deep import.
+- `protocolV1`, `protocolSchemasV1`, and the generated adapter/template constants expose the embedded v1 contract without a deep import.
 
 ```ts
 import { evaluateBehavior, type BehaviorInput } from "@agentic-swe/core";

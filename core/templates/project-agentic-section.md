@@ -1,3 +1,4 @@
+<!-- Generated from protocol/v1/protocol.yaml by `npm run adapters:generate`. Do not edit directly. Protocol 1.0; package 0.1.0. -->
 ## Agentic Workflow
 
 Read `.agentic/config.yaml` before selecting skills or creating local workflow records.

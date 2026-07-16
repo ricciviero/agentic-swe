@@ -1,0 +1,20 @@
+{
+  "name": "@agentic-swe/skills",
+  "version": "0.1.0",
+  "description": "Versioned public skill assets for Agentic SWE hosts",
+  "type": "module",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "sideEffects": false,
+  "engines": { "node": ">=20.18" },
+  "files": ["dist", "manifest.json", "README.md", "LICENSE", "THIRD_PARTY_NOTICES.md"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./manifest.json": "./manifest.json"
+  },
+  "types": "./dist/index.d.ts"
+}

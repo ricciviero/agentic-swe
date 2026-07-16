@@ -41,13 +41,15 @@ Do not list a skill merely because it is installed. Record a concise, project-re
 
 `AGENTS.md` is the only complete project constitution. It must be versioned with the repository. `.agentic/config.yaml` is its machine-readable companion for agent selection, skill mapping, and local workflow paths.
 
-Use these canonical templates when the Agentic SWE package is available:
+Render these canonical templates when the Agentic SWE CLI is available:
 
-```text
-core/templates/project-config.yaml
-core/templates/project-agentic-section.md
-core/templates/CLAUDE.md
+```bash
+agentic-swe render project-config
+agentic-swe render project-agents-section
+agentic-swe render project-claude
 ```
+
+The tracked files under `core/templates/` are generated compatibility outputs for source checkouts. Do not edit them directly.
 
 When only this skill is installed, create the equivalent concise files directly. Do not add unsupported configuration keys or invent project facts.
 
@@ -196,5 +198,5 @@ Add only project-specific rules. Do not paste generic coding advice or a complet
 - Every mapped global skill exists in one of the discovered locations.
 - Every project-skill adapter resolves to `.agents/skills/`.
 - Local iteration, memory, or private configuration paths are ignored when appropriate.
-- Run `scripts/verify-agentic-project.sh <project-root>` when the Agentic SWE package is available.
+- Run `agentic-swe verify <project-root>` when the Agentic SWE CLI is available; the source-checkout shell wrapper is transitional.
 - No generated document contains private paths, credentials, customer data, or invented facts.

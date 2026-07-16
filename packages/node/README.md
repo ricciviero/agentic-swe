@@ -1,6 +1,6 @@
 # `@agentic-swe/node`
 
-Read-only Node.js adapter for Agentic SWE Protocol v1. It discovers repository metadata, parses and validates `.agentic/config.yaml`, inventories approved skills, verifies planning records, and composes `@agentic-swe/core`.
+Node.js adapter for Agentic SWE Protocol v1. Its repository inspection, verification, and evaluation APIs are read-only. Separate explicit APIs render generated adapters and install or uninstall only owned global instruction surfaces.
 
 ```ts
 import { createNodeRuntime } from "@agentic-swe/node";
@@ -23,7 +23,9 @@ const result = await runtime.evaluate({
 console.log(result.plan.phase, result.effectiveCapabilities);
 ```
 
-`inspectRepository` and `runtime.evaluate` do not write files or execute commands. Returned repository paths are normalized; persisted behavior state contains request/session data rather than machine-specific repository paths. Symlinks and planning records that escape the repository are rejected.
+`inspectRepository`, `verifyProject`, and `runtime.evaluate` do not write files or execute commands. Returned repository paths are normalized; persisted behavior state contains request/session data rather than machine-specific repository paths. Symlinks and planning records that escape the repository are rejected.
+
+`renderAdapterToFile`, `installGlobalAdapters`, `uninstallGlobalAdapters`, and the source-checkout skill linker are opt-in mutation APIs. They expose dry-run results, use generated ownership markers, preserve unowned Codex content, and refuse unexpected symlinks or unowned destinations.
 
 Malformed or incompatible configuration produces structured diagnostics and a blocked/read-only `BehaviorPlan`. If no classifier is supplied, classification falls back to `uncertain`, which Protocol v1 treats as non-trivial.
 

@@ -2,7 +2,7 @@
 
 Agentic SWE is an open behavior framework for software-engineering agents. This directory is the normative, agent-agnostic contract. It describes how a host decides workflow phase, gates, skill routing, requested capabilities, delivery criteria, and learning candidates without owning the host's model, concrete tools, permission system, storage, or user interface.
 
-Protocol version `1.0` is normative. The TypeScript reference implementation lives in [`packages/core`](../../packages/core/) and [`packages/node`](../../packages/node/). Until generated prompt adapters land, [`core/agentic-protocol.md`](../../core/agentic-protocol.md) remains the compatible human/agent rendering and must stay semantically aligned.
+Protocol version `1.0` is normative. The TypeScript reference implementation lives in [`packages/core`](../../packages/core/) and [`packages/node`](../../packages/node/). [`core/agentic-protocol.md`](../../core/agentic-protocol.md) and the project templates are generated compatibility renderings; `npm run generate:check` rejects drift.
 
 ## Normative artifacts
 
@@ -11,7 +11,8 @@ Protocol version `1.0` is normative. The TypeScript reference implementation liv
 - [`conformance/`](conformance/) contains normative input/expected-output examples for every required v1 path.
 - [`core/agentic-protocol.md`](../../core/agentic-protocol.md) is a compatibility adapter, not a second source of behavior.
 - [`skills/agents-setup`](../../skills/agents-setup/) and [`skills/iterations-planner`](../../skills/iterations-planner/) implement detailed procedures selected by the protocol.
-- [`packages/core`](../../packages/core/) embeds generated protocol assets and evaluates them without I/O; [`packages/node`](../../packages/node/) supplies the read-only repository adapter.
+- [`packages/core`](../../packages/core/) embeds generated protocol assets and evaluates them without I/O; [`packages/node`](../../packages/node/) supplies read-only repository inspection plus explicit adapter installation APIs.
+- [`packages/cli`](../../packages/cli/) exposes inspection, evaluation, verification, rendering, and safe installation commands; [`packages/skills`](../../packages/skills/) distributes versioned skill assets and integrity metadata.
 
 Normative terms such as **MUST**, **MUST NOT**, **SHOULD**, and **MAY** use their ordinary requirements meaning. When prose and `protocol.yaml` conflict, `protocol.yaml` and the conformance cases define v1 behavior.
 
@@ -129,7 +130,7 @@ An adapter may render the plan for a model or UI. Enforcement consumes the struc
 | Report evidence and assumptions | Protocol | Completion criteria and reason codes |
 | Capture repeated corrections in `AGENTS.md` | Protocol | Learning policy/action |
 | Templates, file naming, numbering, indexes | Workflow skills | Procedural detail, outside core state machine |
-| Codex managed block and Claude rule symlink | Adapters/installers | Rendering and installation, outside core state machine |
+| Codex managed block and owned Claude rule | Adapters/installers | Generated rendering and non-destructive installation, outside core state machine |
 | Tool schemas, provider selection, TUI, persistence | Host | Explicitly outside Agentic SWE protocol |
 
 ## Configuration

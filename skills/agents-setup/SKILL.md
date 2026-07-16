@@ -36,7 +36,7 @@ Read [references/project-bootstrap.md](references/project-bootstrap.md) for the 
 
 1. Establish the project purpose, stack, operational boundaries, and active coding agents.
 2. Reconcile existing instructions into one canonical `AGENTS.md`; preserve existing files unless the user approves their removal.
-3. Create or reconcile `.agentic/config.yaml` from the Agentic SWE template. Record only the selected global skills and concrete triggers.
+3. Create or reconcile `.agentic/config.yaml` from the generated Agentic SWE template. Record only the selected global skills and concrete triggers; do not add keys outside the published v1 schema.
 4. Add the `Agentic Workflow` section to `AGENTS.md`, including the planning gate and validation expectations.
 5. Create `CLAUDE.md` with an `@AGENTS.md` import when Claude Code is active. Preserve any substantive Claude-specific rules below the import.
 6. Identify reusable, project-specific knowledge. Propose project skills with a short rationale, then create only the skills the user accepts.
@@ -65,4 +65,4 @@ Use `skill-creator` for a Codex-compatible project skill when it is available.
 
 ## Validation
 
-Run `scripts/verify-agentic-project.sh <project-root>` when the Agentic SWE package is available. Otherwise verify that `AGENTS.md` is internally coherent, `CLAUDE.md` imports it rather than duplicating it, selected skills exist, project-skill paths resolve, and local-only iteration or memory directories are ignored when requested. Do not claim a tool-specific behavior without checking the installed agent's documentation or configuration.
+Run `agentic-swe verify <project-root>` when the Agentic SWE CLI is available. The compatibility wrapper `scripts/verify-agentic-project.sh` may be used from a source checkout. Use `agentic-swe render project-config`, `project-agents-section`, and `project-claude` when generating canonical templates rather than maintaining local copies. Otherwise verify that `AGENTS.md` is internally coherent, `CLAUDE.md` imports it rather than duplicating it, selected skills exist, project-skill paths resolve, and local-only iteration or memory directories are ignored when requested. Do not claim a tool-specific behavior without checking the installed agent's documentation or configuration.

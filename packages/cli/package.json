@@ -1,0 +1,25 @@
+{
+  "name": "@agentic-swe/cli",
+  "version": "0.1.0",
+  "description": "Command-line interface for Agentic SWE Protocol v1",
+  "type": "module",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "sideEffects": false,
+  "engines": { "node": ">=20.18" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "bin": { "agentic-swe": "./dist/bin.js" },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@agentic-swe/core": "0.1.0",
+    "@agentic-swe/node": "0.1.0",
+    "@agentic-swe/skills": "0.1.0"
+  }
+}

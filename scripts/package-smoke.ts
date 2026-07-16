@@ -62,6 +62,8 @@ async function assertNoPrivatePaths(root: string): Promise<void> {
 const smokeSource = `
 import { evaluateBehavior, PROTOCOL_VERSION } from "@agentic-swe/core";
 import { validateProjectConfigData } from "@agentic-swe/node";
+import { runCli } from "@agentic-swe/cli";
+import { loadSkill, verifySkillIntegrity } from "@agentic-swe/skills";
 
 const plan = evaluateBehavior({
   protocolVersion: PROTOCOL_VERSION,
@@ -99,6 +101,15 @@ const config = validateProjectConfigData({
   }
 });
 if (config.status !== "valid") throw new Error("Config validation failed");
+const planner = await loadSkill("iterations-planner");
+if (!planner.body.includes("# iterations-planner")) throw new Error("Skill body unavailable");
+if (!(await verifySkillIntegrity(planner.name))) throw new Error("Skill integrity failed");
+let version = "";
+const exitCode = await runCli(["--version"], {
+  stdout: value => { version += value; },
+  stderr: value => { throw new Error(value); }
+});
+if (exitCode !== 0 || version.trim() !== "0.1.0") throw new Error("CLI public API failed");
 console.log("consumer smoke: ok");
 `;
 
@@ -108,43 +119,53 @@ try {
   await mkdir(tarballs);
   const core = pack("./packages/core", tarballs);
   const node = pack("./packages/node", tarballs);
+  const skills = pack("./packages/skills", tarballs);
+  const cli = pack("./packages/cli", tarballs);
   const coreTarball = resolve(tarballs, core.filename);
   const nodeTarball = resolve(tarballs, node.filename);
+  const skillsTarball = resolve(tarballs, skills.filename);
+  const cliTarball = resolve(tarballs, cli.filename);
+  assert(skills.files.some((file) => file.path === "dist/assets/agents-setup/SKILL.md"));
+  assert(skills.files.some((file) => file.path === "THIRD_PARTY_NOTICES.md"));
+  assert(cli.files.some((file) => file.path === "dist/bin.js"));
 
   for (const runtime of ["node", "bun"] as const) {
     const consumer = join(temporaryRoot, `${runtime}-consumer`);
     await mkdir(consumer);
-    const manifest =
-      runtime === "bun"
-        ? {
-            name: `${runtime}-consumer`,
-            private: true,
-            type: "module",
-            dependencies: {
-              "@agentic-swe/core": `file:${coreTarball}`,
-              "@agentic-swe/node": `file:${nodeTarball}`,
-            },
-            overrides: { "@agentic-swe/core": `file:${coreTarball}` },
-          }
-        : { name: `${runtime}-consumer`, private: true, type: "module" };
+    const dependencies = {
+      "@agentic-swe/core": `file:${coreTarball}`,
+      "@agentic-swe/node": `file:${nodeTarball}`,
+      "@agentic-swe/skills": `file:${skillsTarball}`,
+      "@agentic-swe/cli": `file:${cliTarball}`,
+    };
+    const manifest = {
+      name: `${runtime}-consumer`,
+      private: true,
+      type: "module",
+      dependencies,
+      ...(runtime === "bun" ? { overrides: dependencies } : {}),
+    };
     await writeFile(
       join(consumer, "package.json"),
       JSON.stringify(manifest, null, 2),
     );
     await writeFile(join(consumer, "smoke.mjs"), smokeSource);
     if (runtime === "node") {
-      run("npm", ["install", "--ignore-scripts", coreTarball, nodeTarball], consumer);
+      run("npm", ["install", "--ignore-scripts"], consumer);
       const output = run("node", ["smoke.mjs"], consumer);
       assert.match(output, /consumer smoke: ok/);
+      assert.equal(run("node", ["node_modules/@agentic-swe/cli/dist/bin.js", "--version"], consumer).trim(), "0.1.0");
     } else {
       run("bun", ["install"], consumer);
       const output = run("bun", ["run", "smoke.mjs"], consumer);
       assert.match(output, /consumer smoke: ok/);
+      assert.equal(run("bun", ["run", "node_modules/@agentic-swe/cli/dist/bin.js", "--version"], consumer).trim(), "0.1.0");
     }
+    assert.equal(run(join(consumer, "node_modules", ".bin", "agentic-swe"), ["--version"], consumer).trim(), "0.1.0");
     await assertNoPrivatePaths(join(consumer, "node_modules", "@agentic-swe"));
   }
   console.log(
-    `Package smoke: Node and Bun consumers passed (${basename(coreTarball)}, ${basename(nodeTarball)}).`,
+    `Package smoke: Node and Bun consumers passed (${[coreTarball, nodeTarball, skillsTarball, cliTarball].map((path) => basename(path)).join(", ")}).`,
   );
 } finally {
   await rm(temporaryRoot, { recursive: true, force: true });
