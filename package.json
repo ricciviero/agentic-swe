@@ -1,0 +1,33 @@
+{
+  "name": "agentic-swe",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "protocol:generate": "tsx scripts/generate-protocol-assets.ts",
+    "protocol:check": "tsx scripts/generate-protocol-assets.ts --check",
+    "adapters:generate": "tsx scripts/generate-adapters.ts",
+    "adapters:check": "tsx scripts/generate-adapters.ts --check",
+    "skills:generate": "tsx scripts/generate-skills-package.ts",
+    "skills:check": "tsx scripts/generate-skills-package.ts --check",
+    "skills:assets": "tsx scripts/generate-skills-package.ts --assets-only",
+    "generate": "npm run protocol:generate && npm run adapters:generate && npm run skills:generate",
+    "generate:check": "npm run protocol:check && npm run adapters:check && npm run skills:check",
+    "build": "npm run generate:check && tsc -b && npm run skills:assets",
+    "typecheck": "npm run build && tsc -p tsconfig.tests.json --noEmit",
+    "test": "npm run build && node --import tsx --test packages/*/test/*.test.ts scripts/*.test.ts && node --import tsx scripts/run-conformance.ts",
+    "test:conformance": "npm run build && node --import tsx scripts/run-conformance.ts",
+    "pack:check": "npm run build && node --import tsx scripts/package-smoke.ts",
+    "release:check": "npm run build && node --import tsx scripts/check-publish.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "yaml": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=20.18"
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "name": "explicit-lighter-process",
+  "protocolVersion": "1.1",
+  "input": {
+    "protocolVersion": "1.1",
+    "requestId": "explicit-lighter-process",
+    "repository": {
+      "configured": true,
+      "configVersion": 1,
+      "protocolCompatibility": "compatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": true,
+      "planningEvidence": false,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "non-trivial",
+        "source": "human",
+        "reasons": ["The request changes a public behavior contract."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": true,
+      "lighterProcessReason": "The user explicitly requested direct implementation for this request.",
+      "mutationRequested": true,
+      "implementationFinished": false
+    },
+    "availableSkills": [
+      { "name": "iterations-planner", "source": "global", "selected": true, "relevant": true }
+    ],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute",
+      "subagents:invoke"
+    ],
+    "evidence": []
+  },
+  "expected": {
+    "protocolVersion": "1.1",
+    "requestId": "explicit-lighter-process",
+    "phase": "execution",
+    "effectiveClassification": "non-trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+      { "id": "planning", "status": "waived", "reasonCode": "PLANNING_WAIVED_BY_USER" },
+      { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute",
+      "subagents:invoke"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["CONFIGURATION_PRESENT", "TASK_NON_TRIVIAL", "PLANNING_WAIVED_BY_USER"],
+    "diagnostics": [],
+    "overrides": [
+      {
+        "gate": "planning",
+        "source": "user",
+        "reasonCode": "PLANNING_WAIVED_BY_USER",
+        "reason": "The user explicitly requested direct implementation for this request."
+      }
+    ]
+  }
+}

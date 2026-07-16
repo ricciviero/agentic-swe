@@ -1,0 +1,105 @@
+{
+  "name": "learning-candidate",
+  "protocolVersion": "1.1",
+  "input": {
+    "protocolVersion": "1.1",
+    "requestId": "learning-candidate",
+    "repository": {
+      "configured": true,
+      "configVersion": 1,
+      "protocolCompatibility": "compatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": true,
+      "planningEvidence": true,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "non-trivial",
+        "source": "model",
+        "reasons": ["The completed work changed a durable behavior contract."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "mutationRequested": true,
+      "implementationFinished": true
+    },
+    "availableSkills": [],
+    "hostCapabilities": ["repository:read"],
+    "evidence": [
+      { "id": "plan-1", "kind": "planning", "valid": true },
+      { "id": "implementation-1", "kind": "implementation", "valid": true },
+      { "id": "validation-1", "kind": "validation", "valid": true },
+      { "id": "documentation-1", "kind": "documentation", "valid": true },
+      { "id": "assumption-1", "kind": "assumption", "valid": true },
+      { "id": "learning-1", "kind": "learning", "valid": true, "reasonCode": "REPEATED_CORRECTION" },
+      { "id": "learning-2", "kind": "learning", "valid": true, "reasonCode": "REPEATED_CORRECTION" }
+    ],
+    "state": {
+      "protocolVersion": "1.1",
+      "sessionId": "session-1",
+      "requestId": "learning-candidate",
+      "phase": "completion",
+      "sequence": 7,
+      "effectiveClassification": "non-trivial",
+      "gates": [
+        { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+        { "id": "planning", "status": "satisfied", "reasonCode": "PLANNING_SATISFIED", "evidenceIds": ["plan-1"] },
+        { "id": "verification", "status": "satisfied", "reasonCode": "COMPLETION_CRITERIA_SATISFIED", "evidenceIds": ["validation-1"] }
+      ],
+      "selectedSkills": [],
+      "evidenceIds": [
+        "plan-1",
+        "implementation-1",
+        "validation-1",
+        "documentation-1",
+        "assumption-1",
+        "learning-1",
+        "learning-2"
+      ]
+    },
+    "learningSignals": [
+      {
+        "reasonCode": "REPEATED_CORRECTION",
+        "evidenceIds": ["learning-1", "learning-2"]
+      }
+    ]
+  },
+  "expected": {
+    "protocolVersion": "1.1",
+    "requestId": "learning-candidate",
+    "phase": "completion",
+    "effectiveClassification": "non-trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+      { "id": "planning", "status": "satisfied", "reasonCode": "PLANNING_SATISFIED", "evidenceIds": ["plan-1"] },
+      { "id": "verification", "status": "satisfied", "reasonCode": "COMPLETION_CRITERIA_SATISFIED", "evidenceIds": ["validation-1"] }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": ["repository:read"],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true, "evidenceIds": ["plan-1"] },
+      { "id": "implementation-accounted-for", "status": "satisfied", "hard": true, "evidenceIds": ["implementation-1"] },
+      { "id": "validation-evidence", "status": "satisfied", "hard": true, "evidenceIds": ["validation-1"] },
+      { "id": "documentation-aligned", "status": "satisfied", "hard": false, "evidenceIds": ["documentation-1"] },
+      { "id": "assumptions-reported", "status": "satisfied", "hard": false, "evidenceIds": ["assumption-1"] },
+      { "id": "learning-reviewed", "status": "satisfied", "hard": false, "evidenceIds": ["learning-1", "learning-2"] }
+    ],
+    "canComplete": true,
+    "reasons": [
+      "TASK_NON_TRIVIAL",
+      "PLANNING_SATISFIED",
+      "COMPLETION_CRITERIA_SATISFIED",
+      "REPEATED_CORRECTION"
+    ],
+    "diagnostics": [],
+    "learningActions": [
+      {
+        "target": "AGENTS.md",
+        "reasonCode": "REPEATED_CORRECTION",
+        "status": "proposed",
+        "evidenceIds": ["learning-1", "learning-2"]
+      }
+    ]
+  }
+}

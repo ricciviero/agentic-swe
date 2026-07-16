@@ -1,0 +1,314 @@
+id: agentic-swe
+protocolVersion: "1.1"
+configVersion: 1
+status: normative
+title: Agentic SWE Protocol v1
+description: >-
+  Agent-agnostic behavioral policy for software-engineering agents. The protocol
+  decides workflow phase, required gates, requested capabilities, skill routing,
+  delivery criteria, and learning candidates. Hosts retain control of models,
+  concrete tools, permissions, storage, and user interfaces.
+
+principles:
+  - id: repository-policy-wins
+    statement: Repository AGENTS.md instructions may add stricter project rules.
+  - id: model-proposes-host-disposes
+    statement: Model output may classify intent or propose actions but never grants capabilities.
+  - id: deny-wins
+    statement: Effective capabilities are the intersection of protocol requests, host policy, and user-selected mode.
+  - id: conservative-uncertainty
+    statement: An uncertain task classification is treated as non-trivial.
+  - id: evidence-before-completion
+    statement: Hard completion criteria require host-verifiable evidence or an explicit recorded override when the protocol permits one.
+  - id: single-behavior-source
+    statement: Human and agent adapters render this protocol and must not become independent behavioral sources.
+
+capabilities:
+  - id: repository:read
+    description: Inspect repository files and metadata without mutation.
+  - id: instructions:read
+    description: Load applicable repository and user instruction files.
+  - id: skills:read
+    description: Discover and load approved skill metadata or content.
+  - id: workspace:setup-write
+    description: Mutate only protocol-approved setup and adapter paths.
+  - id: workspace:plan-write
+    description: Mutate only configured iteration or fix workspaces and required ignore rules.
+  - id: workspace:mutate
+    description: Mutate repository implementation and documentation files.
+  - id: commands:execute
+    description: Execute host-approved commands inside the workspace.
+  - id: subagents:invoke
+    description: Invoke host-approved scoped subagents.
+  - id: external:mutate
+    description: Mutate an external system after host and user authorization.
+
+phases:
+  - id: discovery
+    terminal: false
+    requestedCapabilities: ["repository:read", "instructions:read"]
+  - id: classification
+    terminal: false
+    requestedCapabilities: ["repository:read", "instructions:read", "skills:read"]
+  - id: setup
+    terminal: false
+    requestedCapabilities: ["repository:read", "instructions:read", "skills:read", "workspace:setup-write"]
+  - id: planning
+    terminal: false
+    requestedCapabilities: ["repository:read", "instructions:read", "skills:read", "workspace:plan-write"]
+  - id: execution
+    terminal: false
+    requestedCapabilities: ["repository:read", "instructions:read", "skills:read", "workspace:mutate", "commands:execute", "subagents:invoke"]
+  - id: verification
+    terminal: false
+    requestedCapabilities: ["repository:read", "instructions:read", "skills:read", "commands:execute"]
+  - id: completion
+    terminal: true
+    requestedCapabilities: ["repository:read"]
+  - id: blocked
+    terminal: true
+    requestedCapabilities: ["repository:read", "instructions:read"]
+  - id: aborted
+    terminal: true
+    requestedCapabilities: []
+
+classifications:
+  trivial:
+    match: all
+    criteria:
+      - localized
+      - mechanically-clear
+      - no-behavior-or-contract-change
+      - no-sequencing-decision
+  non-trivial:
+    match: any
+    criteria:
+      - two-independent-deliverables
+      - cross-layer-behavior-change
+      - migration
+      - refactor
+      - deployment
+      - security-change
+      - unclear-scope
+      - tradeoff-or-acceptance-criteria-needed
+  uncertain:
+    effectiveClassification: non-trivial
+    reasonCode: CLASSIFICATION_UNCERTAIN
+
+gates:
+  - id: setup
+    requiredWhen:
+      all:
+        - repository.configured == false
+        - any(request.explicitOnboarding == true, all(request.mutationRequested == true, classification.effective == non-trivial))
+    skill: agents-setup
+    waiver: forbidden
+    evidence:
+      - canonical-agents-file
+      - compatible-project-config
+      - required-agent-adapters
+  - id: planning
+    requiredWhen:
+      all:
+        - request.mutationRequested == true
+        - classification.effective == non-trivial
+        - workflow.planningGate in [non-trivial, always]
+        - planning-evidence == false
+    skill: iterations-planner
+    waiver:
+      allowedWhen: request.explicitLighterProcess == true
+      recordReason: true
+      reportAtCompletion: true
+    evidence:
+      - original-brief
+      - current-scope
+      - implementation-plan
+      - affected-files
+      - validation-plan
+  - id: verification
+    requiredWhen:
+      all:
+        - implementation-finished == true
+        - hard-completion-criteria-satisfied == false
+    waiver: forbidden
+    evidence:
+      - changed-surface-validation
+      - documentation-alignment-when-required
+      - unresolved-assumptions-reported
+
+skillRouting:
+  globalSkills:
+    candidates: project-config.selected-skills
+    selection: smallest-relevant-set
+  projectSkills:
+    candidates: project-config.project-skills-dir
+    createWhen: durable-repeated-project-knowledge
+  loadBeforeSpecializedAction: true
+  adaptersAreNotSources: true
+
+completionCriteria:
+  - id: gates-satisfied
+    hard: true
+    description: Every applicable setup and planning gate is satisfied or permissibly waived.
+  - id: implementation-accounted-for
+    hard: true
+    description: Requested implementation work is completed or explicitly reported as unresolved.
+  - id: validation-evidence
+    hard: true
+    description: Validation matching the changed surface has host-verifiable evidence.
+  - id: documentation-aligned
+    hard: false
+    description: Durable documentation is aligned when behavior, architecture, or conventions changed.
+  - id: assumptions-reported
+    hard: false
+    description: Unresolved assumptions and external blockers are reported.
+  - id: learning-reviewed
+    hard: false
+    description: Repeated corrections or persistent discovery costs are considered for concise AGENTS.md updates.
+
+events:
+  - id: session.started
+    description: A host starts or resumes a protocol session.
+  - id: repository.discovered
+    description: Repository root, instructions, configuration, and compatibility are known.
+  - id: classification.completed
+    description: A typed task classification has been validated.
+  - id: setup.satisfied
+    description: Required setup artifacts were verified by the host.
+  - id: planning.satisfied
+    description: Required planning artifacts were verified by the host.
+  - id: planning.waived
+    description: The user explicitly requested a lighter process and the reason was recorded.
+  - id: implementation.finished
+    description: The host or agent reports implementation work ready for verification.
+  - id: verification.satisfied
+    description: All hard completion criteria have valid evidence.
+  - id: verification.failed
+    description: Evidence shows that rework is required.
+  - id: configuration.incompatible
+    description: The project configuration cannot be safely interpreted by this protocol version.
+  - id: user.refused
+    description: The user refused a requested privileged action.
+  - id: turn.aborted
+    description: The user or host aborted the active turn.
+  - id: external.blocked
+    description: Progress requires authority or external state that the host does not have.
+  - id: learning.candidate-recorded
+    description: Repeated evidence suggests a concise project-policy improvement.
+
+transitions:
+  - from: [discovery]
+    event: repository.discovered
+    to: classification
+    guards: [repository-context-valid]
+  - from: [discovery, classification]
+    event: configuration.incompatible
+    to: blocked
+    guards: []
+  - from: [classification]
+    event: classification.completed
+    to: setup
+    guards: [setup-gate-required]
+  - from: [classification]
+    event: classification.completed
+    to: planning
+    guards: [setup-gate-not-required, planning-gate-required]
+  - from: [classification]
+    event: classification.completed
+    to: execution
+    guards: [setup-gate-not-required, planning-gate-not-required]
+  - from: [setup]
+    event: setup.satisfied
+    to: planning
+    guards: [planning-gate-required]
+  - from: [setup]
+    event: setup.satisfied
+    to: execution
+    guards: [planning-gate-not-required]
+  - from: [planning]
+    event: planning.satisfied
+    to: execution
+    guards: [planning-evidence-valid]
+  - from: [planning]
+    event: planning.waived
+    to: execution
+    guards: [explicit-user-lighter-process, waiver-reason-recorded]
+  - from: [execution]
+    event: implementation.finished
+    to: verification
+    guards: [implementation-accounted-for]
+  - from: [verification]
+    event: verification.failed
+    to: execution
+    guards: [rework-actionable]
+  - from: [verification]
+    event: verification.satisfied
+    to: completion
+    guards: [hard-completion-criteria-satisfied]
+  - from: [completion]
+    event: learning.candidate-recorded
+    to: completion
+    guards: [learning-signal-repeated]
+  - from: [discovery, classification, setup, planning, execution, verification]
+    event: turn.aborted
+    to: aborted
+    guards: []
+  - from: [setup, planning, execution, verification]
+    event: user.refused
+    to: blocked
+    guards: []
+  - from: [discovery, classification, setup, planning, execution, verification]
+    event: external.blocked
+    to: blocked
+    guards: [blocker-requires-new-authority-or-external-state]
+
+policies:
+  configuration:
+    incompatiblePhase: blocked
+    incompatibleCapabilities: ["repository:read", "instructions:read"]
+    neverFallbackToMutation: true
+  classification:
+    uncertainFallback: non-trivial
+    uncertainReportAssumption: true
+    explicitHumanClassificationMayOverrideModel: true
+  capabilities:
+    resolution: intersection
+    precedence: [host-deny, user-mode, protocol-request]
+    protocolNeverElevatesHost: true
+    readOnlyRequestCapabilities: ["repository:read", "instructions:read", "skills:read"]
+  delivery:
+    hardCriteriaRequireEvidence: true
+    completionWithMissingHardCriteria: false
+    readOnlyRequestEvidence: not-required
+  learning:
+    target: AGENTS.md
+    requireRepeatedSignal: true
+    excludeOneOffPreferences: true
+
+reasonCodes:
+  - id: CONFIGURATION_PRESENT
+    description: A compatible project configuration is present.
+  - id: UNCONFIGURED_TRIVIAL_ALLOWED
+    description: A mechanical microtask may proceed without creating project policy.
+  - id: SETUP_REQUIRED
+    description: Onboarding or non-trivial work requires a configured repository.
+  - id: TASK_TRIVIAL
+    description: Every trivial-task criterion was satisfied.
+  - id: TASK_NON_TRIVIAL
+    description: At least one non-trivial criterion was satisfied.
+  - id: CLASSIFICATION_UNCERTAIN
+    description: Classification was uncertain and conservatively became non-trivial.
+  - id: PLANNING_REQUIRED
+    description: Non-trivial work requires a current planning record.
+  - id: PLANNING_SATISFIED
+    description: A current planning record was verified.
+  - id: PLANNING_WAIVED_BY_USER
+    description: The user explicitly requested a lighter process and the exception was recorded.
+  - id: VALIDATION_REQUIRED
+    description: Hard validation evidence is still missing.
+  - id: COMPLETION_CRITERIA_SATISFIED
+    description: All hard completion criteria have evidence.
+  - id: PROTOCOL_VERSION_INCOMPATIBLE
+    description: The project configuration cannot be safely interpreted by this protocol version.
+  - id: REPEATED_CORRECTION
+    description: Repeated evidence suggests a concise project-policy update.

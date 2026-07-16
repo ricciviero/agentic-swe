@@ -1,0 +1,89 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:behavior-plan",
+  "title": "Agentic SWE BehaviorPlan v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "requestId",
+    "phase",
+    "effectiveClassification",
+    "requiredGates",
+    "selectedSkills",
+    "requestedCapabilities",
+    "completionCriteria",
+    "canComplete",
+    "reasons",
+    "diagnostics"
+  ],
+  "properties": {
+    "protocolVersion": { "const": "1.1" },
+    "requestId": { "type": "string", "minLength": 1 },
+    "phase": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+    "effectiveClassification": {
+      "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/effectiveClassification"
+    },
+    "requiredGates": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/gateDecision" }
+    },
+    "selectedSkills": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/skillReference" }
+    },
+    "requestedCapabilities": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/capability" },
+      "uniqueItems": true
+    },
+    "completionCriteria": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/completionCriterion" }
+    },
+    "canComplete": { "type": "boolean" },
+    "reasons": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/reasonCode" },
+      "uniqueItems": true
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/diagnostic" }
+    },
+    "overrides": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["gate", "source", "reasonCode", "reason"],
+        "properties": {
+          "gate": { "const": "planning" },
+          "source": { "const": "user" },
+          "reasonCode": { "const": "PLANNING_WAIVED_BY_USER" },
+          "reason": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "learningActions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["target", "reasonCode", "status", "evidenceIds"],
+        "properties": {
+          "target": { "const": "AGENTS.md" },
+          "reasonCode": { "const": "REPEATED_CORRECTION" },
+          "status": { "const": "proposed" },
+          "evidenceIds": {
+            "type": "array",
+            "minItems": 2,
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "name": "uncertain-falls-back-to-planning",
+  "protocolVersion": "1.1",
+  "input": {
+    "protocolVersion": "1.1",
+    "requestId": "uncertain-falls-back-to-planning",
+    "repository": {
+      "configured": true,
+      "configVersion": 1,
+      "protocolCompatibility": "compatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": true,
+      "planningEvidence": false,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "uncertain",
+        "source": "model",
+        "reasons": ["Scope and acceptance criteria are incomplete."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "mutationRequested": true,
+      "implementationFinished": false
+    },
+    "availableSkills": [
+      { "name": "iterations-planner", "source": "global", "selected": true, "relevant": true }
+    ],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:plan-write",
+      "workspace:mutate"
+    ],
+    "evidence": []
+  },
+  "expected": {
+    "protocolVersion": "1.1",
+    "requestId": "uncertain-falls-back-to-planning",
+    "phase": "planning",
+    "effectiveClassification": "non-trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+      { "id": "planning", "status": "required", "reasonCode": "PLANNING_REQUIRED" },
+      { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [
+      { "name": "iterations-planner", "required": true, "reasonCode": "PLANNING_REQUIRED" }
+    ],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:plan-write"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "pending", "hard": true },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["CONFIGURATION_PRESENT", "CLASSIFICATION_UNCERTAIN", "PLANNING_REQUIRED"],
+    "diagnostics": [
+      { "code": "CLASSIFICATION_UNCERTAIN", "severity": "warning" }
+    ]
+  }
+}

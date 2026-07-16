@@ -43,8 +43,9 @@ Do not add this overhead for a clearly mechanical microtask.
 4. Create or update numbered folders using the supplied templates.
 5. Update local indexes and the relevant `AGENTS.md` section when it exists.
 6. Before implementation, keep the task or fix record and plan aligned with any scope change.
-7. Verify folder contents, numbering, ignore behavior, and alignment with the Agentic Workflow section before reporting the result.
+7. Treat a non-empty `task.md` + `plan.md` or `bug.md` + `fix.md` pair inside the configured workspace as the runtime's structural planning evidence. The agent still owns qualitative completeness; the runtime does not infer it from unchecked prose.
+8. Verify folder contents, numbering, ignore behavior, and alignment with the Agentic Workflow section before reporting the result.
 
 ## Validation
 
-Run `git check-ignore` for local folders, verify required files in every numbered folder, and ensure generated records do not contradict the original brief. Run `scripts/verify-agentic-project.sh` when the Agentic SWE package is available and the project contract changed. Report unresolved assumptions rather than inventing them.
+Run `git check-ignore` for local folders, verify required files in every numbered folder, and ensure generated records do not contradict the original brief. Run `agentic-swe verify <project-root>` when the CLI is available and the project contract changed. When evaluating a non-trivial request, pass the record directory as `planningRecord`; never point the runtime outside the configured iteration or fix workspace. Report unresolved assumptions rather than inventing them.

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:conformance-case",
+  "title": "Agentic SWE v1 conformance case",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["name", "protocolVersion", "input", "expected"],
+  "properties": {
+    "name": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+    "protocolVersion": { "const": "1.1" },
+    "input": { "$ref": "urn:agentic-swe:protocol:v1:schema:behavior-input" },
+    "expected": { "$ref": "urn:agentic-swe:protocol:v1:schema:behavior-plan" }
+  }
+}

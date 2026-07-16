@@ -1,0 +1,35 @@
+name: test
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: agentic-swe-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v5
+        with:
+          node-version: "20.18"
+          cache: npm
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: "1.3.11"
+      - run: npm ci
+      - run: npm run generate
+      - run: git diff --exit-code
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run pack:check
+      - run: npm run release:check
+      - run: bash scripts/verify-agentic-project.sh .

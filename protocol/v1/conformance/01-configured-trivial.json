@@ -1,0 +1,68 @@
+{
+  "name": "configured-trivial",
+  "protocolVersion": "1.1",
+  "input": {
+    "protocolVersion": "1.1",
+    "requestId": "configured-trivial",
+    "repository": {
+      "configured": true,
+      "configVersion": 1,
+      "protocolCompatibility": "compatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": true,
+      "planningEvidence": false,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "trivial",
+        "source": "heuristic",
+        "reasons": ["Localized mechanical edit with no behavior change."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "mutationRequested": true,
+      "implementationFinished": false
+    },
+    "availableSkills": [],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute"
+    ],
+    "evidence": []
+  },
+  "expected": {
+    "protocolVersion": "1.1",
+    "requestId": "configured-trivial",
+    "phase": "execution",
+    "effectiveClassification": "trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+      { "id": "planning", "status": "not-applicable", "reasonCode": "TASK_TRIVIAL" },
+      { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute",
+      "subagents:invoke"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["CONFIGURATION_PRESENT", "TASK_TRIVIAL"],
+    "diagnostics": []
+  }
+}

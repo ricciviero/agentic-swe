@@ -1,5 +1,7 @@
 # Agentic SWE Protocol
 
+<!-- Generated from protocol/v1/protocol.yaml by `npm run adapters:generate`. Do not edit directly. Protocol 1.1; package 0.1.0. -->
+
 This is global routing guidance for coding agents. Repository instructions in `AGENTS.md` define project-specific rules and may add stricter requirements.
 
 ## Session Start
@@ -10,9 +12,23 @@ This is global routing guidance for coding agents. Repository instructions in `A
 
 ## Task Classification
 
-Treat a task as **trivial** only when it is localized, mechanically clear, has no behavior or contract change, and needs no sequencing decision.
+Treat a task as **trivial** only when every criterion applies:
 
-Treat a task as **non-trivial** when it has two independently verifiable deliverables; changes behavior across layers; is a migration, refactor, deployment, or security change; has unclear scope; or needs a trade-off or acceptance criteria.
+- localized
+- mechanically clear
+- no behavior or contract change
+- no sequencing decision
+
+Treat a task as **non-trivial** when any criterion applies:
+
+- two independent deliverables
+- cross layer behavior change
+- migration
+- refactor
+- deployment
+- security change
+- unclear scope
+- tradeoff or acceptance criteria needed
 
 When uncertain, classify the task as non-trivial and state the assumption.
 
@@ -30,6 +46,21 @@ Use the smallest relevant set of skills mapped by the project configuration. Rea
 
 Implement only after the applicable setup and planning gates are satisfied. Run validation that matches the changed surface, update durable documentation when conventions or architecture change, and report evidence plus unresolved assumptions.
 
+- **gates satisfied**: Every applicable setup and planning gate is satisfied or permissibly waived.
+- **implementation accounted for**: Requested implementation work is completed or explicitly reported as unresolved.
+- **validation evidence**: Validation matching the changed surface has host-verifiable evidence.
+
+## Security Boundary
+
+- **repository policy wins**: Repository AGENTS.md instructions may add stricter project rules.
+- **model proposes host disposes**: Model output may classify intent or propose actions but never grants capabilities.
+- **deny wins**: Effective capabilities are the intersection of protocol requests, host policy, and user-selected mode.
+- **conservative uncertainty**: An uncertain task classification is treated as non-trivial.
+- **evidence before completion**: Hard completion criteria require host-verifiable evidence or an explicit recorded override when the protocol permits one.
+- **single behavior source**: Human and agent adapters render this protocol and must not become independent behavioral sources.
+
+A model may classify intent or propose actions, but it never grants capabilities. Effective access is the intersection of protocol requests, host policy, and the user-selected mode; any deny wins.
+
 ## Learning Loop
 
-Treat repeated corrections, recurring review feedback, and persistent discovery costs as candidates for `AGENTS.md` updates. Keep changes concise, project-specific, and versioned; do not turn one-off preferences into repository policy.
+Treat repeated corrections, recurring review feedback, and persistent discovery costs as candidates for `AGENTS.md` updates. Require repeated evidence, exclude one-off preferences, and keep changes concise and project-specific.

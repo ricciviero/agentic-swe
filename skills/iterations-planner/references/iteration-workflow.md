@@ -39,6 +39,8 @@ Use the `-due-YYYY-MM-DD` suffix only for an actual deadline. Keep severity insi
 
 An iteration is ready to implement only when its task and plan agree. If scope changes, update `task.md` first and then `plan.md`; do not let code become the only current description of the work.
 
+The reference runtime recognizes structural planning evidence only when the host supplies a record directory contained by the configured iteration or fix workspace and both required files are non-empty. This containment and presence check is intentionally narrower than a qualitative review: keep the original brief, decisions, affected files, validation, and completion evidence current even though the runtime does not grade their prose.
+
 ## Plan Fixes
 
 1. Record the symptom, reproduction, expected behavior, impact, and severity in `bug.md`.
@@ -105,3 +107,4 @@ Do not put full task or plan content in `AGENTS.md`. Point to the local workspac
 - Plans identify files, order, decisions, and validation.
 - Any `AGENTS.md` update points to the local workspace and does not duplicate it.
 - Local workspace names match `.agentic/config.yaml` when that manifest exists.
+- `agentic-swe verify <project-root>` passes when the CLI is available and the project contract changed.
