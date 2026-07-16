@@ -164,3 +164,26 @@ test("malformed configuration produces a blocked read-only plan", async () => {
   assert.deepEqual(result.effectiveCapabilities, ["repository:read"]);
   assert.equal(result.inspection.config.status, "incompatible");
 });
+
+test("unconfigured repositories can still route the protocol bootstrap skill", async () => {
+  const root = await mkdtemp(join(tmpdir(), "agentic-swe-unconfigured-test-"));
+  temporaryDirectories.push(root);
+  const globalSkills = join(root, "global-skills");
+  await Promise.all([
+    mkdir(join(root, ".git"), { recursive: true }),
+    mkdir(join(globalSkills, "agents-setup"), { recursive: true }),
+  ]);
+  await writeFile(join(globalSkills, "agents-setup", "SKILL.md"), "# Setup\n", "utf8");
+  const runtime = createNodeRuntime({
+    startPath: root,
+    globalSkillDirectories: [globalSkills],
+  });
+  const result = await runtime.evaluate({
+    requestId: "request-unconfigured",
+    summary: "Set up and implement a feature",
+    classification: { value: "non-trivial", source: "human", reasons: ["Feature."] },
+    relevantSkills: ["agents-setup"],
+  });
+  assert.equal(result.plan.phase, "setup");
+  assert.deepEqual(result.plan.selectedSkills.map((skill) => skill.name), ["agents-setup"]);
+});

@@ -21,6 +21,32 @@ async function globalSkillExists(roots: readonly string[], name: string): Promis
   return false;
 }
 
+const BOOTSTRAP_WORKFLOW_SKILLS = ["agents-setup", "iterations-planner"] as const;
+
+/**
+ * An unconfigured repository has no selected-skill map yet, but setup still
+ * requires the host-provided workflow skills. Discover only these protocol
+ * bootstrap skills; arbitrary globals remain unapproved until config exists.
+ */
+export async function inventoryBootstrapSkills(options: {
+  globalSkillDirectories?: readonly string[];
+  relevantSkills?: readonly string[];
+}): Promise<AvailableSkill[]> {
+  const relevant = new Set(options.relevantSkills ?? []);
+  const skills: AvailableSkill[] = [];
+  for (const name of BOOTSTRAP_WORKFLOW_SKILLS) {
+    if (await globalSkillExists(options.globalSkillDirectories ?? [], name)) {
+      skills.push({
+        name,
+        source: "global",
+        selected: true,
+        relevant: relevant.has(name),
+      });
+    }
+  }
+  return skills;
+}
+
 export async function inventorySkills(options: {
   root: string;
   config: ProjectConfig;

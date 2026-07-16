@@ -2,7 +2,7 @@ import { readProjectConfig } from "./config.js";
 import { inspectPlanningEvidence } from "./evidence.js";
 import { discoverInstructionFiles } from "./instructions.js";
 import { findRepositoryRoot } from "./repository.js";
-import { inventorySkills } from "./skills.js";
+import { inventoryBootstrapSkills, inventorySkills } from "./skills.js";
 import type { InspectRepositoryOptions, RepositoryInspection } from "./types.js";
 
 export async function inspectRepository(
@@ -38,6 +38,13 @@ export async function inspectRepository(
     planningEvidence = planning.present;
     evidence = planning.evidence;
     diagnostics.push(...skills.diagnostics, ...planning.diagnostics);
+  } else if (config.status === "missing") {
+    availableSkills = await inventoryBootstrapSkills({
+      ...(options.globalSkillDirectories
+        ? { globalSkillDirectories: options.globalSkillDirectories }
+        : {}),
+      ...(options.relevantSkills ? { relevantSkills: options.relevantSkills } : {}),
+    });
   }
 
   const setupEvidence =
