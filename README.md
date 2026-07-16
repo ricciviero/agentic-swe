@@ -30,6 +30,8 @@ node packages/cli/dist/bin.js verify .
 
 The package names are reserved in the workspace as `@agentic-swe/core`, `@agentic-swe/node`, `@agentic-swe/skills`, and `@agentic-swe/cli`. They are release-candidate artifacts until an explicitly authorized registry publication; do not assume npm availability before a release is announced.
 
+[Interference](https://github.com/ricciviero/interference) is the first reference host: it integrates the framework as an authoritative behavior runtime while retaining ownership of models, tools, permissions, sessions, and terminal UI. The framework remains a separate repository and can be adopted by other coding-agent hosts.
+
 ## Operating Model
 
 At session start, the protocol makes the workflow decision before implementation:
@@ -41,6 +43,23 @@ At session start, the protocol makes the workflow decision before implementation
 5. Validate the changed surface and report evidence before completion.
 
 `agents-setup` is the bootstrap and migration procedure. `iterations-planner` owns local task, plan, bug, and fix records. They are no longer the only place where the workflow decision lives.
+
+## Framework and Host Boundary
+
+Agentic SWE is the behavioral core, not a complete coding agent and not a system-prompt bundle. It owns the portable decisions that should remain stable across hosts:
+
+- task classification and mutation intent;
+- setup, planning, verification, and completion gates;
+- requested capabilities and deny-wins intersection semantics;
+- skill routing, structured events, evidence, resumable state, and conformance cases.
+
+A host owns execution and product experience:
+
+- model selection, tool implementations, permission prompts, and external side effects;
+- session storage, redaction, terminal or graphical UI, streaming, and interruption;
+- the final enforcement decision, which may restrict protocol requests but can never be elevated by them.
+
+The integration contract is a typed `BehaviorInput → BehaviorPlan` evaluation plus host-owned execution events. This makes behavior testable independently of a model prompt and lets multiple agent products implement the same protocol without sharing their UI or tool stack.
 
 ## Protocol v1
 
@@ -157,6 +176,10 @@ THIRD_PARTY_NOTICES.md  Licenses that apply to bundled third-party material
 Keep all new repository content in English. Do not commit credentials, private machine paths, customer information, or material that cannot be published under a compatible license. Validate changed Codex skills with the `skill-creator` validator before opening a change. See [`CONTRIBUTING.md`](CONTRIBUTING.md) and [`SECURITY.md`](SECURITY.md).
 
 A protocol behavior change must update `protocol.yaml`, affected schemas, at least one conformance case, the v1 specification, generated runtime assets, and any compatibility adapter whose visible semantics changed. Runtime changes must pass typecheck, unit/integration tests, all normative conformance cases, and Node/Bun package smoke tests.
+
+## Releasing
+
+Release preparation is automated and non-publishing; registry publication remains a manual maintainer action. See [`RELEASING.md`](RELEASING.md) for npm scope prerequisites, the verified package order, partial-release handling, and public consumer checks. Publishing Agentic SWE does not publish or release any host such as Interference.
 
 ## License
 
