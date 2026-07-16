@@ -1,0 +1,4 @@
+interface:
+  display_name: "Fedora Development"
+  short_description: "Provision a full Fedora coding stack"
+  default_prompt: "Use $fedora-development to provision a full Fedora coding environment for Codex."

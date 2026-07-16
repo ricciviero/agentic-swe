@@ -62,7 +62,7 @@ path/to/agentic-swe/scripts/verify-agentic-project.sh .
 
 ## Included Skills
 
-The public bundle currently contains 39 skills across frontend and mobile development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
+The public bundle currently contains 40 skills across frontend and mobile development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
 
 Personal or machine-specific skills are intentionally excluded from this public bundle, including `ericsson-reports`, `improve-aura`, `melix-llm-lab`, `obsidian-bases`, `telegram-deploy-notify`, and `vps-github-autodeploy`.
 
