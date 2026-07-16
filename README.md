@@ -41,6 +41,19 @@ Version `0.1.0` of `@agenticswe/core`, `@agenticswe/node`, `@agenticswe/skills`,
 
 [Interference](https://github.com/ricciviero/interference) is the first reference host: it integrates the framework as an authoritative behavior runtime while retaining ownership of models, tools, permissions, sessions, and terminal UI. The framework remains a separate repository and can be adopted by other coding-agent hosts.
 
+If you want to use Agentic SWE rather than integrate it into another host, install Interference:
+
+```bash
+bun install --global interference-agent@0.6.0
+interference
+```
+
+Interference installs `@agenticswe/core`, `@agenticswe/node`, and `@agenticswe/skills` as exact
+runtime dependencies and enables authoritative enforcement by default. End users do not install
+the framework packages separately, start a second process, or configure another account. The
+standalone `@agenticswe/cli` remains available for framework inspection, verification, and host
+integration work.
+
 ## Operating Model
 
 At session start, the protocol makes the workflow decision before implementation:
