@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:behavior-event",
+  "title": "Agentic SWE behavior event v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["protocolVersion", "id", "sessionId", "requestId", "sequence", "type", "source", "fromPhase", "toPhase"],
+  "properties": {
+    "protocolVersion": { "const": "1.0" },
+    "id": { "type": "string", "minLength": 1 },
+    "sessionId": { "type": "string", "minLength": 1 },
+    "requestId": { "type": "string", "minLength": 1 },
+    "sequence": { "type": "integer", "minimum": 1 },
+    "type": {
+      "type": "string",
+      "enum": [
+        "session.started",
+        "repository.discovered",
+        "classification.completed",
+        "setup.satisfied",
+        "planning.satisfied",
+        "planning.waived",
+        "implementation.finished",
+        "verification.satisfied",
+        "verification.failed",
+        "configuration.incompatible",
+        "user.refused",
+        "turn.aborted",
+        "external.blocked",
+        "learning.candidate-recorded"
+      ]
+    },
+    "source": { "type": "string", "enum": ["host", "model", "user"] },
+    "fromPhase": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+    "toPhase": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+    "reasonCode": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/reasonCode" },
+    "evidenceIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "occurredAt": { "type": "string", "format": "date-time" }
+  }
+}

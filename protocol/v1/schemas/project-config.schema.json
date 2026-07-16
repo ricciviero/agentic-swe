@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:project-config",
+  "title": "Agentic SWE project configuration v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["version", "agents", "project_skills_dir", "selected_skills", "workflow"],
+  "properties": {
+    "version": { "const": 1 },
+    "agents": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" }
+    },
+    "project_skills_dir": {
+      "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/relativePath"
+    },
+    "selected_skills": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "trigger"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "trigger": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "workflow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["planning_gate", "iteration_directory", "fix_directory", "local_workspaces_gitignored"],
+      "properties": {
+        "planning_gate": {
+          "type": "string",
+          "enum": ["non-trivial", "always", "disabled"]
+        },
+        "iteration_directory": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/relativePath" },
+        "fix_directory": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/relativePath" },
+        "local_workspaces_gitignored": { "type": "boolean" }
+      }
+    }
+  }
+}

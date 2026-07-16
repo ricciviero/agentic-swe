@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:behavior-state",
+  "title": "Agentic SWE behavior state v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "sessionId",
+    "requestId",
+    "phase",
+    "sequence",
+    "gates",
+    "selectedSkills",
+    "evidenceIds"
+  ],
+  "properties": {
+    "protocolVersion": { "const": "1.0" },
+    "sessionId": { "type": "string", "minLength": 1 },
+    "requestId": { "type": "string", "minLength": 1 },
+    "phase": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+    "sequence": { "type": "integer", "minimum": 0 },
+    "effectiveClassification": {
+      "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/effectiveClassification"
+    },
+    "gates": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/gateDecision" }
+    },
+    "selectedSkills": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/skillReference" }
+    },
+    "evidenceIds": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "lastEventId": { "type": "string", "minLength": 1 },
+    "blockedReason": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/reasonCode" }
+  }
+}

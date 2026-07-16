@@ -1,6 +1,6 @@
 # Agentic SWE Protocol
 
-This is global routing guidance for coding agents. Repository instructions in `AGENTS.md` define project-specific rules and may add stricter requirements.
+This is the prompt-compatible adapter for Agentic SWE Protocol v1. The normative machine-readable contract is `protocol/v1/protocol.yaml`; repository instructions in `AGENTS.md` define project-specific rules and may add stricter requirements.
 
 ## Session Start
 

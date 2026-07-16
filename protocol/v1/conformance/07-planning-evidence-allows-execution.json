@@ -1,0 +1,72 @@
+{
+  "name": "planning-evidence-allows-execution",
+  "protocolVersion": "1.0",
+  "input": {
+    "protocolVersion": "1.0",
+    "requestId": "planning-evidence-allows-execution",
+    "repository": {
+      "configured": true,
+      "configVersion": 1,
+      "protocolCompatibility": "compatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": true,
+      "planningEvidence": true,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "non-trivial",
+        "source": "model",
+        "reasons": ["The request is a migration with ordered deliverables."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "implementationFinished": false
+    },
+    "availableSkills": [
+      { "name": "iterations-planner", "source": "global", "selected": true, "relevant": true }
+    ],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute",
+      "subagents:invoke"
+    ],
+    "evidence": [
+      { "id": "plan-1", "kind": "planning", "valid": true }
+    ]
+  },
+  "expected": {
+    "protocolVersion": "1.0",
+    "requestId": "planning-evidence-allows-execution",
+    "phase": "execution",
+    "effectiveClassification": "non-trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+      { "id": "planning", "status": "satisfied", "reasonCode": "PLANNING_SATISFIED", "evidenceIds": ["plan-1"] },
+      { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute",
+      "subagents:invoke"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true, "evidenceIds": ["plan-1"] },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["CONFIGURATION_PRESENT", "TASK_NON_TRIVIAL", "PLANNING_SATISFIED"],
+    "diagnostics": []
+  }
+}

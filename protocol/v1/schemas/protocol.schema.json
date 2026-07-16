@@ -1,0 +1,320 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:protocol",
+  "title": "Agentic SWE Protocol definition v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "protocolVersion",
+    "configVersion",
+    "status",
+    "title",
+    "description",
+    "principles",
+    "capabilities",
+    "phases",
+    "classifications",
+    "gates",
+    "skillRouting",
+    "completionCriteria",
+    "events",
+    "transitions",
+    "policies",
+    "reasonCodes"
+  ],
+  "properties": {
+    "id": { "const": "agentic-swe" },
+    "protocolVersion": { "const": "1.0" },
+    "configVersion": { "const": 1 },
+    "status": { "const": "normative" },
+    "title": { "type": "string", "minLength": 1 },
+    "description": { "type": "string", "minLength": 1 },
+    "principles": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "statement"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "statement": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/capability" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "phases": {
+      "type": "array",
+      "minItems": 9,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "terminal", "requestedCapabilities"],
+        "properties": {
+          "id": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+          "terminal": { "type": "boolean" },
+          "requestedCapabilities": {
+            "type": "array",
+            "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/capability" },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "classifications": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["trivial", "non-trivial", "uncertain"],
+      "properties": {
+        "trivial": { "$ref": "#/$defs/classificationRule" },
+        "non-trivial": { "$ref": "#/$defs/classificationRule" },
+        "uncertain": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["effectiveClassification", "reasonCode"],
+          "properties": {
+            "effectiveClassification": { "const": "non-trivial" },
+            "reasonCode": { "const": "CLASSIFICATION_UNCERTAIN" }
+          }
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "requiredWhen", "waiver", "evidence"],
+        "properties": {
+          "id": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/gateId" },
+          "requiredWhen": { "$ref": "#/$defs/condition" },
+          "skill": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "waiver": {
+            "oneOf": [
+              { "const": "forbidden" },
+              {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["allowedWhen", "recordReason", "reportAtCompletion"],
+                "properties": {
+                  "allowedWhen": { "type": "string", "minLength": 1 },
+                  "recordReason": { "type": "boolean" },
+                  "reportAtCompletion": { "type": "boolean" }
+                }
+              }
+            ]
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "skillRouting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["globalSkills", "projectSkills", "loadBeforeSpecializedAction", "adaptersAreNotSources"],
+      "properties": {
+        "globalSkills": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["candidates", "selection"],
+          "properties": {
+            "candidates": { "const": "project-config.selected-skills" },
+            "selection": { "const": "smallest-relevant-set" }
+          }
+        },
+        "projectSkills": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["candidates", "createWhen"],
+          "properties": {
+            "candidates": { "const": "project-config.project-skills-dir" },
+            "createWhen": { "const": "durable-repeated-project-knowledge" }
+          }
+        },
+        "loadBeforeSpecializedAction": { "const": true },
+        "adaptersAreNotSources": { "const": true }
+      }
+    },
+    "completionCriteria": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "hard", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "hard": { "type": "boolean" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z]+(?:[.-][a-z]+)*$" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    },
+    "transitions": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["from", "event", "to", "guards"],
+        "properties": {
+          "from": {
+            "type": "array",
+            "minItems": 1,
+            "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+            "uniqueItems": true
+          },
+          "event": { "type": "string", "pattern": "^[a-z]+(?:[.-][a-z]+)*$" },
+          "to": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },
+          "guards": {
+            "type": "array",
+            "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+            "uniqueItems": true
+          }
+        }
+      }
+    },
+    "policies": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["configuration", "classification", "capabilities", "delivery", "learning"],
+      "properties": {
+        "configuration": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["incompatiblePhase", "incompatibleCapabilities", "neverFallbackToMutation"],
+          "properties": {
+            "incompatiblePhase": { "const": "blocked" },
+            "incompatibleCapabilities": {
+              "type": "array",
+              "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/capability" },
+              "uniqueItems": true
+            },
+            "neverFallbackToMutation": { "const": true }
+          }
+        },
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["uncertainFallback", "uncertainReportAssumption", "explicitHumanClassificationMayOverrideModel"],
+          "properties": {
+            "uncertainFallback": { "const": "non-trivial" },
+            "uncertainReportAssumption": { "const": true },
+            "explicitHumanClassificationMayOverrideModel": { "type": "boolean" }
+          }
+        },
+        "capabilities": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["resolution", "precedence", "protocolNeverElevatesHost"],
+          "properties": {
+            "resolution": { "const": "intersection" },
+            "precedence": {
+              "type": "array",
+              "minItems": 3,
+              "uniqueItems": true,
+              "items": { "type": "string", "enum": ["host-deny", "user-mode", "protocol-request"] }
+            },
+            "protocolNeverElevatesHost": { "const": true }
+          }
+        },
+        "delivery": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["hardCriteriaRequireEvidence", "completionWithMissingHardCriteria"],
+          "properties": {
+            "hardCriteriaRequireEvidence": { "const": true },
+            "completionWithMissingHardCriteria": { "const": false }
+          }
+        },
+        "learning": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["target", "requireRepeatedSignal", "excludeOneOffPreferences"],
+          "properties": {
+            "target": { "const": "AGENTS.md" },
+            "requireRepeatedSignal": { "const": true },
+            "excludeOneOffPreferences": { "const": true }
+          }
+        }
+      }
+    },
+    "reasonCodes": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "description"],
+        "properties": {
+          "id": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/reasonCode" },
+          "description": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  },
+  "$defs": {
+    "classificationRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["match", "criteria"],
+      "properties": {
+        "match": { "type": "string", "enum": ["all", "any"] },
+        "criteria": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "uniqueItems": true
+        }
+      }
+    },
+    "condition": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "all": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        },
+        "any": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "type": "string", "minLength": 1 }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "name": "unconfigured-trivial",
+  "protocolVersion": "1.0",
+  "input": {
+    "protocolVersion": "1.0",
+    "requestId": "unconfigured-trivial",
+    "repository": {
+      "configured": false,
+      "configVersion": null,
+      "protocolCompatibility": "unknown",
+      "instructionFiles": [],
+      "setupEvidence": false,
+      "planningEvidence": false,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "trivial",
+        "source": "human",
+        "reasons": ["Mechanical typo correction only."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "implementationFinished": false
+    },
+    "availableSkills": [],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute"
+    ],
+    "evidence": []
+  },
+  "expected": {
+    "protocolVersion": "1.0",
+    "requestId": "unconfigured-trivial",
+    "phase": "execution",
+    "effectiveClassification": "trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "not-applicable", "reasonCode": "UNCONFIGURED_TRIVIAL_ALLOWED" },
+      { "id": "planning", "status": "not-applicable", "reasonCode": "TASK_TRIVIAL" },
+      { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:mutate",
+      "commands:execute",
+      "subagents:invoke"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["UNCONFIGURED_TRIVIAL_ALLOWED", "TASK_TRIVIAL"],
+    "diagnostics": []
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "name": "unconfigured-non-trivial-setup",
+  "protocolVersion": "1.0",
+  "input": {
+    "protocolVersion": "1.0",
+    "requestId": "unconfigured-non-trivial-setup",
+    "repository": {
+      "configured": false,
+      "configVersion": null,
+      "protocolCompatibility": "unknown",
+      "instructionFiles": [],
+      "setupEvidence": false,
+      "planningEvidence": false,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "non-trivial",
+        "source": "model",
+        "reasons": ["The request changes behavior across multiple layers."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "implementationFinished": false
+    },
+    "availableSkills": [
+      { "name": "agents-setup", "source": "global", "selected": true, "relevant": true },
+      { "name": "iterations-planner", "source": "global", "selected": true, "relevant": true }
+    ],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:setup-write",
+      "workspace:plan-write",
+      "workspace:mutate"
+    ],
+    "evidence": []
+  },
+  "expected": {
+    "protocolVersion": "1.0",
+    "requestId": "unconfigured-non-trivial-setup",
+    "phase": "setup",
+    "effectiveClassification": "non-trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "required", "reasonCode": "SETUP_REQUIRED" },
+      { "id": "planning", "status": "pending", "reasonCode": "PLANNING_REQUIRED" },
+      { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [
+      { "name": "agents-setup", "required": true, "reasonCode": "SETUP_REQUIRED" }
+    ],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "workspace:setup-write"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "pending", "hard": true },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["TASK_NON_TRIVIAL", "SETUP_REQUIRED", "PLANNING_REQUIRED"],
+    "diagnostics": []
+  }
+}

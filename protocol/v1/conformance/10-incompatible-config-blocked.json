@@ -1,0 +1,61 @@
+{
+  "name": "incompatible-config-blocked",
+  "protocolVersion": "1.0",
+  "input": {
+    "protocolVersion": "1.0",
+    "requestId": "incompatible-config-blocked",
+    "repository": {
+      "configured": true,
+      "configVersion": 2,
+      "protocolCompatibility": "incompatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": false,
+      "planningEvidence": false,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "trivial",
+        "source": "heuristic",
+        "reasons": ["The requested edit is mechanical."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "implementationFinished": false
+    },
+    "availableSkills": [],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "workspace:mutate",
+      "commands:execute"
+    ],
+    "evidence": []
+  },
+  "expected": {
+    "protocolVersion": "1.0",
+    "requestId": "incompatible-config-blocked",
+    "phase": "blocked",
+    "effectiveClassification": "trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "blocked", "reasonCode": "PROTOCOL_VERSION_INCOMPATIBLE" },
+      { "id": "planning", "status": "blocked", "reasonCode": "PROTOCOL_VERSION_INCOMPATIBLE" },
+      { "id": "verification", "status": "blocked", "reasonCode": "PROTOCOL_VERSION_INCOMPATIBLE" }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": ["repository:read", "instructions:read"],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "pending", "hard": true },
+      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "pending", "hard": false },
+      { "id": "assumptions-reported", "status": "pending", "hard": false },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["PROTOCOL_VERSION_INCOMPATIBLE"],
+    "diagnostics": [
+      { "code": "PROTOCOL_VERSION_INCOMPATIBLE", "severity": "error" }
+    ]
+  }
+}

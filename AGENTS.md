@@ -4,7 +4,7 @@ This file is the canonical instruction set for contributors and coding agents wo
 
 ## Purpose
 
-Maintain a public, reusable, agent-agnostic skill collection. The canonical source of every published skill is `skills/<skill-name>/`.
+Maintain a public, reusable, agent-agnostic behavior framework for software-engineering agents. The normative behavior contract lives in `protocol/v1/`; the canonical source of every published skill remains `skills/<skill-name>/`.
 
 ## Repository rules
 
@@ -14,6 +14,24 @@ Maintain a public, reusable, agent-agnostic skill collection. The canonical sour
 - Do not add credentials, private paths, customer data, or unlicensed material.
 - Preserve licenses and notices for third-party skills, assets, fonts, and code.
 - Do not edit an installed `.codex/skills` or `.claude/skills` copy as the source of truth; edit this repository and use links or adapters.
+- Keep model/provider APIs, concrete tool implementations, host permissions, persistence, and UI concerns outside the protocol contract.
+
+## Protocol changes
+
+- Treat `protocol/v1/protocol.yaml` as the canonical behavior definition and `protocol/v1/README.md` as its normative explanation.
+- Keep serialized contracts under `protocol/v1/schemas/` and normative examples under `protocol/v1/conformance/`.
+- A behavior change must update the protocol definition, affected schema, at least one conformance case, the specification, and any compatibility adapter whose visible semantics changed.
+- Keep `protocolVersion`, project config `version`, and future package semver independent and document their compatibility.
+- The protocol may request abstract capabilities; it must never grant permissions or encode a provider, concrete tool registry, or agent UI.
+- Regenerate embedded runtime assets with `npm run protocol:generate`; `npm run protocol:check` must reject drift from `protocol/v1/`.
+
+## Runtime changes
+
+- Keep `@agentic-swe/core` deterministic and free of filesystem, network, shell, provider, Node, and Bun runtime dependencies.
+- Keep repository discovery, YAML parsing, path containment, skill inventory, and planning-evidence inspection in `@agentic-swe/node`; its inspect/evaluate paths must remain read-only.
+- A model-facing classifier or skill router is an untrusted port. Validate its output before evaluation and never derive effective permissions from model output.
+- Export supported APIs from each package root. Do not require consumers to deep-import internal files.
+- Run `npm run typecheck`, `npm test`, and `npm run pack:check` after runtime or packaging changes.
 
 ## Agent compatibility
 
@@ -40,5 +58,5 @@ Maintain a public, reusable, agent-agnostic skill collection. The canonical sour
 - Keep one skill focused on one durable capability.
 - Propose a project-specific skill only for repeated, project-specific knowledge not already covered by a global skill.
 - Keep root documentation accurate when installation, compatibility, licensing, or the public skill inventory changes.
-- Keep `core/agentic-protocol.md`, its templates, the bootstrap skill, and the planning skill aligned. Do not make an adapter a second behavioral source of truth.
+- Keep `protocol/v1/`, `core/agentic-protocol.md`, its templates, the bootstrap skill, and the planning skill aligned. Do not make an adapter a second behavioral source of truth.
 - Global installers must preserve unowned user configuration and expose a dry-run mode.

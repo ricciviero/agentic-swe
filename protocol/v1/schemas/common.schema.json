@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:common",
+  "title": "Agentic SWE v1 common definitions",
+  "$defs": {
+    "phase": {
+      "type": "string",
+      "enum": [
+        "discovery",
+        "classification",
+        "setup",
+        "planning",
+        "execution",
+        "verification",
+        "completion",
+        "blocked",
+        "aborted"
+      ]
+    },
+    "classification": {
+      "type": "string",
+      "enum": ["trivial", "non-trivial", "uncertain"]
+    },
+    "effectiveClassification": {
+      "type": "string",
+      "enum": ["trivial", "non-trivial"]
+    },
+    "capability": {
+      "type": "string",
+      "enum": [
+        "repository:read",
+        "instructions:read",
+        "skills:read",
+        "workspace:setup-write",
+        "workspace:plan-write",
+        "workspace:mutate",
+        "commands:execute",
+        "subagents:invoke",
+        "external:mutate"
+      ]
+    },
+    "gateId": {
+      "type": "string",
+      "enum": ["setup", "planning", "verification"]
+    },
+    "gateStatus": {
+      "type": "string",
+      "enum": ["pending", "required", "satisfied", "waived", "not-applicable", "blocked"]
+    },
+    "completionStatus": {
+      "type": "string",
+      "enum": ["pending", "satisfied", "waived", "not-applicable"]
+    },
+    "reasonCode": {
+      "type": "string",
+      "enum": [
+        "CONFIGURATION_PRESENT",
+        "UNCONFIGURED_TRIVIAL_ALLOWED",
+        "SETUP_REQUIRED",
+        "TASK_TRIVIAL",
+        "TASK_NON_TRIVIAL",
+        "CLASSIFICATION_UNCERTAIN",
+        "PLANNING_REQUIRED",
+        "PLANNING_SATISFIED",
+        "PLANNING_WAIVED_BY_USER",
+        "VALIDATION_REQUIRED",
+        "COMPLETION_CRITERIA_SATISFIED",
+        "PROTOCOL_VERSION_INCOMPATIBLE",
+        "REPEATED_CORRECTION"
+      ]
+    },
+    "diagnostic": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["code", "severity"],
+      "properties": {
+        "code": { "$ref": "#/$defs/reasonCode" },
+        "severity": { "type": "string", "enum": ["info", "warning", "error"] },
+        "message": { "type": "string", "minLength": 1 }
+      }
+    },
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$"
+    },
+    "skillReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "required", "reasonCode"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+        "required": { "type": "boolean" },
+        "reasonCode": { "$ref": "#/$defs/reasonCode" }
+      }
+    },
+    "gateDecision": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "reasonCode"],
+      "properties": {
+        "id": { "$ref": "#/$defs/gateId" },
+        "status": { "$ref": "#/$defs/gateStatus" },
+        "reasonCode": { "$ref": "#/$defs/reasonCode" },
+        "evidenceIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    },
+    "completionCriterion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "hard"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "gates-satisfied",
+            "implementation-accounted-for",
+            "validation-evidence",
+            "documentation-aligned",
+            "assumptions-reported",
+            "learning-reviewed"
+          ]
+        },
+        "status": { "$ref": "#/$defs/completionStatus" },
+        "hard": { "type": "boolean" },
+        "evidenceIds": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

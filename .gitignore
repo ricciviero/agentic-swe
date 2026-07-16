@@ -1,3 +1,7 @@
 .DS_Store
 /iterazioni
 /fix
+/node_modules
+/packages/*/dist
+/*.tgz
+*.tsbuildinfo

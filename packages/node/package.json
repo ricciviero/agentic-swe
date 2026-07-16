@@ -1,0 +1,25 @@
+{
+  "name": "@agentic-swe/node",
+  "version": "0.1.0",
+  "description": "Read-only Node.js repository adapter for Agentic SWE Protocol v1",
+  "type": "module",
+  "license": "MIT",
+  "publishConfig": { "access": "public" },
+  "sideEffects": false,
+  "engines": { "node": ">=20.18" },
+  "files": ["dist", "README.md", "LICENSE"],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "types": "./dist/index.d.ts",
+  "dependencies": {
+    "@agentic-swe/core": "0.1.0",
+    "ajv": "^8.17.0",
+    "ajv-formats": "^3.0.0",
+    "yaml": "^2.8.0"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "name": "agentic-swe",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "workspaces": ["packages/*"],
+  "scripts": {
+    "protocol:generate": "tsx scripts/generate-protocol-assets.ts",
+    "protocol:check": "tsx scripts/generate-protocol-assets.ts --check",
+    "build": "npm run protocol:check && tsc -b",
+    "typecheck": "npm run build && tsc -p tsconfig.tests.json --noEmit",
+    "test": "npm run build && node --import tsx --test packages/core/test/*.test.ts packages/node/test/*.test.ts && node --import tsx scripts/run-conformance.ts",
+    "test:conformance": "npm run build && node --import tsx scripts/run-conformance.ts",
+    "pack:check": "npm run build && node --import tsx scripts/package-smoke.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsx": "^4.20.0",
+    "typescript": "^5.9.0",
+    "yaml": "^2.8.0"
+  },
+  "engines": {
+    "node": ">=20.18"
+  }
+}

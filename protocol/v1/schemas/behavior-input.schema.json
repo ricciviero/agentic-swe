@@ -1,0 +1,137 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agentic-swe:protocol:v1:schema:behavior-input",
+  "title": "Agentic SWE behavior evaluation input v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "requestId",
+    "repository",
+    "request",
+    "availableSkills",
+    "hostCapabilities",
+    "evidence"
+  ],
+  "properties": {
+    "protocolVersion": { "const": "1.0" },
+    "requestId": { "type": "string", "minLength": 1 },
+    "repository": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "configured",
+        "configVersion",
+        "protocolCompatibility",
+        "instructionFiles",
+        "setupEvidence",
+        "planningEvidence",
+        "planningGate"
+      ],
+      "properties": {
+        "configured": { "type": "boolean" },
+        "configVersion": { "type": ["integer", "null"], "minimum": 1 },
+        "protocolCompatibility": {
+          "type": "string",
+          "enum": ["compatible", "incompatible", "unknown"]
+        },
+        "instructionFiles": {
+          "type": "array",
+          "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/relativePath" },
+          "uniqueItems": true
+        },
+        "setupEvidence": { "type": "boolean" },
+        "planningEvidence": { "type": "boolean" },
+        "planningGate": {
+          "type": "string",
+          "enum": ["non-trivial", "always", "disabled"]
+        }
+      }
+    },
+    "request": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "explicitOnboarding", "explicitLighterProcess", "implementationFinished"],
+      "properties": {
+        "summary": { "type": "string", "minLength": 1 },
+        "classification": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["value", "source", "reasons"],
+          "properties": {
+            "value": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/classification" },
+            "source": { "type": "string", "enum": ["model", "heuristic", "human"] },
+            "reasons": {
+              "type": "array",
+              "items": { "type": "string", "minLength": 1 }
+            }
+          }
+        },
+        "explicitOnboarding": { "type": "boolean" },
+        "explicitLighterProcess": { "type": "boolean" },
+        "lighterProcessReason": { "type": "string", "minLength": 1 },
+        "implementationFinished": { "type": "boolean" }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "explicitLighterProcess": { "const": true } } },
+          "then": { "required": ["lighterProcessReason"] }
+        }
+      ]
+    },
+    "availableSkills": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "source", "selected", "relevant"],
+        "properties": {
+          "name": { "type": "string", "pattern": "^[a-z0-9]+(?:-[a-z0-9]+)*$" },
+          "source": { "type": "string", "enum": ["global", "project"] },
+          "selected": { "type": "boolean" },
+          "relevant": { "type": "boolean" }
+        }
+      }
+    },
+    "hostCapabilities": {
+      "type": "array",
+      "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/capability" },
+      "uniqueItems": true
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["id", "kind", "valid"],
+        "properties": {
+          "id": { "type": "string", "minLength": 1 },
+          "kind": {
+            "type": "string",
+            "enum": ["setup", "planning", "implementation", "validation", "documentation", "assumption", "learning"]
+          },
+          "valid": { "type": "boolean" },
+          "reasonCode": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/reasonCode" }
+        }
+      }
+    },
+    "state": { "$ref": "urn:agentic-swe:protocol:v1:schema:behavior-state" },
+    "learningSignals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["reasonCode", "evidenceIds"],
+        "properties": {
+          "reasonCode": { "const": "REPEATED_CORRECTION" },
+          "evidenceIds": {
+            "type": "array",
+            "minItems": 2,
+            "items": { "type": "string", "minLength": 1 },
+            "uniqueItems": true
+          }
+        }
+      }
+    }
+  }
+}

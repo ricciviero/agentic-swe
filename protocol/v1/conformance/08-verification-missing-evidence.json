@@ -1,0 +1,82 @@
+{
+  "name": "verification-missing-evidence",
+  "protocolVersion": "1.0",
+  "input": {
+    "protocolVersion": "1.0",
+    "requestId": "verification-missing-evidence",
+    "repository": {
+      "configured": true,
+      "configVersion": 1,
+      "protocolCompatibility": "compatible",
+      "instructionFiles": ["AGENTS.md"],
+      "setupEvidence": true,
+      "planningEvidence": true,
+      "planningGate": "non-trivial"
+    },
+    "request": {
+      "classification": {
+        "value": "non-trivial",
+        "source": "model",
+        "reasons": ["The implementation changed behavior across layers."]
+      },
+      "explicitOnboarding": false,
+      "explicitLighterProcess": false,
+      "implementationFinished": true
+    },
+    "availableSkills": [],
+    "hostCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "commands:execute"
+    ],
+    "evidence": [
+      { "id": "plan-1", "kind": "planning", "valid": true },
+      { "id": "implementation-1", "kind": "implementation", "valid": true },
+      { "id": "assumption-1", "kind": "assumption", "valid": true }
+    ],
+    "state": {
+      "protocolVersion": "1.0",
+      "sessionId": "session-1",
+      "requestId": "verification-missing-evidence",
+      "phase": "verification",
+      "sequence": 5,
+      "effectiveClassification": "non-trivial",
+      "gates": [
+        { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+        { "id": "planning", "status": "satisfied", "reasonCode": "PLANNING_SATISFIED", "evidenceIds": ["plan-1"] }
+      ],
+      "selectedSkills": [],
+      "evidenceIds": ["plan-1", "implementation-1", "assumption-1"]
+    }
+  },
+  "expected": {
+    "protocolVersion": "1.0",
+    "requestId": "verification-missing-evidence",
+    "phase": "verification",
+    "effectiveClassification": "non-trivial",
+    "requiredGates": [
+      { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
+      { "id": "planning", "status": "satisfied", "reasonCode": "PLANNING_SATISFIED", "evidenceIds": ["plan-1"] },
+      { "id": "verification", "status": "required", "reasonCode": "VALIDATION_REQUIRED" }
+    ],
+    "selectedSkills": [],
+    "requestedCapabilities": [
+      "repository:read",
+      "instructions:read",
+      "skills:read",
+      "commands:execute"
+    ],
+    "completionCriteria": [
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true, "evidenceIds": ["plan-1"] },
+      { "id": "implementation-accounted-for", "status": "satisfied", "hard": true, "evidenceIds": ["implementation-1"] },
+      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "documentation-aligned", "status": "not-applicable", "hard": false },
+      { "id": "assumptions-reported", "status": "satisfied", "hard": false, "evidenceIds": ["assumption-1"] },
+      { "id": "learning-reviewed", "status": "pending", "hard": false }
+    ],
+    "canComplete": false,
+    "reasons": ["TASK_NON_TRIVIAL", "PLANNING_SATISFIED", "VALIDATION_REQUIRED"],
+    "diagnostics": []
+  }
+}
