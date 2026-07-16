@@ -23,6 +23,10 @@ Use `skill-creator` for a new or materially revised Codex skill. Keep `SKILL.md`
 ## Pull requests
 
 - Branch from the current `main`; do not push directly to the protected branch.
+- Protection applies to administrators too. Force-pushes and deletion of `main` are disabled.
+- The strict `test` status check must be current with `main`, and all review conversations must be resolved before merge.
+- No approving review is required while the repository has one maintainer; the pull request and CI requirements still apply.
+- Automatic deletion of merged branches is intentionally disabled.
 - Use a Conventional Commit message for each logical change.
 - Explain behavior or compatibility changes and include validation evidence.
 - Keep generated assets, package metadata, documentation, and the compatibility matrix aligned.
