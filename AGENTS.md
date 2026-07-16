@@ -39,6 +39,13 @@ Maintain a public, reusable, agent-agnostic behavior framework for software-engi
 - Support Codex and Claude Code through the same canonical skill directory whenever their discovery behavior allows it.
 - Add an agent-specific adapter only when it is necessary for discovery or configuration. Keep adapters generated or minimal, never a divergent second copy of a skill.
 
+## GitHub governance
+
+- Treat `main` as protected for every contributor and administrator: never push directly, force-push, or delete it.
+- Merge changes only through a pull request whose strict `test` status check is current with `main` and whose review conversations are resolved.
+- No approving review is required while the repository has a single maintainer; this does not waive the pull request or status-check requirements.
+- Keep GitHub's automatic deletion of merged branches disabled unless the maintainer explicitly changes that policy.
+
 ## Agentic Workflow
 
 - Read `.agentic/config.yaml` before selecting skills or creating local workflow records.
