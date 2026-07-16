@@ -63,9 +63,11 @@ npm install
 npm run typecheck
 npm test
 npm run pack:check
+npm run release:check
 ```
 
 The last command creates local tarballs in a temporary directory, installs all four packages into isolated Node and Bun consumers, runs the public APIs and CLI, inspects package contents, and deletes the temporary artifacts.
+`release:check` performs an npm publish dry-run for every public workspace, rejects manifest auto-corrections or warnings, and never creates a registry release.
 
 ## CLI
 

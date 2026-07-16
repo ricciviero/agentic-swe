@@ -2,13 +2,22 @@
   "name": "@agentic-swe/cli",
   "version": "0.1.0",
   "description": "Command-line interface for Agentic SWE Protocol v1",
+  "keywords": ["agentic", "software-engineering", "coding-agent", "cli"],
+  "author": "Riccardo Civiero",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ricciviero/agentic-swe.git",
+    "directory": "packages/cli"
+  },
+  "homepage": "https://github.com/ricciviero/agentic-swe#readme",
+  "bugs": { "url": "https://github.com/ricciviero/agentic-swe/issues" },
   "type": "module",
   "license": "MIT",
-  "publishConfig": { "access": "public" },
+  "publishConfig": { "access": "public", "registry": "https://registry.npmjs.org/" },
   "sideEffects": false,
   "engines": { "node": ">=20.18" },
   "files": ["dist", "README.md", "LICENSE"],
-  "bin": { "agentic-swe": "./dist/bin.js" },
+  "bin": { "agentic-swe": "dist/bin.js" },
   "exports": {
     ".": {
       "types": "./dist/index.d.ts",

@@ -14,5 +14,6 @@ All notable changes to Agentic SWE are documented here. Package SemVer and proto
 - Node/Bun tarball smoke tests and public continuous integration.
 - Host execution-event, evidence-claim, and completion-evaluation APIs in `@agentic-swe/core`.
 - Protocol 1.1 read-only request intent, preventing complex informational work from opening setup/planning gates or mutation capabilities.
+- Complete npm metadata for every public workspace package, including monorepo source links and issue tracking.
 
 No registry package, release tag, or GitHub release is implied by the Unreleased section.
