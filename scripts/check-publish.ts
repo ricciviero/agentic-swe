@@ -64,6 +64,29 @@ for (const directory of PACKAGE_NAMES) {
     assert.equal(manifest.bin?.["agentic-swe"], "dist/bin.js", `${manifestPath}: CLI bin`);
   }
 
+  const packRun = spawnSync(
+    "npm",
+    ["pack", "--dry-run", "--json", `./packages/${directory}`],
+    { encoding: "utf8" },
+  );
+  assert.equal(
+    packRun.status,
+    0,
+    `npm pack dry-run failed for ${expectedName}:\n${packRun.stdout}${packRun.stderr}`,
+  );
+  assert.deepEqual(
+    unexpectedPublishWarnings(packRun.stderr),
+    [],
+    `npm pack emitted an unexpected warning about ${expectedName}:\n${packRun.stderr}`,
+  );
+  const entry = publishedEntry(JSON.parse(packRun.stdout), expectedName);
+  assert.equal(entry?.name, expectedName, `${expectedName}: dry-run name`);
+  assert.equal(entry?.version, EXPECTED_VERSION, `${expectedName}: dry-run version`);
+  assert(
+    entry?.files?.some((file) => file.path === "package.json"),
+    `${expectedName}: dry-run package manifest missing`,
+  );
+
   const dryRun = spawnSync(
     "npm",
     ["publish", "--dry-run", "--json", `./packages/${directory}`],
@@ -78,13 +101,6 @@ for (const directory of PACKAGE_NAMES) {
     unexpectedPublishWarnings(dryRun.stderr),
     [],
     `npm auto-corrected or emitted an unexpected warning about ${expectedName}:\n${dryRun.stderr}`,
-  );
-  const entry = publishedEntry(JSON.parse(dryRun.stdout), expectedName);
-  assert.equal(entry?.name, expectedName, `${expectedName}: dry-run name`);
-  assert.equal(entry?.version, EXPECTED_VERSION, `${expectedName}: dry-run version`);
-  assert(
-    entry?.files?.some((file) => file.path === "package.json"),
-    `${expectedName}: dry-run package manifest missing`,
   );
   console.log(`${expectedName}@${EXPECTED_VERSION}: publish dry-run passed.`);
 }

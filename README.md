@@ -67,7 +67,7 @@ npm run release:check
 ```
 
 The last command creates local tarballs in a temporary directory, installs all four packages into isolated Node and Bun consumers, runs the public APIs and CLI, inspects package contents, and deletes the temporary artifacts.
-`release:check` performs an npm publish dry-run for every public workspace, rejects manifest auto-corrections and unexpected npm warnings, and never creates a registry release. The single authentication warning emitted by an unauthenticated registry dry-run is expected in ordinary CI and does not hide other warnings.
+`release:check` inspects each public workspace through a deterministic npm pack dry-run, then exercises its publish dry-run, rejects manifest auto-corrections and unexpected npm warnings, and never creates a registry release. The single authentication warning emitted by an unauthenticated registry dry-run is expected in ordinary CI and does not hide other warnings.
 
 ## CLI
 
