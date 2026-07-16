@@ -16,7 +16,7 @@
     "generate:check": "npm run protocol:check && npm run adapters:check && npm run skills:check",
     "build": "npm run generate:check && tsc -b && npm run skills:assets",
     "typecheck": "npm run build && tsc -p tsconfig.tests.json --noEmit",
-    "test": "npm run build && node --import tsx --test packages/*/test/*.test.ts && node --import tsx scripts/run-conformance.ts",
+    "test": "npm run build && node --import tsx --test packages/*/test/*.test.ts scripts/*.test.ts && node --import tsx scripts/run-conformance.ts",
     "test:conformance": "npm run build && node --import tsx scripts/run-conformance.ts",
     "pack:check": "npm run build && node --import tsx scripts/package-smoke.ts",
     "release:check": "npm run build && node --import tsx scripts/check-publish.ts"

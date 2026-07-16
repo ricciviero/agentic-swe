@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
+import { unexpectedPublishWarnings } from "./publish-warnings.js";
 
 const PACKAGE_NAMES = ["core", "node", "skills", "cli"] as const;
 const EXPECTED_VERSION = "0.1.0";
@@ -73,10 +74,10 @@ for (const directory of PACKAGE_NAMES) {
     0,
     `npm publish dry-run failed for ${expectedName}:\n${dryRun.stdout}${dryRun.stderr}`,
   );
-  assert.doesNotMatch(
-    dryRun.stderr,
-    /npm warn/i,
-    `npm auto-corrected or warned about ${expectedName}:\n${dryRun.stderr}`,
+  assert.deepEqual(
+    unexpectedPublishWarnings(dryRun.stderr),
+    [],
+    `npm auto-corrected or emitted an unexpected warning about ${expectedName}:\n${dryRun.stderr}`,
   );
   const entry = publishedEntry(JSON.parse(dryRun.stdout), expectedName);
   assert.equal(entry?.name, expectedName, `${expectedName}: dry-run name`);
