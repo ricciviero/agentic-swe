@@ -1,9 +1,9 @@
-# `@agentic-swe/node`
+# `@agenticswe/node`
 
 Node.js adapter for Agentic SWE Protocol v1. Its repository inspection, verification, and evaluation APIs are read-only. Separate explicit APIs render generated adapters and install or uninstall only owned global instruction surfaces.
 
 ```ts
-import { createNodeRuntime } from "@agentic-swe/node";
+import { createNodeRuntime } from "@agenticswe/node";
 
 const runtime = createNodeRuntime({
   startPath: process.cwd(),

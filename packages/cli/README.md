@@ -1,4 +1,4 @@
-# `@agentic-swe/cli`
+# `@agenticswe/cli`
 
 Cross-platform command-line interface for Agentic SWE Protocol v1. It inspects and verifies repositories, evaluates typed requests, renders generated adapters, and installs or removes only owned global instruction surfaces.
 

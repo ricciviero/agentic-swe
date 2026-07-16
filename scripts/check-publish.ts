@@ -35,7 +35,7 @@ function publishedEntry(value: unknown, packageName: string): PublishResult | un
 for (const directory of PACKAGE_NAMES) {
   const manifestPath = `packages/${directory}/package.json`;
   const manifest = JSON.parse(await readFile(manifestPath, "utf8")) as PackageManifest;
-  const expectedName = `@agentic-swe/${directory}`;
+  const expectedName = `@agenticswe/${directory}`;
 
   assert.equal(manifest.name, expectedName, `${manifestPath}: package name`);
   assert.equal(manifest.version, EXPECTED_VERSION, `${manifestPath}: aligned version`);

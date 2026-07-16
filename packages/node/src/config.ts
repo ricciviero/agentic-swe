@@ -2,7 +2,7 @@ import { access, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { Ajv2020, type ErrorObject, type ValidateFunction } from "ajv/dist/2020.js";
 import addFormatsModule, { type FormatsPlugin } from "ajv-formats";
-import { CONFIG_VERSION, protocolSchemasV1, type ProjectConfig } from "@agentic-swe/core";
+import { CONFIG_VERSION, protocolSchemasV1, type ProjectConfig } from "@agenticswe/core";
 import { parse } from "yaml";
 import { assertRealPathWithinRepository } from "./paths.js";
 import type { NodeDiagnostic, ProjectConfigResult } from "./types.js";

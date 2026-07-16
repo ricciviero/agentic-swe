@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
-import { PROTOCOL_VERSION } from "@agentic-swe/core";
+import { PROTOCOL_VERSION } from "@agenticswe/core";
 import {
   ADAPTER_KINDS,
   createNodeRuntime,
@@ -21,13 +21,13 @@ import {
   type SkillLinkTarget,
   type NodeEvaluationRequest,
   type NodeDiagnostic,
-} from "@agentic-swe/node";
+} from "@agenticswe/node";
 import {
   SKILLS_PACKAGE_VERSION,
   listSkills,
   skillAssetRoot,
   verifySkillIntegrity,
-} from "@agentic-swe/skills";
+} from "@agenticswe/skills";
 
 export const CLI_VERSION = "0.1.0" as const;
 export const EXIT_CODES = {

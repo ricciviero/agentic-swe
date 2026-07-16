@@ -21,7 +21,7 @@ import {
   unlinkSkillDirectories,
   validateProjectConfigData,
   verifyProject,
-} from "@agentic-swe/node";
+} from "@agenticswe/node";
 
 const temporaryDirectories: string[] = [];
 

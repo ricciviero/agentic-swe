@@ -1,6 +1,6 @@
 import { access, stat } from "node:fs/promises";
 import { isAbsolute, relative, resolve, sep } from "node:path";
-import type { Evidence, ProjectConfig } from "@agentic-swe/core";
+import type { Evidence, ProjectConfig } from "@agenticswe/core";
 import {
   assertRealPathWithinRepository,
   normalizeRelativePath,

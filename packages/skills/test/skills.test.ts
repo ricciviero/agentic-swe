@@ -6,7 +6,7 @@ import {
   loadSkill,
   readSkillFile,
   verifySkillIntegrity,
-} from "@agentic-swe/skills";
+} from "@agenticswe/skills";
 
 test("published skill manifest is complete, ordered, and unique", () => {
   const skills = listSkills();

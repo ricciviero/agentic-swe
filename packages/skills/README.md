@@ -1,9 +1,9 @@
-# `@agentic-swe/skills`
+# `@agenticswe/skills`
 
 Versioned, read-only distribution of the public skills maintained in the Agentic SWE repository. The canonical source remains the root `skills/` directory; package assets and the integrity manifest are generated from it.
 
 ```ts
-import { listSkills, loadSkill, verifySkillIntegrity } from "@agentic-swe/skills";
+import { listSkills, loadSkill, verifySkillIntegrity } from "@agenticswe/skills";
 
 const metadata = listSkills();
 const planner = await loadSkill("iterations-planner");

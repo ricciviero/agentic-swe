@@ -16,7 +16,7 @@ import {
   inspectRepository,
   readProjectConfig,
   validateProjectConfigData,
-} from "@agentic-swe/node";
+} from "@agenticswe/node";
 
 const temporaryDirectories: string[] = [];
 

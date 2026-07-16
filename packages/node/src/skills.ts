@@ -1,6 +1,6 @@
 import { access, readdir } from "node:fs/promises";
 import { join } from "node:path";
-import type { AvailableSkill, ProjectConfig } from "@agentic-swe/core";
+import type { AvailableSkill, ProjectConfig } from "@agenticswe/core";
 import { assertRealPathWithinRepository, resolveWithinRepository } from "./paths.js";
 import type { NodeDiagnostic } from "./types.js";
 

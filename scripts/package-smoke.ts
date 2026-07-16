@@ -60,10 +60,10 @@ async function assertNoPrivatePaths(root: string): Promise<void> {
 }
 
 const smokeSource = `
-import { evaluateBehavior, PROTOCOL_VERSION } from "@agentic-swe/core";
-import { validateProjectConfigData } from "@agentic-swe/node";
-import { runCli } from "@agentic-swe/cli";
-import { loadSkill, verifySkillIntegrity } from "@agentic-swe/skills";
+import { evaluateBehavior, PROTOCOL_VERSION } from "@agenticswe/core";
+import { validateProjectConfigData } from "@agenticswe/node";
+import { runCli } from "@agenticswe/cli";
+import { loadSkill, verifySkillIntegrity } from "@agenticswe/skills";
 
 const plan = evaluateBehavior({
   protocolVersion: PROTOCOL_VERSION,
@@ -134,10 +134,10 @@ try {
     const consumer = join(temporaryRoot, `${runtime}-consumer`);
     await mkdir(consumer);
     const dependencies = {
-      "@agentic-swe/core": `file:${coreTarball}`,
-      "@agentic-swe/node": `file:${nodeTarball}`,
-      "@agentic-swe/skills": `file:${skillsTarball}`,
-      "@agentic-swe/cli": `file:${cliTarball}`,
+      "@agenticswe/core": `file:${coreTarball}`,
+      "@agenticswe/node": `file:${nodeTarball}`,
+      "@agenticswe/skills": `file:${skillsTarball}`,
+      "@agenticswe/cli": `file:${cliTarball}`,
     };
     const manifest = {
       name: `${runtime}-consumer`,
@@ -155,15 +155,15 @@ try {
       run("npm", ["install", "--ignore-scripts"], consumer);
       const output = run("node", ["smoke.mjs"], consumer);
       assert.match(output, /consumer smoke: ok/);
-      assert.equal(run("node", ["node_modules/@agentic-swe/cli/dist/bin.js", "--version"], consumer).trim(), "0.1.0");
+      assert.equal(run("node", ["node_modules/@agenticswe/cli/dist/bin.js", "--version"], consumer).trim(), "0.1.0");
     } else {
       run("bun", ["install"], consumer);
       const output = run("bun", ["run", "smoke.mjs"], consumer);
       assert.match(output, /consumer smoke: ok/);
-      assert.equal(run("bun", ["run", "node_modules/@agentic-swe/cli/dist/bin.js", "--version"], consumer).trim(), "0.1.0");
+      assert.equal(run("bun", ["run", "node_modules/@agenticswe/cli/dist/bin.js", "--version"], consumer).trim(), "0.1.0");
     }
     assert.equal(run(join(consumer, "node_modules", ".bin", "agentic-swe"), ["--version"], consumer).trim(), "0.1.0");
-    await assertNoPrivatePaths(join(consumer, "node_modules", "@agentic-swe"));
+    await assertNoPrivatePaths(join(consumer, "node_modules", "@agenticswe"));
   }
   console.log(
     `Package smoke: Node and Bun consumers passed (${[coreTarball, nodeTarball, skillsTarball, cliTarball].map((path) => basename(path)).join(", ")}).`,

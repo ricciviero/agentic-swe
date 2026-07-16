@@ -6,7 +6,7 @@ import {
   evaluateBehavior,
   type BehaviorInput,
   type BehaviorPlan,
-} from "@agentic-swe/core";
+} from "@agenticswe/core";
 
 interface ConformanceCase {
   name: string;

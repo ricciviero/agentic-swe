@@ -24,7 +24,7 @@ import {
   type BehaviorPlan,
   type BehaviorState,
   type HostExecutionEvent,
-} from "@agentic-swe/core";
+} from "@agenticswe/core";
 
 function hostEvent(
   sequence: number,

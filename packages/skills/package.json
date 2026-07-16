@@ -1,5 +1,5 @@
 {
-  "name": "@agentic-swe/skills",
+  "name": "@agenticswe/skills",
   "version": "0.1.0",
   "description": "Versioned public skill assets for Agentic SWE hosts",
   "keywords": ["agentic", "software-engineering", "coding-agent", "agent-skills"],

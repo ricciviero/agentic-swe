@@ -28,7 +28,7 @@ node packages/cli/dist/bin.js inspect .
 node packages/cli/dist/bin.js verify .
 ```
 
-The package names are reserved in the workspace as `@agentic-swe/core`, `@agentic-swe/node`, `@agentic-swe/skills`, and `@agentic-swe/cli`. They are release-candidate artifacts until an explicitly authorized registry publication; do not assume npm availability before a release is announced.
+The package names are reserved in the workspace as `@agenticswe/core`, `@agenticswe/node`, `@agenticswe/skills`, and `@agenticswe/cli`. They are release-candidate artifacts until an explicitly authorized registry publication; do not assume npm availability before a release is announced.
 
 [Interference](https://github.com/ricciviero/interference) is the first reference host: it integrates the framework as an authoritative behavior runtime while retaining ownership of models, tools, permissions, sessions, and terminal UI. The framework remains a separate repository and can be adopted by other coding-agent hosts.
 
@@ -71,9 +71,9 @@ The existing Markdown core remains compatible for Codex and Claude Code. It and 
 
 ## Reference Runtime
 
-`@agentic-swe/core` evaluates a typed request into a deterministic `BehaviorPlan`, validates state transitions, intersects capabilities, validates classifier/skill-router ports, serializes resumable state, and reconciles host execution events into completion evidence. It has no runtime dependencies and performs no I/O. Event subjects are host-redacted metadata: file contents, command output, credentials, and model transcripts do not belong in the core event log.
+`@agenticswe/core` evaluates a typed request into a deterministic `BehaviorPlan`, validates state transitions, intersects capabilities, validates classifier/skill-router ports, serializes resumable state, and reconciles host execution events into completion evidence. It has no runtime dependencies and performs no I/O. Event subjects are host-redacted metadata: file contents, command output, credentials, and model transcripts do not belong in the core event log.
 
-`@agentic-swe/node` discovers repository instructions and configuration, validates YAML against the v1 schema, inventories approved skills, verifies planning evidence, and composes the core. Inspection and evaluation are read-only: hosts remain responsible for models, permission enforcement, persistence, and every mutating action.
+`@agenticswe/node` discovers repository instructions and configuration, validates YAML against the v1 schema, inventories approved skills, verifies planning evidence, and composes the core. Inspection and evaluation are read-only: hosts remain responsible for models, permission enforcement, persistence, and every mutating action.
 
 To build and exercise the public APIs locally:
 
@@ -125,7 +125,7 @@ The core installer is non-destructive:
 - Codex receives a managed block in `${CODEX_HOME:-~/.codex}/AGENTS.md`. Existing personal instructions remain intact; rerun the installer after pulling core changes.
 - Claude Code receives an entirely owned rule at `${CLAUDE_HOME:-~/.claude}/rules/agentic-swe.md`; unowned files and unexpected symlinks are refused.
 
-The skill linker remains a source-checkout compatibility entry point and never overwrites an existing skill. Package consumers should resolve metadata and bodies through `@agentic-swe/skills`, which avoids cloning or embedding the catalog. Use `--dry-run` before either installer and `agentic-swe uninstall --target all` to remove only owned global adapters.
+The skill linker remains a source-checkout compatibility entry point and never overwrites an existing skill. Package consumers should resolve metadata and bodies through `@agenticswe/skills`, which avoids cloning or embedding the catalog. Use `--dry-run` before either installer and `agentic-swe uninstall --target all` to remove only owned global adapters.
 
 ## Project Bootstrap
 

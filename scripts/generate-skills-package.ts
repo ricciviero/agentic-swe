@@ -138,7 +138,7 @@ if (!assetsOnly) {
       writeFile(manifestPath, manifest, "utf8"),
       writeFile(noticesPath, notices, "utf8"),
     ]);
-    console.log(`Generated @agentic-swe/skills manifest (${skills.length} skills).`);
+    console.log(`Generated @agenticswe/skills manifest (${skills.length} skills).`);
   }
 }
 
@@ -155,5 +155,5 @@ if (assetsOnly) {
       dereference: false,
     });
   }
-  console.log(`Prepared @agentic-swe/skills assets (${skills.length} skills).`);
+  console.log(`Prepared @agenticswe/skills assets (${skills.length} skills).`);
 }

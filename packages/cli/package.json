@@ -1,5 +1,5 @@
 {
-  "name": "@agentic-swe/cli",
+  "name": "@agenticswe/cli",
   "version": "0.1.0",
   "description": "Command-line interface for Agentic SWE Protocol v1",
   "keywords": ["agentic", "software-engineering", "coding-agent", "cli"],
@@ -27,8 +27,8 @@
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@agentic-swe/core": "0.1.0",
-    "@agentic-swe/node": "0.1.0",
-    "@agentic-swe/skills": "0.1.0"
+    "@agenticswe/core": "0.1.0",
+    "@agenticswe/node": "0.1.0",
+    "@agenticswe/skills": "0.1.0"
   }
 }

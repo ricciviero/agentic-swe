@@ -1,4 +1,4 @@
-# `@agentic-swe/core`
+# `@agenticswe/core`
 
 Pure TypeScript reference evaluator for Agentic SWE Protocol v1. The package has no runtime dependencies and performs no filesystem, network, shell, model, or tool I/O.
 
@@ -12,7 +12,7 @@ Pure TypeScript reference evaluator for Agentic SWE Protocol v1. The package has
 - `protocolV1`, `protocolSchemasV1`, and the generated adapter/template constants expose the embedded v1 contract without a deep import.
 
 ```ts
-import { evaluateBehavior, type BehaviorInput } from "@agentic-swe/core";
+import { evaluateBehavior, type BehaviorInput } from "@agenticswe/core";
 
 const plan = evaluateBehavior(input satisfies BehaviorInput);
 if (plan.phase === "execution") {

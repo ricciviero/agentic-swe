@@ -1,5 +1,5 @@
 {
-  "name": "@agentic-swe/node",
+  "name": "@agenticswe/node",
   "version": "0.1.0",
   "description": "Read-only Node.js repository adapter for Agentic SWE Protocol v1",
   "keywords": ["agentic", "software-engineering", "coding-agent", "repository-adapter"],
@@ -26,7 +26,7 @@
   },
   "types": "./dist/index.d.ts",
   "dependencies": {
-    "@agentic-swe/core": "0.1.0",
+    "@agenticswe/core": "0.1.0",
     "ajv": "^8.17.0",
     "ajv-formats": "^3.0.0",
     "yaml": "^2.8.0"

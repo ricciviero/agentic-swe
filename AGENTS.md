@@ -27,8 +27,8 @@ Maintain a public, reusable, agent-agnostic behavior framework for software-engi
 
 ## Runtime changes
 
-- Keep `@agentic-swe/core` deterministic and free of filesystem, network, shell, provider, Node, and Bun runtime dependencies.
-- Keep repository discovery, YAML parsing, path containment, skill inventory, and planning-evidence inspection in `@agentic-swe/node`; its inspect/evaluate/verify paths must remain read-only. Keep explicit render/install/uninstall mutations isolated behind dry-run and ownership checks.
+- Keep `@agenticswe/core` deterministic and free of filesystem, network, shell, provider, Node, and Bun runtime dependencies.
+- Keep repository discovery, YAML parsing, path containment, skill inventory, and planning-evidence inspection in `@agenticswe/node`; its inspect/evaluate/verify paths must remain read-only. Keep explicit render/install/uninstall mutations isolated behind dry-run and ownership checks.
 - A model-facing classifier or skill router is an untrusted port. Validate its output before evaluation and never derive effective permissions from model output.
 - Export supported APIs from each package root. Do not require consumers to deep-import internal files.
 - Run `npm run generate:check`, `npm run typecheck`, `npm test`, and `npm run pack:check` after runtime or packaging changes.

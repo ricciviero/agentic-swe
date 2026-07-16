@@ -1,5 +1,5 @@
 {
-  "name": "@agentic-swe/core",
+  "name": "@agenticswe/core",
   "version": "0.1.0",
   "description": "Pure reference evaluator for Agentic SWE Protocol v1",
   "keywords": ["agentic", "software-engineering", "coding-agent", "behavior-protocol"],

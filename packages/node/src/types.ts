@@ -10,7 +10,7 @@ import type {
   RuntimeDiagnostic,
   SkillRouter,
   TaskClassifier,
-} from "@agentic-swe/core";
+} from "@agenticswe/core";
 
 export type NodeDiagnosticCode =
   | "REPOSITORY_NOT_FOUND"

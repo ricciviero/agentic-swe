@@ -3,7 +3,7 @@ import {
   claudeProjectAdapterV1,
   projectAgenticSectionV1,
   projectConfigTemplateV1,
-} from "@agentic-swe/core";
+} from "@agenticswe/core";
 
 export const AGENTIC_BEGIN_MARKER = "<!-- agentic-swe:begin -->";
 export const AGENTIC_END_MARKER = "<!-- agentic-swe:end -->";

@@ -4,18 +4,18 @@ Registry publication is a maintainer-only manual action. CI, ordinary contributo
 
 Agentic SWE uses one version across four public packages. Internal dependencies are exact versions, so publish in dependency order and verify every package before continuing:
 
-1. `@agentic-swe/core`
-2. `@agentic-swe/skills`
-3. `@agentic-swe/node`
-4. `@agentic-swe/cli`
+1. `@agenticswe/core`
+2. `@agenticswe/skills`
+3. `@agenticswe/node`
+4. `@agenticswe/cli`
 
 ## 1. Verify registry access
 
-Authenticate as the intended maintainer and confirm access to the `agentic-swe` npm organization:
+Authenticate as the intended maintainer and confirm access to the `agenticswe` npm organization:
 
 ```bash
 npm whoami
-npm org ls agentic-swe
+npm org ls agenticswe
 ```
 
 Stop on `403`. Create the npm organization or grant the maintainer access before changing tags, package names, or consumer manifests. Do not silently publish under a different scope: a scope change is a public API and documentation change across all four manifests.
@@ -23,10 +23,10 @@ Stop on `403`. Create the npm organization or grant the maintainer access before
 Confirm that the version is not already present. For the initial release:
 
 ```bash
-npm view @agentic-swe/core@0.1.0 version
-npm view @agentic-swe/skills@0.1.0 version
-npm view @agentic-swe/node@0.1.0 version
-npm view @agentic-swe/cli@0.1.0 version
+npm view @agenticswe/core@0.1.0 version
+npm view @agenticswe/skills@0.1.0 version
+npm view @agenticswe/node@0.1.0 version
+npm view @agenticswe/cli@0.1.0 version
 ```
 
 `E404` is expected before the first publication. Any returned version means that package must not be published again.
@@ -64,16 +64,16 @@ The maintainer runs these commands, one at a time, from the repository root. Com
 
 ```bash
 npm publish ./packages/core --access public
-npm view @agentic-swe/core@0.1.0 name version dist.integrity --json
+npm view @agenticswe/core@0.1.0 name version dist.integrity --json
 
 npm publish ./packages/skills --access public
-npm view @agentic-swe/skills@0.1.0 name version dist.integrity --json
+npm view @agenticswe/skills@0.1.0 name version dist.integrity --json
 
 npm publish ./packages/node --access public
-npm view @agentic-swe/node@0.1.0 name version dependencies dist.integrity --json
+npm view @agenticswe/node@0.1.0 name version dependencies dist.integrity --json
 
 npm publish ./packages/cli --access public
-npm view @agentic-swe/cli@0.1.0 name version dependencies bin dist.integrity --json
+npm view @agenticswe/cli@0.1.0 name version dependencies bin dist.integrity --json
 ```
 
 Do not continue after a failed verification. If publication stops partway through, keep already-published packages intact, diagnose the failure, and resume only with packages whose exact version is still absent. Never unpublish a partially released public version as a routine rollback; correct forward with a new patch version when necessary.
@@ -87,10 +87,10 @@ tmpdir="$(mktemp -d)"
 cd "$tmpdir"
 npm init -y
 npm install --save-exact \
-  @agentic-swe/core@0.1.0 \
-  @agentic-swe/node@0.1.0 \
-  @agentic-swe/skills@0.1.0 \
-  @agentic-swe/cli@0.1.0
+  @agenticswe/core@0.1.0 \
+  @agenticswe/node@0.1.0 \
+  @agenticswe/skills@0.1.0 \
+  @agenticswe/cli@0.1.0
 ./node_modules/.bin/agentic-swe --version
 ```
 

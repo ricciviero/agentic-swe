@@ -8,7 +8,7 @@ import {
   type Capability,
   type ClassificationDecision,
   type RuntimeDiagnostic,
-} from "@agentic-swe/core";
+} from "@agenticswe/core";
 import { inspectRepository } from "./inspect.js";
 import type {
   NodeEvaluationRequest,
