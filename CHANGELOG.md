@@ -12,5 +12,6 @@ All notable changes to Agentic SWE are documented here. Package SemVer and proto
 - Generated Codex/Claude adapters and project templates with drift checks.
 - `@agentic-swe/skills` manifest, integrity hashes, and read-only skill resolver.
 - Node/Bun tarball smoke tests and public continuous integration.
+- Host execution-event, evidence-claim, and completion-evaluation APIs in `@agentic-swe/core`.
 
 No registry package, release tag, or GitHub release is implied by the Unreleased section.

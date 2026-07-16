@@ -52,7 +52,7 @@ The existing Markdown core remains compatible for Codex and Claude Code. It and 
 
 ## Reference Runtime
 
-`@agentic-swe/core` evaluates a typed request into a deterministic `BehaviorPlan`, validates state transitions, intersects capabilities, validates classifier/skill-router ports, and serializes resumable state. It has no runtime dependencies and performs no I/O.
+`@agentic-swe/core` evaluates a typed request into a deterministic `BehaviorPlan`, validates state transitions, intersects capabilities, validates classifier/skill-router ports, serializes resumable state, and reconciles host execution events into completion evidence. It has no runtime dependencies and performs no I/O. Event subjects are host-redacted metadata: file contents, command output, credentials, and model transcripts do not belong in the core event log.
 
 `@agentic-swe/node` discovers repository instructions and configuration, validates YAML against the v1 schema, inventories approved skills, verifies planning evidence, and composes the core. Inspection and evaluation are read-only: hosts remain responsible for models, permission enforcement, persistence, and every mutating action.
 

@@ -7,11 +7,15 @@ import {
   TransitionError,
   applyBehaviorEvent,
   createBehaviorState,
+  claimEventEvidence,
+  evaluateCompletion,
   evaluateBehavior,
+  evidenceFromEvents,
   intersectCapabilities,
   protocolSchemasV1,
   protocolV1,
   restoreBehaviorState,
+  recordEvent,
   runSkillRouter,
   runTaskClassifier,
   serializeBehaviorState,
@@ -19,7 +23,27 @@ import {
   type BehaviorInput,
   type BehaviorPlan,
   type BehaviorState,
+  type HostExecutionEvent,
 } from "@agentic-swe/core";
+
+function hostEvent(
+  sequence: number,
+  overrides: Partial<HostExecutionEvent> = {},
+): HostExecutionEvent {
+  return {
+    schemaVersion: 1,
+    protocolVersion: PROTOCOL_VERSION,
+    id: `host-${sequence}`,
+    sessionId: "session-delivery",
+    requestId: "request-delivery",
+    turnNumber: 1,
+    sequence,
+    type: "tool.completed",
+    outcome: "succeeded",
+    occurredAt: "2026-07-16T12:00:00.000Z",
+    ...overrides,
+  };
+}
 
 async function fixture(name: string): Promise<{ input: BehaviorInput; expected: BehaviorPlan }> {
   return JSON.parse(
@@ -198,4 +222,46 @@ test("planning waiver is accepted only with an explicit reason", async () => {
   assert.equal(missingReason.phase, "planning");
   assert.equal(missingReason.overrides, undefined);
   assert.equal(missingReason.diagnostics[0]?.code, "PLANNING_REQUIRED");
+});
+
+test("host execution events produce evidence only after successful real events", async () => {
+  let events: HostExecutionEvent[] = [];
+  events = recordEvent(events, hostEvent(1, {
+    type: "validation.recorded",
+    outcome: "failed",
+    exitCode: 1,
+    evidenceKind: "validation",
+  }));
+  events = recordEvent(events, hostEvent(2, {
+    type: "validation.recorded",
+    outcome: "succeeded",
+    exitCode: 0,
+    evidenceKind: "validation",
+  }));
+  assert.deepEqual(evidenceFromEvents(events).map((item) => item.id), ["host-2"]);
+  assert.throws(() => claimEventEvidence(events, "invented", "validation"), /unknown host event/);
+  assert.throws(() => claimEventEvidence(events, "host-1", "validation"), /did not succeed/);
+});
+
+test("completion evaluation keeps hard criteria outstanding until evidence exists", async () => {
+  const { expected: plan } = await fixture("07-planning-evidence-allows-execution.json");
+  const implementation = hostEvent(1, {
+    type: "workspace.mutated",
+    evidenceKind: "implementation",
+  });
+  const validation = hostEvent(2, {
+    type: "validation.recorded",
+    evidenceKind: "validation",
+    exitCode: 0,
+  });
+  const events = recordEvent(recordEvent([], implementation), validation);
+  const before = evaluateCompletion(plan, []);
+  const after = evaluateCompletion(plan, evidenceFromEvents(events));
+  assert.equal(before.satisfied, false);
+  assert.deepEqual(before.outstanding.map((criterion) => criterion.id), [
+    "implementation-accounted-for",
+    "validation-evidence",
+  ]);
+  assert.equal(after.satisfied, true);
+  assert.deepEqual(after.outstanding, []);
 });
