@@ -265,3 +265,26 @@ test("completion evaluation keeps hard criteria outstanding until evidence exist
   assert.equal(after.satisfied, true);
   assert.deepEqual(after.outstanding, []);
 });
+
+test("read-only requests complete without mutation or validation evidence", async () => {
+  const { input } = await fixture("12-configured-read-only-request.json");
+  const plan = evaluateBehavior({
+    ...input,
+    request: { ...input.request, implementationFinished: true },
+  });
+  const completion = evaluateCompletion(plan, []);
+  assert.equal(plan.phase, "completion");
+  assert.equal(plan.canComplete, true);
+  assert.deepEqual(
+    plan.completionCriteria
+      .filter((criterion) => criterion.hard)
+      .map((criterion) => [criterion.id, criterion.status]),
+    [
+      ["gates-satisfied", "satisfied"],
+      ["implementation-accounted-for", "not-applicable"],
+      ["validation-evidence", "not-applicable"],
+    ],
+  );
+  assert.equal(completion.satisfied, true);
+  assert.deepEqual(completion.outstanding, []);
+});

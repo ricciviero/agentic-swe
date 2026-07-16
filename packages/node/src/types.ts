@@ -77,6 +77,8 @@ export interface NodeEvaluationRequest {
   explicitLighterProcess?: boolean;
   lighterProcessReason?: string;
   implementationFinished?: boolean;
+  /** Defaults to true for backward-compatible conservative behavior. */
+  mutationRequested?: boolean;
   planningRecord?: string;
   relevantSkills?: string[];
   hostCapabilities?: Capability[];

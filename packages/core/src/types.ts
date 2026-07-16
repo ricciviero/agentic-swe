@@ -1,4 +1,4 @@
-export const PROTOCOL_VERSION = "1.0" as const;
+export const PROTOCOL_VERSION = "1.1" as const;
 export const CONFIG_VERSION = 1 as const;
 
 export const PHASES = [
@@ -114,6 +114,8 @@ export interface BehaviorRequest {
   explicitLighterProcess: boolean;
   lighterProcessReason?: string;
   implementationFinished: boolean;
+  /** Intent signal may only restrict mutation; it never grants a host capability. */
+  mutationRequested: boolean;
 }
 
 export interface AvailableSkill {

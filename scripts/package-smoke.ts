@@ -81,6 +81,7 @@ const plan = evaluateBehavior({
     classification: { value: "trivial", source: "human", reasons: ["Mechanical."] },
     explicitOnboarding: false,
     explicitLighterProcess: false,
+    mutationRequested: true,
     implementationFinished: false
   },
   availableSkills: [],

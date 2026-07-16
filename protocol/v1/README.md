@@ -2,7 +2,7 @@
 
 Agentic SWE is an open behavior framework for software-engineering agents. This directory is the normative, agent-agnostic contract. It describes how a host decides workflow phase, gates, skill routing, requested capabilities, delivery criteria, and learning candidates without owning the host's model, concrete tools, permission system, storage, or user interface.
 
-Protocol version `1.0` is normative. The TypeScript reference implementation lives in [`packages/core`](../../packages/core/) and [`packages/node`](../../packages/node/). [`core/agentic-protocol.md`](../../core/agentic-protocol.md) and the project templates are generated compatibility renderings; `npm run generate:check` rejects drift.
+Protocol version `1.1` is normative. The TypeScript reference implementation lives in [`packages/core`](../../packages/core/) and [`packages/node`](../../packages/node/). [`core/agentic-protocol.md`](../../core/agentic-protocol.md) and the project templates are generated compatibility renderings; `npm run generate:check` rejects drift.
 
 ## Normative artifacts
 
@@ -45,6 +45,8 @@ protocol requested capabilities
 
 Any deny wins. A protocol/runtime failure MUST NOT fall back to mutation access.
 
+`request.mutationRequested` is a restrictive intent signal. When false, setup and planning are not required merely because an explanation is complex, execution requests only read capabilities, and implementation/validation evidence is not applicable. A model-provided true value never grants access: the normal protocol, host, and user-mode intersection still applies.
+
 ## State machine
 
 ```text
@@ -85,11 +87,11 @@ A task is `non-trivial` when **any** listed v1 signal is present, including two 
 
 ### Setup
 
-An unconfigured repository MAY execute a trivial mechanical task without creating policy. Explicit onboarding or non-trivial work MUST enter `setup`. Setup cannot be waived. The host verifies the canonical `AGENTS.md`, compatible `.agentic/config.yaml`, and required adapters before leaving the phase.
+An unconfigured repository MAY execute a trivial mechanical task without creating policy. Explicit onboarding or non-trivial mutating work MUST enter `setup`. Setup cannot be waived. The host verifies the canonical `AGENTS.md`, compatible `.agentic/config.yaml`, and required adapters before leaving the phase.
 
 ### Planning
 
-Non-trivial work MUST have current planning evidence when the project planning gate is `non-trivial` or `always`. The detailed procedure belongs to `iterations-planner`. A user MAY explicitly request a lighter process; the host records the planning waiver reason and the completion report discloses it. Silence or model preference is not a waiver.
+Non-trivial mutating work MUST have current planning evidence when the project planning gate is `non-trivial` or `always`. The detailed procedure belongs to `iterations-planner`. A user MAY explicitly request a lighter process; the host records the planning waiver reason and the completion report discloses it. Silence or model preference is not a waiver.
 
 ### Verification
 
@@ -146,7 +148,7 @@ Each conformance JSON file contains:
 ```json
 {
   "name": "stable-case-name",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {},
   "expected": {}
 }
@@ -158,7 +160,7 @@ Implementations MUST produce an equivalent normalized `BehaviorPlan` for every c
 
 - `protocolVersion` changes only when serialized semantics or required behavior changes.
 - Backward-compatible v1 additions increment the minor component (`1.1`). Breaking semantics require `2.0`.
-- Package semver describes a specific implementation. Patch releases may fix an implementation while still implementing protocol `1.0`.
+- Package semver describes a specific implementation. Patch releases may fix an implementation while still implementing protocol `1.1`.
 - Project config `version` is independent. A runtime publishes an explicit compatibility matrix for config and protocol versions.
 - Adapters include or report the protocol version they render.
 

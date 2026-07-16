@@ -1,8 +1,8 @@
 {
   "name": "verification-missing-evidence",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "verification-missing-evidence",
     "repository": {
       "configured": true,
@@ -21,6 +21,7 @@
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
+      "mutationRequested": true,
       "implementationFinished": true
     },
     "availableSkills": [],
@@ -36,7 +37,7 @@
       { "id": "assumption-1", "kind": "assumption", "valid": true }
     ],
     "state": {
-      "protocolVersion": "1.0",
+      "protocolVersion": "1.1",
       "sessionId": "session-1",
       "requestId": "verification-missing-evidence",
       "phase": "verification",
@@ -51,7 +52,7 @@
     }
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "verification-missing-evidence",
     "phase": "verification",
     "effectiveClassification": "non-trivial",

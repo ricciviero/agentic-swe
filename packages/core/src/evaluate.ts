@@ -112,7 +112,8 @@ export function evaluateBehavior(input: BehaviorInput): BehaviorPlan {
 
   const setupRequired =
     !input.repository.configured &&
-    (input.request.explicitOnboarding || effectiveClassification === "non-trivial");
+    (input.request.explicitOnboarding ||
+      (input.request.mutationRequested && effectiveClassification === "non-trivial"));
   let setupGate: GateDecision;
   if (input.repository.configured) {
     setupGate = { id: "setup", status: "satisfied", reasonCode: "CONFIGURATION_PRESENT" };
@@ -129,7 +130,9 @@ export function evaluateBehavior(input: BehaviorInput): BehaviorPlan {
 
   const planningEvidenceIds = validEvidenceIds(input, "planning");
   const planningPolicyApplies =
-    effectiveClassification === "non-trivial" && input.repository.planningGate !== "disabled";
+    input.request.mutationRequested &&
+    effectiveClassification === "non-trivial" &&
+    input.repository.planningGate !== "disabled";
   const waiverReason = input.request.lighterProcessReason?.trim();
   let planningGate: GateDecision;
   if (!planningPolicyApplies) {
@@ -177,9 +180,11 @@ export function evaluateBehavior(input: BehaviorInput): BehaviorPlan {
       ["satisfied", "waived", "not-applicable"].includes(gate.status),
     );
   const implementationSatisfied =
-    input.request.implementationFinished && implementationEvidenceIds.length > 0;
+    input.request.implementationFinished &&
+    (!input.request.mutationRequested || implementationEvidenceIds.length > 0);
   const validationSatisfied =
-    input.request.implementationFinished && validationEvidenceIds.length > 0;
+    input.request.implementationFinished &&
+    (!input.request.mutationRequested || validationEvidenceIds.length > 0);
   const hardCriteriaSatisfied =
     workflowGatesSatisfied && implementationSatisfied && validationSatisfied;
 
@@ -237,7 +242,11 @@ export function evaluateBehavior(input: BehaviorInput): BehaviorPlan {
     withEvidence(
       {
         id: "implementation-accounted-for",
-        status: implementationSatisfied ? "satisfied" : "pending",
+        status: !input.request.mutationRequested
+          ? "not-applicable"
+          : implementationSatisfied
+            ? "satisfied"
+            : "pending",
         hard: true,
       },
       implementationSatisfied ? implementationEvidenceIds : [],
@@ -245,7 +254,11 @@ export function evaluateBehavior(input: BehaviorInput): BehaviorPlan {
     withEvidence(
       {
         id: "validation-evidence",
-        status: validationSatisfied ? "satisfied" : "pending",
+        status: !input.request.mutationRequested
+          ? "not-applicable"
+          : validationSatisfied
+            ? "satisfied"
+            : "pending",
         hard: true,
       },
       validationSatisfied ? validationEvidenceIds : [],
@@ -317,7 +330,10 @@ export function evaluateBehavior(input: BehaviorInput): BehaviorPlan {
     effectiveClassification,
     requiredGates: [setupGate, planningGate, verificationGate],
     selectedSkills,
-    requestedCapabilities: [...getPhaseDefinition(phase).requestedCapabilities],
+    requestedCapabilities:
+      phase === "execution" && !input.request.mutationRequested
+        ? ["repository:read", "instructions:read", "skills:read"]
+        : [...getPhaseDefinition(phase).requestedCapabilities],
     completionCriteria,
     canComplete: phase === "completion" && hardCriteriaSatisfied,
     reasons: uniqueReasons(reasons),

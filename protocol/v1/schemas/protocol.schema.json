@@ -25,7 +25,7 @@
   ],
   "properties": {
     "id": { "const": "agentic-swe" },
-    "protocolVersion": { "const": "1.0" },
+    "protocolVersion": { "const": "1.1" },
     "configVersion": { "const": 1 },
     "status": { "const": "normative" },
     "title": { "type": "string", "minLength": 1 },
@@ -237,7 +237,7 @@
         "capabilities": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["resolution", "precedence", "protocolNeverElevatesHost"],
+          "required": ["resolution", "precedence", "protocolNeverElevatesHost", "readOnlyRequestCapabilities"],
           "properties": {
             "resolution": { "const": "intersection" },
             "precedence": {
@@ -246,16 +246,22 @@
               "uniqueItems": true,
               "items": { "type": "string", "enum": ["host-deny", "user-mode", "protocol-request"] }
             },
-            "protocolNeverElevatesHost": { "const": true }
+            "protocolNeverElevatesHost": { "const": true },
+            "readOnlyRequestCapabilities": {
+              "type": "array",
+              "items": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/capability" },
+              "uniqueItems": true
+            }
           }
         },
         "delivery": {
           "type": "object",
           "additionalProperties": false,
-          "required": ["hardCriteriaRequireEvidence", "completionWithMissingHardCriteria"],
+          "required": ["hardCriteriaRequireEvidence", "completionWithMissingHardCriteria", "readOnlyRequestEvidence"],
           "properties": {
             "hardCriteriaRequireEvidence": { "const": true },
-            "completionWithMissingHardCriteria": { "const": false }
+            "completionWithMissingHardCriteria": { "const": false },
+            "readOnlyRequestEvidence": { "const": "not-required" }
           }
         },
         "learning": {

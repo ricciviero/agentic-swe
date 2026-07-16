@@ -1,6 +1,6 @@
 # Agentic SWE Protocol
 
-<!-- Generated from protocol/v1/protocol.yaml by `npm run adapters:generate`. Do not edit directly. Protocol 1.0; package 0.1.0. -->
+<!-- Generated from protocol/v1/protocol.yaml by `npm run adapters:generate`. Do not edit directly. Protocol 1.1; package 0.1.0. -->
 
 This is global routing guidance for coding agents. Repository instructions in `AGENTS.md` define project-specific rules and may add stricter requirements.
 

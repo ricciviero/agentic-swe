@@ -1,8 +1,8 @@
 {
   "name": "incompatible-config-blocked",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "incompatible-config-blocked",
     "repository": {
       "configured": true,
@@ -21,6 +21,7 @@
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
+      "mutationRequested": true,
       "implementationFinished": false
     },
     "availableSkills": [],
@@ -33,7 +34,7 @@
     "evidence": []
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "incompatible-config-blocked",
     "phase": "blocked",
     "effectiveClassification": "trivial",

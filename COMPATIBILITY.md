@@ -4,7 +4,7 @@ Protocol versions, project configuration versions, adapter generation, and packa
 
 | Protocol | Project config | Package line | Generated adapter | Runtime support |
 | --- | --- | --- | --- | --- |
-| `1.0` | `1` | `0.1.x` | Protocol `1.0`, package `0.1.x` header | Node.js `>=20.18`; Bun `1.3.x` consumer smoke |
+| `1.1` | `1` | `0.1.x` | Protocol `1.1`, package `0.1.x` header | Node.js `>=20.18`; Bun `1.3.x` consumer smoke |
 
 All packages in the first `0.1.x` release candidate are version-aligned: `@agentic-swe/core`, `@agentic-swe/node`, `@agentic-swe/skills`, and `@agentic-swe/cli`. Inter-package dependencies use exact `0.1.0` versions so a host cannot accidentally combine incompatible development builds.
 

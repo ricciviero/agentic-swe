@@ -15,7 +15,7 @@
     "evidenceIds"
   ],
   "properties": {
-    "protocolVersion": { "const": "1.0" },
+    "protocolVersion": { "const": "1.1" },
     "sessionId": { "type": "string", "minLength": 1 },
     "requestId": { "type": "string", "minLength": 1 },
     "phase": { "$ref": "urn:agentic-swe:protocol:v1:schema:common#/$defs/phase" },

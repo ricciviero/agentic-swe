@@ -1,8 +1,8 @@
 {
   "name": "explicit-lighter-process",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "explicit-lighter-process",
     "repository": {
       "configured": true,
@@ -22,6 +22,7 @@
       "explicitOnboarding": false,
       "explicitLighterProcess": true,
       "lighterProcessReason": "The user explicitly requested direct implementation for this request.",
+      "mutationRequested": true,
       "implementationFinished": false
     },
     "availableSkills": [
@@ -38,7 +39,7 @@
     "evidence": []
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "explicit-lighter-process",
     "phase": "execution",
     "effectiveClassification": "non-trivial",

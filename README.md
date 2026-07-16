@@ -36,7 +36,7 @@ At session start, the protocol makes the workflow decision before implementation
 
 1. Read repository instructions and `.agentic/config.yaml` when present.
 2. Route unconfigured onboarding or non-trivial work to `agents-setup`.
-3. Classify the request. Non-trivial work must pass through `iterations-planner` before editing.
+3. Classify the request and its mutation intent. Non-trivial mutating work must pass through `iterations-planner` before editing; read-only questions never gain mutation capabilities.
 4. Use only the project-selected global skills that match the task.
 5. Validate the changed surface and report evidence before completion.
 
@@ -44,7 +44,7 @@ At session start, the protocol makes the workflow decision before implementation
 
 ## Protocol v1
 
-[`protocol/v1/protocol.yaml`](protocol/v1/protocol.yaml) defines phases, legal transitions, abstract capabilities, gates, completion criteria, reason codes, and the learning loop. JSON Schema files define serialized project configuration, evaluation inputs, behavior plans, events, and resumable state. Normative conformance cases cover configured and unconfigured repositories, trivial and non-trivial work, uncertainty, explicit planning waivers, verification, completion, incompatible configuration, and repeated-learning signals.
+[`protocol/v1/protocol.yaml`](protocol/v1/protocol.yaml) defines phases, legal transitions, abstract capabilities, mutation intent, gates, completion criteria, reason codes, and the learning loop. JSON Schema files define serialized project configuration, evaluation inputs, behavior plans, events, and resumable state. Normative conformance cases cover configured and unconfigured repositories, trivial and non-trivial work, read-only requests, uncertainty, explicit planning waivers, verification, completion, incompatible configuration, and repeated-learning signals.
 
 The key security boundary is explicit: a model may classify intent or propose actions, but it never grants capabilities. A host computes effective access by intersecting protocol requests with its own permission policy and the user's selected mode; any deny wins.
 

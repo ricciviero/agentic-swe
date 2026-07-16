@@ -1,8 +1,8 @@
 {
   "name": "unconfigured-trivial",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "unconfigured-trivial",
     "repository": {
       "configured": false,
@@ -21,6 +21,7 @@
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
+      "mutationRequested": true,
       "implementationFinished": false
     },
     "availableSkills": [],
@@ -34,7 +35,7 @@
     "evidence": []
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "unconfigured-trivial",
     "phase": "execution",
     "effectiveClassification": "trivial",

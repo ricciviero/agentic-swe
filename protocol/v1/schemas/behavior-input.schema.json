@@ -14,7 +14,7 @@
     "evidence"
   ],
   "properties": {
-    "protocolVersion": { "const": "1.0" },
+    "protocolVersion": { "const": "1.1" },
     "requestId": { "type": "string", "minLength": 1 },
     "repository": {
       "type": "object",
@@ -51,7 +51,7 @@
     "request": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["classification", "explicitOnboarding", "explicitLighterProcess", "implementationFinished"],
+      "required": ["classification", "explicitOnboarding", "explicitLighterProcess", "implementationFinished", "mutationRequested"],
       "properties": {
         "summary": { "type": "string", "minLength": 1 },
         "classification": {
@@ -70,7 +70,8 @@
         "explicitOnboarding": { "type": "boolean" },
         "explicitLighterProcess": { "type": "boolean" },
         "lighterProcessReason": { "type": "string", "minLength": 1 },
-        "implementationFinished": { "type": "boolean" }
+        "implementationFinished": { "type": "boolean" },
+        "mutationRequested": { "type": "boolean" }
       },
       "allOf": [
         {

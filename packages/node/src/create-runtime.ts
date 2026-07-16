@@ -100,6 +100,7 @@ export function createNodeRuntime(options: NodeRuntimeOptions = {}): NodeRuntime
         explicitOnboarding: request.explicitOnboarding ?? false,
         explicitLighterProcess: request.explicitLighterProcess ?? false,
         implementationFinished: request.implementationFinished ?? false,
+        mutationRequested: request.mutationRequested ?? true,
       };
       if (request.lighterProcessReason) {
         behaviorRequest.lighterProcessReason = request.lighterProcessReason;

@@ -1,32 +1,31 @@
 {
-  "name": "planning-evidence-allows-execution",
+  "name": "configured-read-only-request",
   "protocolVersion": "1.1",
   "input": {
     "protocolVersion": "1.1",
-    "requestId": "planning-evidence-allows-execution",
+    "requestId": "request-12",
     "repository": {
       "configured": true,
       "configVersion": 1,
       "protocolCompatibility": "compatible",
       "instructionFiles": ["AGENTS.md"],
       "setupEvidence": true,
-      "planningEvidence": true,
+      "planningEvidence": false,
       "planningGate": "non-trivial"
     },
     "request": {
+      "summary": "Explain the architecture without changing files.",
       "classification": {
         "value": "non-trivial",
         "source": "model",
-        "reasons": ["The request is a migration with ordered deliverables."]
+        "reasons": ["The explanation spans several layers."]
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
-      "mutationRequested": true,
+      "mutationRequested": false,
       "implementationFinished": false
     },
-    "availableSkills": [
-      { "name": "iterations-planner", "source": "global", "selected": true, "relevant": true }
-    ],
+    "availableSkills": [],
     "hostCapabilities": [
       "repository:read",
       "instructions:read",
@@ -35,39 +34,30 @@
       "commands:execute",
       "subagents:invoke"
     ],
-    "evidence": [
-      { "id": "plan-1", "kind": "planning", "valid": true }
-    ]
+    "evidence": []
   },
   "expected": {
     "protocolVersion": "1.1",
-    "requestId": "planning-evidence-allows-execution",
+    "requestId": "request-12",
     "phase": "execution",
     "effectiveClassification": "non-trivial",
     "requiredGates": [
       { "id": "setup", "status": "satisfied", "reasonCode": "CONFIGURATION_PRESENT" },
-      { "id": "planning", "status": "satisfied", "reasonCode": "PLANNING_SATISFIED", "evidenceIds": ["plan-1"] },
+      { "id": "planning", "status": "not-applicable", "reasonCode": "TASK_NON_TRIVIAL" },
       { "id": "verification", "status": "pending", "reasonCode": "VALIDATION_REQUIRED" }
     ],
     "selectedSkills": [],
-    "requestedCapabilities": [
-      "repository:read",
-      "instructions:read",
-      "skills:read",
-      "workspace:mutate",
-      "commands:execute",
-      "subagents:invoke"
-    ],
+    "requestedCapabilities": ["repository:read", "instructions:read", "skills:read"],
     "completionCriteria": [
-      { "id": "gates-satisfied", "status": "satisfied", "hard": true, "evidenceIds": ["plan-1"] },
-      { "id": "implementation-accounted-for", "status": "pending", "hard": true },
-      { "id": "validation-evidence", "status": "pending", "hard": true },
+      { "id": "gates-satisfied", "status": "satisfied", "hard": true },
+      { "id": "implementation-accounted-for", "status": "not-applicable", "hard": true },
+      { "id": "validation-evidence", "status": "not-applicable", "hard": true },
       { "id": "documentation-aligned", "status": "pending", "hard": false },
       { "id": "assumptions-reported", "status": "pending", "hard": false },
       { "id": "learning-reviewed", "status": "pending", "hard": false }
     ],
     "canComplete": false,
-    "reasons": ["CONFIGURATION_PRESENT", "TASK_NON_TRIVIAL", "PLANNING_SATISFIED"],
+    "reasons": ["CONFIGURATION_PRESENT", "TASK_NON_TRIVIAL"],
     "diagnostics": []
   }
 }

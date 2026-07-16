@@ -1,8 +1,8 @@
 {
   "name": "unconfigured-non-trivial-setup",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "unconfigured-non-trivial-setup",
     "repository": {
       "configured": false,
@@ -21,6 +21,7 @@
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
+      "mutationRequested": true,
       "implementationFinished": false
     },
     "availableSkills": [
@@ -38,7 +39,7 @@
     "evidence": []
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "unconfigured-non-trivial-setup",
     "phase": "setup",
     "effectiveClassification": "non-trivial",

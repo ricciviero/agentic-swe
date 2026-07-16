@@ -135,6 +135,9 @@ export function evaluateCompletion(
   const assumptions = evidenceIds(evidence, "assumption");
   const learning = evidenceIds(evidence, "learning");
   const updated = plan.completionCriteria.map((criterion): CompletionCriterion => {
+    if (criterion.status === "not-applicable" || criterion.status === "waived") {
+      return criterion;
+    }
     const { evidenceIds: _previousEvidenceIds, ...baseCriterion } = criterion;
     let ids: string[] = [];
     let satisfied = false;
@@ -160,7 +163,10 @@ export function evaluateCompletion(
       ? { ...baseCriterion, status: "satisfied", evidenceIds: ids }
       : { ...baseCriterion, status: "satisfied" };
   });
-  const outstanding = updated.filter((criterion) => criterion.hard && criterion.status !== "satisfied");
+  const outstanding = updated.filter(
+    (criterion) =>
+      criterion.hard && !["satisfied", "waived", "not-applicable"].includes(criterion.status),
+  );
   return { satisfied: outstanding.length === 0, criteria: updated, outstanding };
 }
 

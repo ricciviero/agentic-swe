@@ -1,8 +1,8 @@
 {
   "name": "learning-candidate",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "learning-candidate",
     "repository": {
       "configured": true,
@@ -21,6 +21,7 @@
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
+      "mutationRequested": true,
       "implementationFinished": true
     },
     "availableSkills": [],
@@ -35,7 +36,7 @@
       { "id": "learning-2", "kind": "learning", "valid": true, "reasonCode": "REPEATED_CORRECTION" }
     ],
     "state": {
-      "protocolVersion": "1.0",
+      "protocolVersion": "1.1",
       "sessionId": "session-1",
       "requestId": "learning-candidate",
       "phase": "completion",
@@ -65,7 +66,7 @@
     ]
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "learning-candidate",
     "phase": "completion",
     "effectiveClassification": "non-trivial",

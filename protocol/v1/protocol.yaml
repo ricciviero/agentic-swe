@@ -1,5 +1,5 @@
 id: agentic-swe
-protocolVersion: "1.0"
+protocolVersion: "1.1"
 configVersion: 1
 status: normative
 title: Agentic SWE Protocol v1
@@ -100,7 +100,7 @@ gates:
     requiredWhen:
       all:
         - repository.configured == false
-        - any(request.explicitOnboarding == true, classification.effective == non-trivial)
+        - any(request.explicitOnboarding == true, all(request.mutationRequested == true, classification.effective == non-trivial))
     skill: agents-setup
     waiver: forbidden
     evidence:
@@ -110,6 +110,7 @@ gates:
   - id: planning
     requiredWhen:
       all:
+        - request.mutationRequested == true
         - classification.effective == non-trivial
         - workflow.planningGate in [non-trivial, always]
         - planning-evidence == false
@@ -274,9 +275,11 @@ policies:
     resolution: intersection
     precedence: [host-deny, user-mode, protocol-request]
     protocolNeverElevatesHost: true
+    readOnlyRequestCapabilities: ["repository:read", "instructions:read", "skills:read"]
   delivery:
     hardCriteriaRequireEvidence: true
     completionWithMissingHardCriteria: false
+    readOnlyRequestEvidence: not-required
   learning:
     target: AGENTS.md
     requireRepeatedSignal: true

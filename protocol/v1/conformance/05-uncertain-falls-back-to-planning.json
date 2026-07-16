@@ -1,8 +1,8 @@
 {
   "name": "uncertain-falls-back-to-planning",
-  "protocolVersion": "1.0",
+  "protocolVersion": "1.1",
   "input": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "uncertain-falls-back-to-planning",
     "repository": {
       "configured": true,
@@ -21,6 +21,7 @@
       },
       "explicitOnboarding": false,
       "explicitLighterProcess": false,
+      "mutationRequested": true,
       "implementationFinished": false
     },
     "availableSkills": [
@@ -36,7 +37,7 @@
     "evidence": []
   },
   "expected": {
-    "protocolVersion": "1.0",
+    "protocolVersion": "1.1",
     "requestId": "uncertain-falls-back-to-planning",
     "phase": "planning",
     "effectiveClassification": "non-trivial",

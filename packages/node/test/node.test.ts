@@ -149,6 +149,34 @@ test("node runtime evaluates read-only and intersects capabilities", async () =>
   assert.deepEqual(after, before);
 });
 
+test("node runtime skips planning and mutation capabilities for informational requests", async () => {
+  const { root, globalSkills } = await createRepository();
+  const runtime = createNodeRuntime({ startPath: root, globalSkillDirectories: [globalSkills] });
+  const result = await runtime.evaluate({
+    requestId: "request-informational",
+    summary: "Explain the runtime architecture without changing files.",
+    classification: {
+      value: "non-trivial",
+      source: "human",
+      reasons: ["The explanation spans multiple layers."],
+    },
+    mutationRequested: false,
+    hostCapabilities: ["repository:read", "instructions:read", "skills:read", "workspace:mutate"],
+  });
+  assert.equal(result.plan.phase, "execution");
+  assert.equal(result.plan.requiredGates.find((gate) => gate.id === "planning")?.status, "not-applicable");
+  assert.deepEqual(result.plan.requestedCapabilities, [
+    "repository:read",
+    "instructions:read",
+    "skills:read",
+  ]);
+  assert.deepEqual(result.effectiveCapabilities, [
+    "repository:read",
+    "instructions:read",
+    "skills:read",
+  ]);
+});
+
 test("malformed configuration produces a blocked read-only plan", async () => {
   const { root } = await createRepository();
   await writeFile(join(root, ".agentic", "config.yaml"), "version: 2\n", "utf8");

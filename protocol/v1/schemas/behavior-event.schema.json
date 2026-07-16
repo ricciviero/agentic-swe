@@ -6,7 +6,7 @@
   "additionalProperties": false,
   "required": ["protocolVersion", "id", "sessionId", "requestId", "sequence", "type", "source", "fromPhase", "toPhase"],
   "properties": {
-    "protocolVersion": { "const": "1.0" },
+    "protocolVersion": { "const": "1.1" },
     "id": { "type": "string", "minLength": 1 },
     "sessionId": { "type": "string", "minLength": 1 },
     "requestId": { "type": "string", "minLength": 1 },
