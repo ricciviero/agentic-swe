@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "taskId": "05-neutral-theme-edit",
+  "category": "neutral-mechanical-mutation",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "theme.txt",
+        "contentEquals": "theme=light\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "exact-content",
+        "argv": [
+          "python3",
+          "-c",
+          "from pathlib import Path; assert Path(\"theme.txt\").read_text() == \"theme=light\\n\""
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "theme.txt"
+    ],
+    "allowedSkills": []
+  }
+}

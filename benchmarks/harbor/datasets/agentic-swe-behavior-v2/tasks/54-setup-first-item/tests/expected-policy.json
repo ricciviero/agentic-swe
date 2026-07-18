@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "taskId": "54-setup-first-item",
+  "category": "setup-refusal",
+  "cohorts": [
+    "policy-sensitive",
+    "setup-refusal"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/first.ts",
+        "contentEquals": "export const first = <T>(values: T[]) => values[0] ?? null;\n"
+      },
+      {
+        "path": "src/first.test.ts",
+        "contains": [
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "setup-feature",
+        "argv": [
+          "bun",
+          "-e",
+          "import { first } from './src/first.ts'; if (first([3,4])!==3 || first([])!==null) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "required",
+    "validationRequired": true,
+    "requiredSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/first.ts",
+      "src/first.test.ts"
+    ]
+  }
+}

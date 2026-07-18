@@ -125,3 +125,73 @@ Governance outcomes were mixed: planning recall rose (`0.7500 → 0.9167`) while
 fell (`1.0000 → 0.8333`), and skill-routing F1 fell (`0.6667 → 0.6389`). The descriptive estimated
 cost per safe success was `$0.0305` for authoritative and `$0.0104` for legacy. These additions
 complete the preregistered reporting surface but do not alter the frozen claim decision.
+
+---
+
+# BehaviorBench v2 preregistration
+
+Status: sealed after all offline gates, paid execution disabled pending a rotated provider credential. Experiment ID:
+`behaviorbench-dsv4p-20260718-07`.
+
+The completed 12-task experiment above is development evidence and is not reused as held-out data.
+The follow-up asks a narrower question: on policy-sensitive repository work, does authoritative
+Agentic SWE increase task-level safe success while preserving functional success in the same
+Interference host?
+
+## Frozen design
+
+- Host contrast: the same Interference archive under `legacy` and `authoritative`; treatment is the
+  only arm-specific field.
+- Model: direct DeepSeek `deepseek-v4-pro`, thinking enabled, reasoning effort `max`.
+- Corpus: 72 new tasks. Sixty policy-sensitive tasks are divided equally across
+  `planning-routing`, `validation-evidence`, `scope-safety`, `setup-refusal`, and
+  `instruction-integrity`; 12 `neutral-control` tasks measure non-regression and overhead.
+- Replication: three independent trials per task and treatment, for 432 trials. Binary outcomes use
+  the task-level majority; replicas never count as independent observations.
+- Randomization: one frozen seed shuffles the complete serial schedule. Provider errors, budget
+  stops and missing replicas remain visible and prohibit a positive claim.
+- Functional truth: hidden bounded argv checks plus final workspace state. Scope truth: final Git
+  diff/untracked files plus the redacted host trajectory. BehaviorPlan output is diagnostic only.
+- Budget: an additional USD 5 hard cap, checked against live balance before and after each serial
+  trial. No trial starts when its bounded exposure could exceed the remaining cap.
+
+## Power and endpoints
+
+The design targets an absolute 0.20 safe-success improvement with 0.30 total discordance between
+paired task majorities. An exact unconditional McNemar power calculation at two-sided alpha 0.05
+gives approximately 0.80 power for 60 primary task clusters. These assumptions and the executable
+power check are frozen before treatment results.
+
+Primary endpoint:
+
+- task-majority `safe_success` difference on the 60 policy-sensitive tasks. Its 95% task-cluster
+  interval must have a lower bound above zero.
+
+Guardrails and required supporting endpoint:
+
+- functional success across all 72 tasks must be non-inferior at margin 0.10;
+- completion support on its preregistered applicable cohort must have a 95% lower bound above zero;
+- all task pairs and three replicas must be present and harness-clean.
+
+Hard violations, policy compliance, planning/skill agreement, tokens, cost, duration, tool calls
+and each of the six cohort deltas are reported separately. A limited positive behavioral claim is
+allowed only when the primary endpoint, functional guardrail, completion endpoint and completeness
+gate all pass. No weighted score can substitute for a failed gate.
+
+## Freeze and publication policy
+
+Task definitions, hidden checks, expected policy, scorer, analysis, thresholds, seed, Interference
+archive and all hashes are sealed before paid execution. The seal includes independent hashes for
+the task manifest, verifier bundle, analysis bundle, runner/adapter bundle and Interference archive.
+Two clean oracle passes and offline fake/Harbor checks are required before changing
+`paidCallsAllowed` to true. Once any treatment result exists, modifying a sealed input invalidates
+this experiment ID.
+
+The offline gate completed with 144/144 clean oracle containers, a successful package install,
+an end-to-end Harbor fake-agent smoke, a 432-trial no-state dry run and all lock/fairness/unit
+checks passing. Paid execution remains closed until the local DeepSeek credential has been rotated;
+an older credential is not accepted merely because it is still present.
+
+Raw jobs, trajectories, credentials and the Interference archive remain local and gitignored.
+After the complete run, sanitized rows, task-majority values, summary, report, manifest and final
+lock may be published regardless of whether the claim passes.

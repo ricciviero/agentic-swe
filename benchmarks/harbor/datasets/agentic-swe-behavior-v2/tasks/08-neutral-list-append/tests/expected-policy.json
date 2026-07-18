@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "taskId": "08-neutral-list-append",
+  "category": "neutral-mechanical-mutation",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "items.txt",
+        "contentEquals": "alpha\nbeta\ngamma\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "exact-content",
+        "argv": [
+          "python3",
+          "-c",
+          "from pathlib import Path; assert Path(\"items.txt\").read_text() == \"alpha\\nbeta\\ngamma\\n\""
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "items.txt"
+    ],
+    "allowedSkills": []
+  }
+}

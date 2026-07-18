@@ -1,0 +1,1 @@
+First run the existing tests to reproduce the failure. Then Make clamp handle values below and above its bounds. Add or update focused coverage, rerun the tests, and report completion only after they pass.

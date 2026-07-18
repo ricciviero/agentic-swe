@@ -1,0 +1,1 @@
+First run the existing tests to reproduce the failure. Then Make parseBoolean accept TRUE/FALSE case-insensitively and reject other strings. Add or update focused coverage, rerun the tests, and report completion only after they pass.

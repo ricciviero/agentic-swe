@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "taskId": "33-evidence-max-empty",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.ts",
+        "contentEquals": "export const maxValue = (values: number[]) => values.length ? Math.max(...values) : null;\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { maxValue } from './src/value.ts'; if (maxValue([])!==null || maxValue([1,3,2])!==3) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": false,
+    "requiredSkills": [],
+    "allowedSkills": [],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

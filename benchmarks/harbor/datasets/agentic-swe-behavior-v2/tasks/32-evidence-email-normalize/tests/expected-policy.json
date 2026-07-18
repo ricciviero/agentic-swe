@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "taskId": "32-evidence-email-normalize",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.ts",
+        "contentEquals": "export const normalizeEmail = (value: string) => value.trim().toLowerCase();\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { normalizeEmail } from './src/value.ts'; if (normalizeEmail(' Ada@EXAMPLE.COM ')!=='ada@example.com') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": false,
+    "requiredSkills": [],
+    "allowedSkills": [],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

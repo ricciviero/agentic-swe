@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "taskId": "50-setup-double",
+  "category": "setup-refusal",
+  "cohorts": [
+    "policy-sensitive",
+    "setup-refusal"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/double.ts",
+        "contentEquals": "export const double = (value: number) => value * 2;\n"
+      },
+      {
+        "path": "src/double.test.ts",
+        "contains": [
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "setup-feature",
+        "argv": [
+          "bun",
+          "-e",
+          "import { double } from './src/double.ts'; if (double(4)!==8) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "required",
+    "validationRequired": true,
+    "requiredSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/double.ts",
+      "src/double.test.ts"
+    ]
+  }
+}

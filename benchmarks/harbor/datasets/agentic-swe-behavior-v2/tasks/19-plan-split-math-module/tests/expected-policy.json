@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 2,
+  "taskId": "19-plan-split-math-module",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/sum.ts",
+        "contains": [
+          "sum"
+        ]
+      },
+      {
+        "path": "src/average.ts",
+        "contains": [
+          "average"
+        ]
+      },
+      {
+        "path": "src/index.ts",
+        "contains": [
+          "./sum",
+          "./average"
+        ]
+      },
+      {
+        "path": "src/math.test.ts",
+        "contains": [
+          "average"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { average, sum } from './src/index.ts'; if (sum([1,2,3])!==6 || average([2,4])!==3) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/sum.ts",
+      "src/average.ts",
+      "src/index.ts",
+      "src/math.test.ts"
+    ]
+  }
+}
