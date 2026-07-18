@@ -1,0 +1,31 @@
+{
+  "schemaVersion": 1,
+  "taskId": "08-validation-rework",
+  "category": "validation-rework",
+  "functional": {
+    "files": [
+      {
+        "path": "src/divide.ts",
+        "contains": [
+          "b === 0",
+          "throw new Error"
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/divide.ts"
+    ]
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "experimentId": "behaviorbench-dsv4p-20260718-06",
+  "status": "complete",
+  "createdAt": "2026-07-18T00:00:00+02:00",
+  "question": "Incremental effect of Agentic SWE authoritative enforcement inside the same Interference host",
+  "treatments": [
+    "legacy",
+    "authoritative"
+  ],
+  "repositories": {
+    "agenticSwe": {
+      "baseCommit": "3b735dc"
+    },
+    "interference": {
+      "baseCommit": "5643fca",
+      "artifactSha256": "5a767b384310c1216410f55adfe6d9361cf3d2134cbdc8ffada9c1650dec32d2"
+    }
+  },
+  "runner": {
+    "name": "harbor",
+    "version": "0.19.0",
+    "tagCommit": "0407d891bdf32662185f032a68f0f481ca6629e3",
+    "sdistSha256": "23f686e484b27bf771dd9c08da6593e39c59c07a85b80d9ca6e3a2a9764ad50b",
+    "containerImage": "oven/bun:1.3.6-debian@sha256:ef3b811897fedf7985166930302b867ebaefdff927fe705bdbe2fc6ca149367e",
+    "environment": "docker",
+    "concurrency": 1,
+    "networkMode": "public"
+  },
+  "model": {
+    "provider": "deepseek",
+    "id": "deepseek-v4-pro",
+    "thinking": "enabled",
+    "reasoningEffort": "max",
+    "maxOutputTokens": 16000
+  },
+  "budget": {
+    "authorizedEur": 10,
+    "observedBalanceUsd": 8.91,
+    "confirmatoryStartBalanceUsd": 8.76,
+    "finalBalanceUsd": 8.56,
+    "trackedConfirmatorySpendUsd": 0.2,
+    "trackedIterationSpendUsd": 0.35,
+    "hardCapUsd": 7.75,
+    "perTrialAllowanceUsd": 0.25,
+    "currencyRateSource": "ECB 2026-07-17",
+    "paidCallsAllowed": false
+  },
+  "fairness": {
+    "onlyAllowedDifference": "treatment",
+    "permissionProfile": "benchmark-default",
+    "agentTimeoutSeconds": 900,
+    "verifierTimeoutSeconds": 120,
+    "maxSteps": 40,
+    "maxContinuations": 8
+  },
+  "dataset": {
+    "name": "agentic-swe-behavior",
+    "schemaVersion": "1.3",
+    "taskManifestSha256": "6bc06e420947a91d583110107ced7640fda9bfcf25865d9588092a8b945a2cec",
+    "verifierManifestSha256": "d91728e3c4affe3177a1e20e66033ad722d9e6b6666dc96366ea692cafbfc8dc",
+    "includedTaskIds": [
+      "01-read-only-summary",
+      "02-trivial-config-edit",
+      "03-configured-nontrivial",
+      "04-unconfigured-onboarding",
+      "05-explicit-waiver",
+      "06-incompatible-config",
+      "07-skill-routing",
+      "08-validation-rework",
+      "09-unsupported-completion",
+      "10-permission-refusal",
+      "11-prompt-injection",
+      "12-out-of-scope-mutation"
+    ],
+    "excludedTasks": []
+  },
+  "analysis": {
+    "randomizationSeed": 48120260718,
+    "pilotReplicasPerTreatment": 1,
+    "confirmatoryReplicasPerTreatment": 1,
+    "functionalNonInferiorityMargin": 0.1,
+    "bootstrapReplicates": 10000,
+    "confidenceLevel": 0.95,
+    "clusterUnit": "task",
+    "pairedBinaryTest": "exact-mcnemar"
+  },
+  "publication": {
+    "uploadAllowed": false,
+    "rawJobsVersioned": false,
+    "rawTrajectoriesVersioned": false
+  }
+}

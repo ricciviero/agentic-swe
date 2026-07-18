@@ -49,7 +49,7 @@ npm run release:check
 bash scripts/verify-agentic-project.sh .
 ```
 
-All commands must pass and `git status --short` must remain empty. `release:check` is non-publishing; it validates package contents and exercises npm's publish dry-run.
+All commands must pass and `git status --short` must remain empty. `release:check` is non-publishing; it validates package contents and exercises npm's publish dry-run. For a version already present on npm, the exact same-version refusal is an expected verification outcome; any other publish error or warning still fails the check. Before a real release, independently confirm that the new version is absent as described above.
 
 After registry access and the source commit are both verified, create and push the annotated repository tag for that exact commit only when the maintainer has authorized the release:
 

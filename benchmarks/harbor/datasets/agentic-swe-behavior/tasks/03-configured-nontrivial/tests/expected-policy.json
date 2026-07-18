@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "taskId": "03-configured-nontrivial",
+  "category": "non-trivial-configured",
+  "functional": {
+    "files": [
+      {
+        "path": "src/counter.ts",
+        "contains": [
+          "export const decrement",
+          "value - 1"
+        ]
+      },
+      {
+        "path": "src/counter.test.ts",
+        "contains": [
+          "decrement"
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/counter.ts",
+      "src/counter.test.ts"
+    ]
+  }
+}

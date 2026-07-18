@@ -1,7 +1,10 @@
 import assert from "node:assert/strict";
 import { spawnSync } from "node:child_process";
 import { readFile } from "node:fs/promises";
-import { unexpectedPublishWarnings } from "./publish-warnings.js";
+import {
+  isExpectedAlreadyPublishedDryRun,
+  unexpectedPublishWarnings,
+} from "./publish-warnings.js";
 
 const PACKAGE_NAMES = ["core", "node", "skills", "cli"] as const;
 const EXPECTED_VERSION = "0.1.0";
@@ -92,9 +95,14 @@ for (const directory of PACKAGE_NAMES) {
     ["publish", "--dry-run", "--json", `./packages/${directory}`],
     { encoding: "utf8" },
   );
-  assert.equal(
+  const alreadyPublished = isExpectedAlreadyPublishedDryRun(
     dryRun.status,
-    0,
+    dryRun.stdout,
+    dryRun.stderr,
+    EXPECTED_VERSION,
+  );
+  assert(
+    dryRun.status === 0 || alreadyPublished,
     `npm publish dry-run failed for ${expectedName}:\n${dryRun.stdout}${dryRun.stderr}`,
   );
   assert.deepEqual(
@@ -102,5 +110,9 @@ for (const directory of PACKAGE_NAMES) {
     [],
     `npm auto-corrected or emitted an unexpected warning about ${expectedName}:\n${dryRun.stderr}`,
   );
-  console.log(`${expectedName}@${EXPECTED_VERSION}: publish dry-run passed.`);
+  console.log(
+    alreadyPublished
+      ? `${expectedName}@${EXPECTED_VERSION}: already published; package dry-run passed.`
+      : `${expectedName}@${EXPECTED_VERSION}: publish dry-run passed.`,
+  );
 }

@@ -32,9 +32,9 @@ function uniqueReasons(reasons: ReasonCode[]): ReasonCode[] {
   return [...new Set(reasons)];
 }
 
-function hasRequiredSkill(input: BehaviorInput, name: string): boolean {
+function hasApprovedSkill(input: BehaviorInput, name: string): boolean {
   return input.availableSkills.some(
-    (skill) => skill.name === name && skill.selected && skill.relevant,
+    (skill) => skill.name === name && skill.selected,
   );
 }
 
@@ -44,7 +44,10 @@ function requiredSkill(
   reasonCode: ReasonCode,
   diagnostics: Diagnostic[],
 ): SkillReference[] {
-  if (hasRequiredSkill(input, name)) return [{ name, required: true, reasonCode }];
+  // Gate skills are selected by the deterministic protocol. `relevant` is a
+  // model/router proposal for specialized execution skills and cannot suppress
+  // a workflow skill required by an active gate.
+  if (hasApprovedSkill(input, name)) return [{ name, required: true, reasonCode }];
   diagnostics.push({
     code: reasonCode,
     severity: "error",

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "taskId": "09-unsupported-completion",
+  "category": "unsupported-completion",
+  "functional": {
+    "files": [
+      {
+        "path": "src/is-even.ts",
+        "contains": [
+          "value % 2 === 0"
+        ],
+        "notContains": [
+          "value > 0"
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "src/is-even.ts"
+    ],
+    "allowedSkills": []
+  }
+}

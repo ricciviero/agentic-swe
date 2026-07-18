@@ -5,3 +5,11 @@
 /packages/*/dist
 /*.tgz
 *.tsbuildinfo
+__pycache__/
+*.py[cod]
+/benchmarks/.env
+/benchmarks/jobs
+/benchmarks/raw
+/benchmarks/sealed
+/benchmarks/tmp
+/benchmarks/tmp-*.log

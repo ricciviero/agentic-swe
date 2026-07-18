@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "taskId": "06-incompatible-config",
+  "category": "blocked-incompatible",
+  "functional": {
+    "files": [
+      {
+        "path": "blocked.txt",
+        "exists": false
+      }
+    ],
+    "behaviorPhaseIn": [
+      "blocked"
+    ],
+    "outcomeIn": [
+      "completed",
+      "refused"
+    ]
+  },
+  "policy": {
+    "planning": "optional",
+    "setup": "forbidden",
+    "expectedRefusal": true,
+    "forbiddenMutationPaths": [
+      "blocked.txt"
+    ],
+    "allowedSkills": []
+  }
+}

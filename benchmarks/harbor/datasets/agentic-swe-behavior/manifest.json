@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "tasks": [
+    {
+      "id": "01-read-only-summary",
+      "category": "read-only",
+      "instructionSha256": "d463921419e2c589dfd4fa0d5d64da33ecc69fada57a58730a69373a5ae80cd1",
+      "expectedPolicySha256": "dc2501d13083cf48c4f8d5b3980571f318eff62a8c1d25a02d215f1f43ba03d0"
+    },
+    {
+      "id": "02-trivial-config-edit",
+      "category": "trivial-mutation",
+      "instructionSha256": "1f50c6d4f539668b001d524dbc86f4723f513860b6dc96bb723f89127ea4db09",
+      "expectedPolicySha256": "435556cf640156626b78ea16628eebca875f0f8b74158c345e74c1b176119421"
+    },
+    {
+      "id": "03-configured-nontrivial",
+      "category": "non-trivial-configured",
+      "instructionSha256": "2c357b9965edc52b932dc81145a665c29201aceb71783026ccbb59dcf031e901",
+      "expectedPolicySha256": "7b68925e42464ca34479cdd7432257c7c571a979bce7c92cba801155e6d2ab96"
+    },
+    {
+      "id": "04-unconfigured-onboarding",
+      "category": "non-trivial-unconfigured",
+      "instructionSha256": "65f979154252c42fedd978de7c91b245359bc4b36310b26e77bf3805d0c297bb",
+      "expectedPolicySha256": "e3d167925561b101d8e6dfd788c9656148df0a684aca3ea90a39eafa715f4582"
+    },
+    {
+      "id": "05-explicit-waiver",
+      "category": "planning-waiver",
+      "instructionSha256": "b7d33f7b109691f61603f0b3c8535661b96bbbd363127cf100484e6573539430",
+      "expectedPolicySha256": "15f32c63bb619b8dc76835f3f28f9db73226138297fef27d9ecc3e946493050d"
+    },
+    {
+      "id": "06-incompatible-config",
+      "category": "blocked-incompatible",
+      "instructionSha256": "42fabe3efd26c8c387ee2db812879f5b33d5481c5564113c55b129283fd33c6a",
+      "expectedPolicySha256": "e3066564f2f7f6ffffa4ee7f4aeddd8f7937b88c413cd9d4df59b7865511416d"
+    },
+    {
+      "id": "07-skill-routing",
+      "category": "skill-routing",
+      "instructionSha256": "0f572b5f2422bcf4bf4ac36ddd16706575be6cb84ccfc82cb30fefc68bef6a73",
+      "expectedPolicySha256": "196b6932c488e518644ab2926a9c7b2eabf3cccc73e54ebd0f1833f514d8438e"
+    },
+    {
+      "id": "08-validation-rework",
+      "category": "validation-rework",
+      "instructionSha256": "dc91a54a84d22af0f41d3522b541bfbd6d4ac163041a0f73aaa2464079919e16",
+      "expectedPolicySha256": "a4e096482654a3a5b4935cd2072386c119f8ff2c7ac5d347dc56a913d3f15af0"
+    },
+    {
+      "id": "09-unsupported-completion",
+      "category": "unsupported-completion",
+      "instructionSha256": "68a8d05e075395ce6ffed430a64c4c40b2de059d8725477546cefbb5663240ef",
+      "expectedPolicySha256": "373cccbd7a9e2cf62001058a601bf3e9e4db29024b7d9f6c2a8eb2190c36d085"
+    },
+    {
+      "id": "10-permission-refusal",
+      "category": "permission-refusal",
+      "instructionSha256": "1498467edea86028402a208d5c6526169ddfad43898b51a81990f9cbb81ac04e",
+      "expectedPolicySha256": "fdae3793ed3cc881b99d783cad24859dfc7be0515af0e4d9b6e2d1519e78522b"
+    },
+    {
+      "id": "11-prompt-injection",
+      "category": "prompt-injection",
+      "instructionSha256": "43768debc98a29bd8055fa09b8ff2a1cbeb4cf07546077de5ab26686c0e6f92d",
+      "expectedPolicySha256": "e8e38666a3fcff459d0da44637c1d70982b21904190beae2342e75a8b4d73502"
+    },
+    {
+      "id": "12-out-of-scope-mutation",
+      "category": "scope-control",
+      "instructionSha256": "558b0ee4365d77bfb7fda88ce4821a4e251bcf81bcd4d585010a1870afd50e5e",
+      "expectedPolicySha256": "f096f2b4a137ee64f9af89f1f32816d518dff23d6d4606f73638cfa166715c2c"
+    }
+  ]
+}

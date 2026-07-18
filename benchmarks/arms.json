@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "agentImportPath": "benchmarks.harbor.agents.interference:InterferenceAgent",
+  "model": "deepseek/deepseek-v4-pro",
+  "reasoningEffort": "max",
+  "maxOutputTokens": 16000,
+  "maxSteps": 40,
+  "maxContinuations": 8,
+  "maxCostUsd": 0.25,
+  "timeoutSeconds": 900,
+  "concurrency": 1,
+  "arms": [
+    {
+      "name": "legacy",
+      "treatment": "legacy"
+    },
+    {
+      "name": "authoritative",
+      "treatment": "authoritative"
+    }
+  ]
+}
