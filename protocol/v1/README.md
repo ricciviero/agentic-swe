@@ -89,9 +89,13 @@ A task is `non-trivial` when **any** listed v1 signal is present, including two 
 
 An unconfigured repository MAY execute a trivial mechanical task without creating policy. Explicit onboarding or non-trivial mutating work MUST enter `setup`. Setup cannot be waived. The host verifies the canonical `AGENTS.md`, compatible `.agentic/config.yaml`, and required adapters before leaving the phase.
 
+When the setup gate is required, the protocol selects the approved `agents-setup` workflow skill deterministically. Model routing is reserved for specialized skills and cannot omit or override a skill required by a gate.
+
 ### Planning
 
 Non-trivial mutating work MUST have current planning evidence when the project planning gate is `non-trivial` or `always`. The detailed procedure belongs to `iterations-planner`. A user MAY explicitly request a lighter process; the host records the planning waiver reason and the completion report discloses it. Silence or model preference is not a waiver.
+
+When the planning gate is required, the protocol selects the approved `iterations-planner` workflow skill deterministically. The model may propose additional relevant skills, but it is not the authority for mandatory workflow routing.
 
 ### Verification
 

@@ -20,7 +20,7 @@ if (plan.phase === "execution") {
 }
 ```
 
-Model output may classify or propose skill names. It never modifies gates or grants capabilities. Illegal transitions throw `TransitionError`; classifier/router errors, aborts, and bounded timeouts return typed diagnostics and conservative results.
+Model output may classify or propose specialized skill names. It never modifies gates or grants capabilities. Skills required by a workflow gate are deterministic: setup selects `agents-setup`, and required planning selects `iterations-planner`, even if a model router marks either skill irrelevant. Illegal transitions throw `TransitionError`; classifier/router errors, aborts, and bounded timeouts return typed diagnostics and conservative results.
 
 ## Compatibility
 

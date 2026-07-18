@@ -224,6 +224,20 @@ test("planning waiver is accepted only with an explicit reason", async () => {
   assert.equal(missingReason.diagnostics[0]?.code, "PLANNING_REQUIRED");
 });
 
+test("required gate skills do not depend on model relevance routing", async () => {
+  const { input } = await fixture("04-configured-non-trivial-planning.json");
+  const plan = evaluateBehavior({
+    ...input,
+    availableSkills: input.availableSkills.map((skill) => ({
+      ...skill,
+      relevant: false,
+    })),
+  });
+  assert.equal(plan.phase, "planning");
+  assert.deepEqual(plan.selectedSkills.map((skill) => skill.name), ["iterations-planner"]);
+  assert.equal(plan.diagnostics.some((diagnostic) => diagnostic.code === "PLANNING_REQUIRED"), false);
+});
+
 test("host execution events produce evidence only after successful real events", async () => {
   let events: HostExecutionEvent[] = [];
   events = recordEvent(events, hostEvent(1, {

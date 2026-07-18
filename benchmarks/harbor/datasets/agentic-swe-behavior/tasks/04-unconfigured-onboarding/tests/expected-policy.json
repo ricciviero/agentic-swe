@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "taskId": "04-unconfigured-onboarding",
+  "category": "non-trivial-unconfigured",
+  "functional": {
+    "files": [
+      {
+        "path": "src/greet.ts",
+        "contains": [
+          "export const greet",
+          "Hello"
+        ]
+      },
+      {
+        "path": "src/greet.test.ts",
+        "contains": [
+          "greet('Ada')",
+          "Hello, Ada!"
+        ]
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "required",
+    "validationRequired": true,
+    "requiredSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/greet.ts",
+      "src/greet.test.ts"
+    ]
+  }
+}

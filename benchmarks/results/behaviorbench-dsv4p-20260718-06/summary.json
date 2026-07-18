@@ -1,0 +1,245 @@
+{
+  "claimAssessment": {
+    "completionSupportImprovement": false,
+    "functionalNonInferiority": false,
+    "functionalNonInferiorityMargin": 0.1,
+    "generalPositiveClaim": false,
+    "safeSuccessImprovement": false
+  },
+  "costPerSafeSuccessUsd": {
+    "authoritative": 0.030472325166666665,
+    "legacy": 0.0104446545
+  },
+  "experimentId": "behaviorbench-dsv4p-20260718-06",
+  "failureTaxonomy": {
+    "authoritative": {
+      "functional-failure": 2,
+      "planning-mismatch": 3,
+      "skill-routing-mismatch": 5,
+      "unsupported-completion": 2
+    },
+    "legacy": {
+      "functional-failure": 2,
+      "hard-violation": 2,
+      "planning-mismatch": 3,
+      "skill-routing-mismatch": 4,
+      "unsupported-completion": 6
+    }
+  },
+  "metrics": {
+    "cachedTokens": {
+      "authoritativeMean": 162069.33333333334,
+      "authoritativeMedian": 147328.0,
+      "bootstrapCI": [
+        70207.46666666667,
+        200804.2666666666
+      ],
+      "difference": 133685.33333333334,
+      "legacyMean": 28384.0,
+      "legacyMedian": 19968.0,
+      "pairedMedianDifference": 120448.0
+    },
+    "completionSupported": {
+      "authoritativeMean": 0.8333333333333334,
+      "bootstrapCI": [
+        -0.08333333333333333,
+        0.75
+      ],
+      "difference": 0.3333333333333333,
+      "exactMcNemar": {
+        "authoritativeWins": 6,
+        "discordantPairs": 8,
+        "legacyWins": 2,
+        "twoSidedPValue": 0.2890625
+      },
+      "legacyMean": 0.5
+    },
+    "costUsd": {
+      "authoritativeMean": 0.015236162583333332,
+      "authoritativeMedian": 0.013800404,
+      "bootstrapCI": [
+        0.008428768195833335,
+        0.018847138062499998
+      ],
+      "difference": 0.013495386833333333,
+      "legacyMean": 0.0017407757499999998,
+      "legacyMedian": 0.001175979,
+      "pairedMedianDifference": 0.012479004500000002
+    },
+    "durationMs": {
+      "authoritativeMean": 126456.66666666667,
+      "authoritativeMedian": 139259.0,
+      "bootstrapCI": [
+        74727.01041666667,
+        145656.35208333333
+      ],
+      "difference": 110788.75,
+      "legacyMean": 15667.916666666666,
+      "legacyMedian": 11518.0,
+      "pairedMedianDifference": 124419.0
+    },
+    "functionalSuccess": {
+      "authoritativeMean": 0.8333333333333334,
+      "bootstrapCI": [
+        -0.25,
+        0.25
+      ],
+      "difference": 0.0,
+      "exactMcNemar": {
+        "authoritativeWins": 1,
+        "discordantPairs": 2,
+        "legacyWins": 1,
+        "twoSidedPValue": 1.0
+      },
+      "legacyMean": 0.8333333333333334
+    },
+    "hardViolation": {
+      "authoritativeMean": 0.0,
+      "bootstrapCI": [
+        -0.4166666666666667,
+        0.0
+      ],
+      "difference": -0.16666666666666666,
+      "exactMcNemar": {
+        "authoritativeWins": 0,
+        "discordantPairs": 2,
+        "legacyWins": 2,
+        "twoSidedPValue": 0.5
+      },
+      "legacyMean": 0.16666666666666666
+    },
+    "inputTokens": {
+      "authoritativeMean": 180190.91666666666,
+      "authoritativeMedian": 168134.5,
+      "bootstrapCI": [
+        80084.625,
+        222502.39374999996
+      ],
+      "difference": 150013.66666666666,
+      "legacyMean": 30177.25,
+      "legacyMedian": 20534.5,
+      "pairedMedianDifference": 138009.0
+    },
+    "outputTokens": {
+      "authoritativeMean": 7776.75,
+      "authoritativeMedian": 8243.5,
+      "bootstrapCI": [
+        4264.308333333333,
+        9245.422916666666
+      ],
+      "difference": 6790.75,
+      "legacyMean": 986.0,
+      "legacyMedian": 664.5,
+      "pairedMedianDifference": 7282.5
+    },
+    "planningPrecision": {
+      "authoritativeMean": 0.8333333333333334,
+      "authoritativeMedian": 1.0,
+      "bootstrapCI": [
+        -0.4166666666666667,
+        0.0
+      ],
+      "difference": -0.16666666666666666,
+      "legacyMean": 1.0,
+      "legacyMedian": 1.0,
+      "pairedMedianDifference": 0.0
+    },
+    "planningRecall": {
+      "authoritativeMean": 0.9166666666666666,
+      "authoritativeMedian": 1.0,
+      "bootstrapCI": [
+        0.0,
+        0.4166666666666667
+      ],
+      "difference": 0.16666666666666666,
+      "legacyMean": 0.75,
+      "legacyMedian": 1.0,
+      "pairedMedianDifference": 0.0
+    },
+    "policyCompliance": {
+      "authoritativeMean": 0.5,
+      "bootstrapCI": [
+        0.0,
+        0.6666666666666666
+      ],
+      "difference": 0.3333333333333333,
+      "exactMcNemar": {
+        "authoritativeWins": 5,
+        "discordantPairs": 6,
+        "legacyWins": 1,
+        "twoSidedPValue": 0.21875
+      },
+      "legacyMean": 0.16666666666666666
+    },
+    "safeSuccess": {
+      "authoritativeMean": 0.5,
+      "bootstrapCI": [
+        0.0,
+        0.6666666666666666
+      ],
+      "difference": 0.3333333333333333,
+      "exactMcNemar": {
+        "authoritativeWins": 5,
+        "discordantPairs": 6,
+        "legacyWins": 1,
+        "twoSidedPValue": 0.21875
+      },
+      "legacyMean": 0.16666666666666666
+    },
+    "skillRoutingF1": {
+      "authoritativeMean": 0.638888888888889,
+      "authoritativeMedian": 1.0,
+      "bootstrapCI": [
+        -0.3333333333333333,
+        0.27777777777777773
+      ],
+      "difference": -0.02777777777777778,
+      "legacyMean": 0.6666666666666666,
+      "legacyMedian": 1.0,
+      "pairedMedianDifference": 0.0
+    },
+    "skillRoutingPrecision": {
+      "authoritativeMean": 0.8333333333333334,
+      "authoritativeMedian": 1.0,
+      "bootstrapCI": [
+        -0.4166666666666667,
+        0.0
+      ],
+      "difference": -0.16666666666666666,
+      "legacyMean": 1.0,
+      "legacyMedian": 1.0,
+      "pairedMedianDifference": 0.0
+    },
+    "skillRoutingRecall": {
+      "authoritativeMean": 0.7916666666666666,
+      "authoritativeMedian": 1.0,
+      "bootstrapCI": [
+        0.0,
+        0.3333333333333333
+      ],
+      "difference": 0.125,
+      "legacyMean": 0.6666666666666666,
+      "legacyMedian": 1.0,
+      "pairedMedianDifference": 0.0
+    },
+    "toolCalls": {
+      "authoritativeMean": 30.416666666666668,
+      "authoritativeMedian": 30.5,
+      "bootstrapCI": [
+        12.666666666666666,
+        33.166666666666664
+      ],
+      "difference": 22.583333333333332,
+      "legacyMean": 7.833333333333333,
+      "legacyMedian": 5.5,
+      "pairedMedianDifference": 20.0
+    }
+  },
+  "schemaVersion": 1,
+  "taskCount": 12,
+  "treatments": [
+    "authoritative",
+    "legacy"
+  ],
+  "trialCount": 24
+}

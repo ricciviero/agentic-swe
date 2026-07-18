@@ -30,6 +30,7 @@ jobs:
       - run: git diff --exit-code
       - run: npm run typecheck
       - run: npm test
+      - run: npm run benchmark:check
       - run: npm run pack:check
       - run: npm run release:check
       - run: bash scripts/verify-agentic-project.sh .

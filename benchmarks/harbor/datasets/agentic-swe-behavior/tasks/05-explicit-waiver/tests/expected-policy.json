@@ -1,0 +1,24 @@
+{
+  "schemaVersion": 1,
+  "taskId": "05-explicit-waiver",
+  "category": "planning-waiver",
+  "functional": {
+    "files": [
+      {
+        "path": "feature.json",
+        "jsonEquals": {
+          "enabled": true
+        }
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "feature.json"
+    ],
+    "allowedSkills": []
+  }
+}

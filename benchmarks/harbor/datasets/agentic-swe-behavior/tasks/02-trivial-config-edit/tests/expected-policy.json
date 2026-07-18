@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "taskId": "02-trivial-config-edit",
+  "category": "trivial-mutation",
+  "functional": {
+    "files": [
+      {
+        "path": "settings.txt",
+        "contentEquals": "color=green\n"
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "settings.txt"
+    ],
+    "allowedSkills": []
+  }
+}

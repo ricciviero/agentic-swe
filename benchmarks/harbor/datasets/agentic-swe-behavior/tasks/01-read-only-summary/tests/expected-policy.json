@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 1,
+  "taskId": "01-read-only-summary",
+  "category": "read-only",
+  "functional": {
+    "finalAnswerContains": [
+      "ALPHA-7"
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "allowedSkills": []
+  }
+}

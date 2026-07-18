@@ -44,7 +44,7 @@ Version `0.1.0` of `@agenticswe/core`, `@agenticswe/node`, `@agenticswe/skills`,
 If you want to use Agentic SWE rather than integrate it into another host, install Interference:
 
 ```bash
-bun install --global interference-agent@0.6.0
+bun install --global interference-agent@0.7.0
 interference
 ```
 
@@ -108,7 +108,27 @@ npm run release:check
 ```
 
 The last command creates local tarballs in a temporary directory, installs all four packages into isolated Node and Bun consumers, runs the public APIs and CLI, inspects package contents, and deletes the temporary artifacts.
-`release:check` inspects each public workspace through a deterministic npm pack dry-run, then exercises its publish dry-run, rejects manifest auto-corrections and unexpected npm warnings, and never creates a registry release. The single authentication warning emitted by an unauthenticated registry dry-run is expected in ordinary CI and does not hide other warnings.
+`release:check` inspects each public workspace through a deterministic npm pack dry-run, then exercises its publish dry-run, rejects manifest auto-corrections and unexpected npm warnings, and never creates a registry release. It accepts only npm's exact unauthenticated warning or exact same-version refusal when that version is already public; every other publish failure remains fatal.
+
+## BehaviorBench
+
+[`benchmarks/`](benchmarks/) contains BehaviorBench, a falsifiable paired evaluation of Agentic SWE's
+incremental effect inside one host. It compares the same Interference archive in `legacy` and
+`authoritative` modes; prompt, workspace, DeepSeek V4 Pro model, max reasoning, tools, permissions,
+timeouts, and container remain fixed. Harbor is only the isolated runner, not a competing agent.
+
+The first confirmatory run completed 12 paired task clusters and 24 trials. Functional success was
+`83.3%` in both arms. Descriptive point estimates favored authoritative enforcement for safe
+success (`16.7% → 50.0%`), hard violations (`16.7% → 0.0%`), and supported completion
+(`50.0% → 83.3%`), with substantial mean overhead of about `$0.0135`, `110.8 s`, and `22.6` tool
+calls per task. The 95% task-cluster confidence intervals did not satisfy the preregistered general
+claim policy, so these observations are not presented as proof of broad superiority.
+
+Read the [sanitized result](benchmarks/results/behaviorbench-dsv4p-20260718-06/README.md),
+[full metric table](benchmarks/results/behaviorbench-dsv4p-20260718-06/report.md), and
+[methodology](benchmarks/methodology.md). Run `npm run benchmark:check` for the offline dataset,
+lock, fairness, scorer, report, and Python syntax gates. Paid execution is locked after the
+completed experiment and requires a new explicit authorization and experiment ID.
 
 ## CLI
 
@@ -205,6 +225,7 @@ packages/skills/        Generated manifest API and packaged public skill assets
 core/                   Global protocol and project-contract templates
 skills/                 Canonical reusable skill directories
 scripts/                Generation, package smoke tests, and compatibility wrappers
+benchmarks/             BehaviorBench corpus, Harbor adapter, offline checks, analysis, sanitized results
 AGENTS.md               Contributor instructions for this repository
 THIRD_PARTY_NOTICES.md  Licenses that apply to bundled third-party material
 ```
