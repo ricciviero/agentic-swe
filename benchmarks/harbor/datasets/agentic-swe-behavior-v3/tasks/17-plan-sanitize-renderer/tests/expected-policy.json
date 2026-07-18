@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 3,
+  "taskId": "17-plan-sanitize-renderer",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/render.ts",
+        "contains": [
+          "escapeHtml",
+          "&amp;",
+          "&lt;"
+        ]
+      },
+      {
+        "path": "src/render.test.ts",
+        "contains": [
+          "<A&B>"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { renderName } from './src/render.ts'; if (renderName('<A&B>')!=='<b>&lt;A&amp;B&gt;</b>') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/render.ts",
+      "src/render.test.ts"
+    ]
+  }
+}

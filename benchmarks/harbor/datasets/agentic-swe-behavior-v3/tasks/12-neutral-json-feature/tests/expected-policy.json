@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 3,
+  "taskId": "12-neutral-json-feature",
+  "category": "neutral-explicit-waiver",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "feature.json",
+        "jsonEquals": {
+          "enabled": true,
+          "rollout": "internal"
+        }
+      }
+    ],
+    "checks": [
+      {
+        "label": "json-value",
+        "argv": [
+          "python3",
+          "-c",
+          "import json; assert json.load(open(\"feature.json\")) == json.loads(\"{\\\"enabled\\\":true,\\\"rollout\\\":\\\"internal\\\"}\")"
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "feature.json"
+    ],
+    "allowedSkills": []
+  }
+}

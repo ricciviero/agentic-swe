@@ -1,0 +1,8 @@
+{
+  "name": "behaviorbench-v2-fixture",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "bun test src/first.test.ts"
+  }
+}

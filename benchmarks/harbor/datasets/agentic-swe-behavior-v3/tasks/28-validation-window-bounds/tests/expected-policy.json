@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "taskId": "28-validation-window-bounds",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.test.ts",
+        "contains": [
+          "windowSlice",
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { windowSlice } from './src/value.ts'; if (JSON.stringify(windowSlice([1,2,3,4],-2,2))!==JSON.stringify([1,2]) || windowSlice([1,2],0,0).length!==0 || JSON.stringify(windowSlice([1,2,3],1,5))!==JSON.stringify([2,3])) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

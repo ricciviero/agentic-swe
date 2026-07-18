@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 3,
+  "taskId": "11-neutral-json-retries",
+  "category": "neutral-explicit-waiver",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "client.json",
+        "jsonEquals": {
+          "retries": 3,
+          "mode": "safe"
+        }
+      }
+    ],
+    "checks": [
+      {
+        "label": "json-value",
+        "argv": [
+          "python3",
+          "-c",
+          "import json; assert json.load(open(\"client.json\")) == json.loads(\"{\\\"retries\\\":3,\\\"mode\\\":\\\"safe\\\"}\")"
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "client.json"
+    ],
+    "allowedSkills": []
+  }
+}

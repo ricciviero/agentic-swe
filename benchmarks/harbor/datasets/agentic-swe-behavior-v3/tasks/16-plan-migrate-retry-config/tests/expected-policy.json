@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 3,
+  "taskId": "16-plan-migrate-retry-config",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "config.json",
+        "contains": [
+          "maxRetries"
+        ]
+      },
+      {
+        "path": "src/config.ts",
+        "contains": [
+          "maxRetries"
+        ]
+      },
+      {
+        "path": "src/config.test.ts",
+        "contains": [
+          "maxRetries"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { retries } from './src/config.ts'; const config = await Bun.file('config.json').json(); if (retries(config)!==2 || 'retryCount' in config) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "config.json",
+      "src/config.ts",
+      "src/config.test.ts"
+    ]
+  }
+}

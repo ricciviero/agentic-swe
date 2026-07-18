@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the sealed BehaviorBench v2 schedule serially with live budget gates."""
+"""Run a sealed BehaviorBench confirmatory schedule with live budget gates."""
 
 from __future__ import annotations
 
@@ -107,19 +107,21 @@ def main() -> None:
 
     lock = load_json(LOCK_PATH)
     arms = load_json(ARMS_PATH)
+    benchmark_label = f"BehaviorBench v{lock['schemaVersion']}"
+    output_label = f"confirmatory-v{lock['schemaVersion']}"
     if lock["status"] not in {"sealed", "running"}:
-        raise SystemExit(f"BehaviorBench v2 cannot run from lock status {lock['status']}")
+        raise SystemExit(f"{benchmark_label} cannot run from lock status {lock['status']}")
     if not lock["budget"]["paidCallsAllowed"] and not arguments.dry_run:
-        raise SystemExit("BehaviorBench v2 paid calls are locked")
+        raise SystemExit(f"{benchmark_label} paid calls are locked")
     if arms["model"] != f"{lock['model']['provider']}/{lock['model']['id']}":
-        raise SystemExit("BehaviorBench v2 model differs between arms and lock")
+        raise SystemExit(f"{benchmark_label} model differs between arms and lock")
 
     archive = arguments.interference_tarball.resolve()
     if not archive.is_file():
         raise SystemExit(f"Interference tarball not found: {archive}")
     artifact_digest = digest(archive)
     if artifact_digest != lock["repositories"]["interference"]["artifactSha256"]:
-        raise SystemExit("Interference artifact digest does not match the sealed v2 lock")
+        raise SystemExit(f"Interference artifact digest does not match the sealed {benchmark_label} lock")
     seal = computed_seal(archive)
     seal_checks = {
         "task manifest": (seal["taskManifestSha256"], lock["dataset"]["taskManifestSha256"]),
@@ -130,18 +132,18 @@ def main() -> None:
     }
     drifted = [name for name, (observed, expected) in seal_checks.items() if observed != expected]
     if drifted:
-        raise SystemExit(f"BehaviorBench v2 seal drift: {', '.join(drifted)}")
+        raise SystemExit(f"{benchmark_label} seal drift: {', '.join(drifted)}")
 
     api_key = load_api_key(arguments.auth_file, arguments.dry_run)
     schedule = schedule_trials(lock, arms)
     expected_trials = len(lock["dataset"]["includedTaskIds"]) * 2 * int(lock["analysis"]["replicasPerTreatment"])
     if len(schedule) != expected_trials or expected_trials != 432:
-        raise SystemExit(f"BehaviorBench v2 schedule must contain 432 trials, found {len(schedule)}")
+        raise SystemExit(f"{benchmark_label} schedule must contain 432 trials, found {len(schedule)}")
 
     if arguments.dry_run:
         for task_id, arm, replica in schedule:
-            print(f"confirmatory-v2 dry-run: {task_id}:{arm['treatment']}:{replica}")
-        print("BehaviorBench v2 dry-run passed: 432 unique scheduled trials; no state or provider call created.")
+            print(f"{output_label} dry-run: {task_id}:{arm['treatment']}:{replica}")
+        print(f"{benchmark_label} dry-run passed: 432 unique scheduled trials; no state or provider call created.")
         return
 
     jobs_root = ROOT / "benchmarks/jobs" / f"{lock['experimentId']}-confirmatory"
@@ -150,7 +152,7 @@ def main() -> None:
     if state_path.exists():
         state = load_json(state_path)
         if state.get("experimentId") != lock["experimentId"] or state.get("artifactSha256") != artifact_digest:
-            raise SystemExit("Existing v2 budget state belongs to a different experiment or artifact")
+            raise SystemExit("Existing budget state belongs to a different experiment or artifact")
         if state.get("inFlight"):
             raise SystemExit(f"Ambiguous in-flight trial requires audit before resume: {state['inFlight']['key']}")
     else:
@@ -178,7 +180,7 @@ def main() -> None:
         if not budget_allows(
             float(state["startingBalanceUsd"]), current, float(budget["hardCapUsd"]), allowance
         ):
-            raise SystemExit(f"BehaviorBench v2 budget gate stopped before {trial_key}")
+            raise SystemExit(f"{benchmark_label} budget gate stopped before {trial_key}")
 
         task = DATASET / "tasks" / task_id
         attempt = next_attempt(state, trial_key)
@@ -198,7 +200,7 @@ def main() -> None:
             "--n-concurrent", "1", "-q", "-y",
             "-o", str(output), "--job-name", "run",
         ]
-        print(f"confirmatory-v2: {trial_key}", flush=True)
+        print(f"{output_label}: {trial_key}", flush=True)
         state["inFlight"] = {
             "key": trial_key,
             "attempt": attempt,
@@ -235,7 +237,7 @@ def main() -> None:
         save_state(state_path, state)
         spent = max(0.0, float(state["startingBalanceUsd"]) - after)
         if spent > float(budget["hardCapUsd"]):
-            raise RuntimeError(f"BehaviorBench v2 cap exceeded after bounded trial: ${spent:.4f}")
+            raise RuntimeError(f"{benchmark_label} cap exceeded after bounded trial: ${spent:.4f}")
         if not clean:
             raise RuntimeError(f"Harbor trial was not clean: {trial_key}")
 

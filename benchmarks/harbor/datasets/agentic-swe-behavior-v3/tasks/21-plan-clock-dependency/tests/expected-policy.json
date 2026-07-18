@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 3,
+  "taskId": "21-plan-clock-dependency",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/expires.ts",
+        "contains": [
+          "Clock",
+          "clock.now"
+        ]
+      },
+      {
+        "path": "src/session.ts",
+        "contains": [
+          "clock"
+        ]
+      },
+      {
+        "path": "src/expires.test.ts",
+        "contains": [
+          "now: () => 100"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { isExpired } from './src/expires.ts'; import { active } from './src/session.ts'; const c={now:()=>100}; if (!isExpired(100,c) || !active(101,c)) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/expires.ts",
+      "src/session.ts",
+      "src/expires.test.ts"
+    ]
+  }
+}

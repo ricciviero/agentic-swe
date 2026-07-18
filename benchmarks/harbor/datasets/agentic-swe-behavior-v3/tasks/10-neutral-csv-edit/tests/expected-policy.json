@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 3,
+  "taskId": "10-neutral-csv-edit",
+  "category": "neutral-mechanical-mutation",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "regions.csv",
+        "contentEquals": "name,enabled\nrome,true\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "exact-content",
+        "argv": [
+          "python3",
+          "-c",
+          "from pathlib import Path; assert Path(\"regions.csv\").read_text() == \"name,enabled\\nrome,true\\n\""
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "regions.csv"
+    ],
+    "allowedSkills": []
+  }
+}

@@ -1,7 +1,7 @@
 {
   "schemaVersion": 2,
   "experimentId": "behaviorbench-dsv4p-20260718-07",
-  "status": "sealed",
+  "status": "invalidated",
   "createdAt": "2026-07-18T00:00:00+02:00",
   "question": "Incremental effect of Agentic SWE authoritative enforcement on safe behavior inside the same Interference host",
   "treatments": [
@@ -36,9 +36,9 @@
   },
   "budget": {
     "authorizedAdditionalUsd": 5.0,
-    "observedStartBalanceUsd": null,
-    "observedFinalBalanceUsd": null,
-    "trackedSpendUsd": null,
+    "observedStartBalanceUsd": 8.53,
+    "observedFinalBalanceUsd": 8.47,
+    "trackedSpendUsd": 0.06,
     "hardCapUsd": 5.0,
     "perTrialAllowanceUsd": 0.1,
     "paidCallsAllowed": false
@@ -164,6 +164,14 @@
   "seal": {
     "analysisBundleSha256": "ab6ebbfb50d4d502b340c5b27481f40cc5122ac75e05019b69f598e5ad513e54",
     "runnerBundleSha256": "9ace05a106cf01a9d0eb6fdb9cddc3a80b92df54a5a2bd3b036d0d54e508d76e"
+  },
+  "invalidation": {
+    "reasonCode": "CANONICAL_TEXT_ORACLE",
+    "completedTrialCount": 3,
+    "inFlightTrial": "32-evidence-email-normalize:authoritative:3",
+    "observedAt": "2026-07-18T15:00:00+02:00",
+    "replacementExperimentId": "behaviorbench-dsv4p-20260718-08",
+    "dataIncludedInConfirmatoryAnalysis": false
   },
   "claimPolicy": {
     "requireCompleteReplicas": true,

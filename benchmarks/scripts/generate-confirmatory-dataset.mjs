@@ -3,10 +3,13 @@ import { createHash } from "node:crypto";
 import { chmod, mkdir, readFile, readdir, rm, writeFile } from "node:fs/promises";
 import { dirname, join, relative, resolve } from "node:path";
 
-import { tasks } from "./confirmatory-tasks.mjs";
+import { tasks as v2Tasks } from "./confirmatory-tasks.mjs";
+import { tasks as v3Tasks } from "./confirmatory-v3-tasks.mjs";
 
 
-const ROOT = resolve("benchmarks/harbor/datasets/agentic-swe-behavior-v2");
+const VERSION = process.argv.includes("--v3") ? 3 : 2;
+const tasks = VERSION === 3 ? v3Tasks : v2Tasks;
+const ROOT = resolve(`benchmarks/harbor/datasets/agentic-swe-behavior-v${VERSION}`);
 const CHECK = process.argv.includes("--check");
 const IMAGE = "oven/bun:1.3.6-debian@sha256:ef3b811897fedf7985166930302b867ebaefdff927fe705bdbe2fc6ca149367e";
 
@@ -17,7 +20,7 @@ function digest(value) {
 
 
 function validateTasks() {
-  assert.equal(tasks.length, 72, "BehaviorBench v2 requires exactly 72 tasks");
+  assert.equal(tasks.length, 72, `BehaviorBench v${VERSION} requires exactly 72 tasks`);
   const counts = new Map();
   for (const task of tasks) {
     assert.ok(task.instruction.trim(), `${task.id} requires a non-empty instruction`);
@@ -58,10 +61,10 @@ function taskToml(task) {
 artifacts = []
 
 [task]
-name = "agenticswe-v2/${task.id}"
-description = "BehaviorBench v2: ${task.category}"
+name = "agenticswe-v${VERSION}/${task.id}"
+description = "BehaviorBench v${VERSION}: ${task.category}"
 authors = [{ name = "Riccardo Civiero" }]
-keywords = ["agentic-swe", "behaviorbench-v2", "${task.category}"]
+keywords = ["agentic-swe", "behaviorbench-v${VERSION}", "${task.category}"]
 
 [metadata]
 category = "${task.category}"
@@ -143,7 +146,7 @@ async function expectedFiles() {
   for (const task of tasks) {
     const base = join(ROOT, "tasks", task.id);
     const expected = {
-      schemaVersion: 2,
+      schemaVersion: VERSION,
       taskId: task.id,
       category: task.category,
       cohorts: task.cohorts,
@@ -174,7 +177,7 @@ async function expectedFiles() {
   }
   files.set(
     join(ROOT, "manifest.json"),
-    JSON.stringify({ schemaVersion: 2, taskCount: tasks.length, tasks: manifest }, null, 2) + "\n",
+    JSON.stringify({ schemaVersion: VERSION, taskCount: tasks.length, tasks: manifest }, null, 2) + "\n",
   );
   return files;
 }
@@ -207,12 +210,12 @@ if (CHECK) {
   assert.deepEqual(
     [...current.keys()].map((file) => relative(ROOT, file)).sort(),
     [...expected.keys()].map((file) => relative(ROOT, file)).sort(),
-    "Generated BehaviorBench v2 file list is stale",
+    `Generated BehaviorBench v${VERSION} file list is stale`,
   );
   for (const [file, content] of expected) {
     assert.equal(current.get(file), content, relative(ROOT, file) + " is stale");
   }
-  console.log("BehaviorBench v2 dataset generation check passed.");
+  console.log(`BehaviorBench v${VERSION} dataset generation check passed.`);
 } else {
   await rm(ROOT, { recursive: true, force: true });
   for (const [file, content] of expected) {
@@ -220,5 +223,5 @@ if (CHECK) {
     await writeFile(file, content);
     if (file.endsWith(".sh") || file.endsWith("verify.py")) await chmod(file, 0o755);
   }
-  console.log(`Generated ${tasks.length} BehaviorBench v2 tasks.`);
+  console.log(`Generated ${tasks.length} BehaviorBench v${VERSION} tasks.`);
 }

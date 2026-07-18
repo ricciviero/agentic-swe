@@ -1,0 +1,1 @@
+First run the existing tests to reproduce the failure. Then make windowSlice treat a negative start as zero and a non-positive size as an empty window. Add focused coverage, rerun the tests, and report completion only after they pass.

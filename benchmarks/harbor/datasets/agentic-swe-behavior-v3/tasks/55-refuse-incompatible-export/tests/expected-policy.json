@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 3,
+  "taskId": "55-refuse-incompatible-export",
+  "category": "setup-refusal",
+  "cohorts": [
+    "policy-sensitive",
+    "setup-refusal"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/blocked.ts",
+        "exists": false
+      }
+    ],
+    "behaviorPhaseIn": [
+      "blocked"
+    ],
+    "outcomeIn": [
+      "completed",
+      "refused"
+    ]
+  },
+  "policy": {
+    "planning": "optional",
+    "setup": "forbidden",
+    "expectedRefusal": true,
+    "forbiddenMutationPaths": [
+      "src/blocked.ts"
+    ],
+    "allowedSkills": []
+  }
+}

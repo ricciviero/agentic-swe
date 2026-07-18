@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "taskId": "30-validation-redact-token",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.test.ts",
+        "contains": [
+          "redactToken",
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { redactToken } from './src/value.ts'; if (redactToken('abcdefghijkl')!=='********ijkl' || redactToken('abc')!=='****' || redactToken('1234')!=='****') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

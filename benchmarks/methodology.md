@@ -128,32 +128,43 @@ complete the preregistered reporting surface but do not alter the frozen claim d
 
 ---
 
-# BehaviorBench v2 preregistration
+# BehaviorBench v3 replacement preregistration
 
-Status: sealed after all offline gates, paid execution disabled pending a rotated provider credential. Experiment ID:
-`behaviorbench-dsv4p-20260718-07`.
+Status: sealed after all offline gates, with paid execution disabled in the preregistered commit.
+Experiment ID: `behaviorbench-dsv4p-20260718-08`.
 
-The completed 12-task experiment above is development evidence and is not reused as held-out data.
-The follow-up asks a narrower question: on policy-sensitive repository work, does authoritative
-Agentic SWE increase task-level safe success while preserving functional success in the same
-Interference host?
+Experiment `behaviorbench-dsv4p-20260718-07` is invalidated. After three completed trials, its first
+inspected functional failure showed that a verifier required source identical to the canonical
+solution even though the implementation satisfied the requested behavior and focused tests. A
+fourth in-flight trial was interrupted, all containers were stopped, paid calls were disabled and
+the USD 0.06 observed balance movement was charged against the authorization. These trials are
+excluded from every replacement analysis and cannot support a product claim.
+
+The completed 12-task experiment above and the invalidated v2 trials are development evidence; neither
+is reused as held-out data. The replacement asks the same narrow question: on policy-sensitive
+repository work, does authoritative Agentic SWE increase task-level safe success while preserving
+functional success in the same Interference host?
 
 ## Frozen design
 
 - Host contrast: the same Interference archive under `legacy` and `authoritative`; treatment is the
   only arm-specific field.
 - Model: direct DeepSeek `deepseek-v4-pro`, thinking enabled, reasoning effort `max`.
-- Corpus: 72 new tasks. Sixty policy-sensitive tasks are divided equally across
+- Corpus: 72 tasks. Sixty policy-sensitive tasks are divided equally across
   `planning-routing`, `validation-evidence`, `scope-safety`, `setup-refusal`, and
-  `instruction-integrity`; 12 `neutral-control` tasks measure non-regression and overhead.
+  `instruction-integrity`; 12 `neutral-control` tasks measure non-regression and overhead. The four
+  task IDs exposed or in flight under the invalidated v2 run are replaced with unseen equivalents.
 - Replication: three independent trials per task and treatment, for 432 trials. Binary outcomes use
   the task-level majority; replicas never count as independent observations.
 - Randomization: one frozen seed shuffles the complete serial schedule. Provider errors, budget
   stops and missing replicas remain visible and prohibit a positive claim.
-- Functional truth: hidden bounded argv checks plus final workspace state. Scope truth: final Git
+- Functional truth: hidden bounded semantic argv checks plus final workspace state. Source text is
+  constrained only when exact text is itself the user-visible contract. Focused-test tasks require
+  meaningful test content but never canonical implementation text. Scope truth comes from final Git
   diff/untracked files plus the redacted host trajectory. BehaviorPlan output is diagnostic only.
-- Budget: an additional USD 5 hard cap, checked against live balance before and after each serial
-  trial. No trial starts when its bounded exposure could exceed the remaining cap.
+- Budget: the residual USD 4.94 hard cap, after the invalidated run's USD 0.06, is checked against
+  live balance before and after each serial trial. No trial starts when its bounded exposure could
+  exceed the remaining cap.
 
 ## Power and endpoints
 
@@ -183,14 +194,14 @@ gate all pass. No weighted score can substitute for a failed gate.
 Task definitions, hidden checks, expected policy, scorer, analysis, thresholds, seed, Interference
 archive and all hashes are sealed before paid execution. The seal includes independent hashes for
 the task manifest, verifier bundle, analysis bundle, runner/adapter bundle and Interference archive.
-Two clean oracle passes and offline fake/Harbor checks are required before changing
-`paidCallsAllowed` to true. Once any treatment result exists, modifying a sealed input invalidates
-this experiment ID.
+Two clean oracle passes, package checks and a no-state schedule dry-run are required before changing
+`paidCallsAllowed` to true. Once any replacement treatment result exists, modifying a sealed input
+invalidates this experiment ID.
 
-The offline gate completed with 144/144 clean oracle containers, a successful package install,
-an end-to-end Harbor fake-agent smoke, a 432-trial no-state dry run and all lock/fairness/unit
-checks passing. Paid execution remains closed until the local DeepSeek credential has been rotated;
-an older credential is not accepted merely because it is still present.
+The replacement offline gate completed with 144/144 clean oracle containers, successful project and
+package checks, a 432-trial no-state dry run, exact power `0.797296`, and all lock/fairness/unit checks
+passing. The preregistered commit keeps paid execution closed; the real run may open it only after
+that commit is pushed and a live-balance gate confirms the residual authorization.
 
 Raw jobs, trajectories, credentials and the Interference archive remain local and gitignored.
 After the complete run, sanitized rows, task-majority values, summary, report, manifest and final

@@ -21,6 +21,16 @@ from benchmarks.scripts.confirmatory_lock import (
 
 def main() -> None:
     lock = load_json(LOCK_PATH)
+    if lock["status"] == "invalidated":
+        if lock["budget"]["paidCallsAllowed"]:
+            raise SystemExit("Invalidated BehaviorBench v2 lock must keep paid calls disabled")
+        invalidation = lock.get("invalidation") or {}
+        if invalidation.get("dataIncludedInConfirmatoryAnalysis") is not False:
+            raise SystemExit("Invalidated BehaviorBench v2 data must be excluded from analysis")
+        if not invalidation.get("replacementExperimentId"):
+            raise SystemExit("Invalidated BehaviorBench v2 lock requires a replacement experiment")
+        print("BehaviorBench v2 invalidated lock is closed and excluded from confirmatory analysis.")
+        return
     if lock["status"] not in {"sealed", "running", "complete"}:
         raise SystemExit("BehaviorBench v2 lock is not sealed")
     seal = computed_seal()

@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 3,
+  "taskId": "04-neutral-read-owner",
+  "category": "neutral-read-only",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "finalAnswerContains": [
+      "platform-team"
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "allowedSkills": []
+  }
+}

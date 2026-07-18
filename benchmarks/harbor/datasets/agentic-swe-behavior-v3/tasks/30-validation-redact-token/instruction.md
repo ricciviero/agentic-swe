@@ -1,0 +1,1 @@
+First run the existing tests to reproduce the failure. Then make redactToken mask every character except the final four, while values of four characters or fewer become exactly four asterisks. Add focused coverage, rerun the tests, and report completion only after they pass.

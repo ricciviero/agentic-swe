@@ -1,0 +1,1 @@
+This repository is not configured for coding agents. Set it up first, then create src/length.ts to export safeLength(value), returning zero for null and the string length otherwise. Add focused passing Bun coverage and validate the project.

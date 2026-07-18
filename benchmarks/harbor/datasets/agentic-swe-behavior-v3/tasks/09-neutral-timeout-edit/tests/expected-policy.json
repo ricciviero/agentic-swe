@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 3,
+  "taskId": "09-neutral-timeout-edit",
+  "category": "neutral-mechanical-mutation",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "defaults.ts",
+        "contentEquals": "export const TIMEOUT = 45;\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "exact-content",
+        "argv": [
+          "python3",
+          "-c",
+          "from pathlib import Path; assert Path(\"defaults.ts\").read_text() == \"export const TIMEOUT = 45;\\n\""
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "defaults.ts"
+    ],
+    "allowedSkills": []
+  }
+}

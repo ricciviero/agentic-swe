@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 3,
+  "taskId": "36-evidence-safe-percent",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { percentage } from './src/value.ts'; if (percentage(1,0)!==0 || percentage(1,4)!==25) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": false,
+    "requiredSkills": [],
+    "allowedSkills": [],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

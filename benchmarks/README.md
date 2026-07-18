@@ -58,19 +58,25 @@ legacy. Read the result directory for limitations, failure counts, and task-leve
 
 ## Preregistered follow-up
 
-`behaviorbench-dsv4p-20260718-07` is a separate, currently locked confirmatory study. It preserves
-the completed v1 corpus and scorer unchanged, and introduces 60 new policy-sensitive tasks plus 12
-neutral controls. Each treatment receives three replicas per task; binary outcomes are reduced to
-a task-level majority before paired inference. The primary endpoint is safe success on the 60
-policy-sensitive tasks, with functional non-inferiority across all 72 tasks as a guardrail.
+`behaviorbench-dsv4p-20260718-07` is invalidated and excluded from confirmatory analysis. Its first
+three completed trials revealed that some functional verifiers required canonical source text,
+which rejected a semantically correct alternative implementation. Execution stopped immediately;
+the observed balance movement was USD 0.06 and no result from that run may support a claim.
 
-The design, power assumptions, missing-data policy and USD 5 additional operational cap live under
-[`experiments/behaviorbench-dsv4p-20260718-07/`](experiments/behaviorbench-dsv4p-20260718-07/).
-All offline gates are now complete: the 72 tasks passed two clean oracle runs (144 containers), the
-Interference archive installed in the pinned image, the Harbor agent-to-verifier smoke passed, the
-432-trial schedule dry-run created no state, and dataset/verifier/analysis/runner/archive hashes are
-sealed. Paid calls remain disabled until a rotated DeepSeek credential is available. The study is
-valid even if it rejects the proposed behavioral improvement.
+[`behaviorbench-dsv4p-20260718-08`](experiments/behaviorbench-dsv4p-20260718-08/) is the sealed
+replacement. It preserves the model, host artifact, two arms, seed, sample size, replicas, endpoints
+and analysis, but replaces all four exposed or in-flight tasks and uses semantic behavior checks.
+The corpus contains 60 policy-sensitive tasks plus 12 neutral controls. Each treatment receives
+three replicas per task; binary outcomes are reduced to a task-level majority before paired
+inference. The primary endpoint is safe success on the 60 policy-sensitive tasks, with functional
+non-inferiority across all 72 tasks as a guardrail.
+
+All replacement offline gates are complete: 72 tasks passed two clean oracle runs (144 containers),
+the 432-trial dry-run created no state, exact power is `0.797296`, project and package checks pass,
+and dataset, verifier, analysis, runner and Interference archive hashes are sealed. Paid calls remain
+disabled in the preregistered commit; the runner may enable them only for the real execution and may
+spend at most the residual USD 4.94 authorization. The study is valid even if it rejects the proposed
+behavioral improvement.
 
 ## Safety
 

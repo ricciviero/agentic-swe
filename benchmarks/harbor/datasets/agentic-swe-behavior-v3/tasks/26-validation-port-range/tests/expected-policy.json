@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "taskId": "26-validation-port-range",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.test.ts",
+        "contains": [
+          "parsePort",
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { parsePort } from './src/value.ts'; let threw=false; try { parsePort('70000'); } catch { threw=true; } if (!threw || parsePort('8080')!==8080) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

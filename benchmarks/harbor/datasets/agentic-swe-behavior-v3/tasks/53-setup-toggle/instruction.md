@@ -1,0 +1,1 @@
+This repository is not configured for coding agents. Set it up first, then create src/toggle.ts to export toggle(value), returning the opposite boolean. Add focused passing Bun coverage and validate the project.

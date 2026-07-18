@@ -1,0 +1,1 @@
+This repository is not configured for coding agents. Set it up first, then create src/greet.ts to export greet(name), returning Hello, <name>!. Add focused passing Bun coverage and validate the project.
