@@ -12,6 +12,24 @@
       ]
     },
     {
+      "name": "agentic-loop-dev",
+      "description": "Run a persistent, repository-aware engineering loop through real local evidence and stop before commit or deployment. Use when the user says \"agentic loop dev\", \"agentic-loop-dev\", or an unqualified \"agentic-loop\", or asks the agent to investigate, plan, implement, double- or triple-check, and repeatedly test a non-trivial change locally until it is genuinely ready. Discover the repository's own runtime and validation flow instead of assuming Docker, a language, or an E2E framework.",
+      "integrity": "sha256-gi2uEnA8zzAtU7YoKZL4eqUsCTJtudId0jPYrvpGiYQ=",
+      "files": [
+        "agents/openai.yaml",
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "agentic-loop-prod",
+      "description": "Run a persistent, repository-aware engineering loop through verified production evidence. Use only when the user explicitly says \"agentic loop prod\" or \"agentic-loop-prod\", or explicitly requests the full investigate-to-production loop. First complete the real local dev loop, then discover and codify the repository's actual delivery topology before any remote mutation. Never assume branch names, CI/CD provider, staging, deployment commands, rollback, or environment URLs.",
+      "integrity": "sha256-sDhysLTdoLSPks2/Jpzn9IjUyhMFWxlj9V+DXAZEsI0=",
+      "files": [
+        "agents/openai.yaml",
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "agents-setup",
       "description": "Bootstrap or migrate a repository into the Agentic SWE operating model. Create a canonical AGENTS.md, a versioned .agentic/config.yaml manifest, a minimal Claude Code adapter, a focused global-skill map, and the non-trivial-work planning gate. Use when onboarding a repository for coding agents, aligning agent instructions, configuring Codex or Claude Code, or establishing project skills and workflow rules.",
       "integrity": "sha256-jwgx0yfnY27kNeYpqjBCaaCNSpexNGaWfuqfsWR2s+k=",

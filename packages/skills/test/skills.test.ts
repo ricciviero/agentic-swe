@@ -10,13 +10,15 @@ import {
 
 test("published skill manifest is complete, ordered, and unique", () => {
   const skills = listSkills();
-  assert.equal(skills.length, 40);
+  assert.equal(skills.length, 42);
   assert.deepEqual(
     skills.map((skill) => skill.name),
     [...skills.map((skill) => skill.name)].sort(),
   );
   assert.equal(new Set(skills.map((skill) => skill.name)).size, skills.length);
   assert(getSkillMetadata("agents-setup"));
+  assert(getSkillMetadata("agentic-loop-dev"));
+  assert(getSkillMetadata("agentic-loop-prod"));
   assert(getSkillMetadata("redesign-existing-projects"));
   assert.throws(() => {
     (skills[0] as { name: string }).name = "mutated";
