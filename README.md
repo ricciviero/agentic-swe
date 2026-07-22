@@ -204,7 +204,7 @@ agentic-swe verify .
 
 ## Included Skills
 
-The public bundle currently contains 40 skills across frontend and mobile development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
+The public bundle currently contains 42 skills across frontend and mobile development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
 
 Personal or machine-specific skills are intentionally excluded from this public bundle, including `ericsson-reports`, `improve-aura`, `melix-llm-lab`, `obsidian-bases`, `telegram-deploy-notify`, and `vps-github-autodeploy`.
 
@@ -212,6 +212,8 @@ Notable workflow skills:
 
 - `agents-setup`: bootstraps or migrates a repository into the Agentic SWE contract and creates the focused skill map.
 - `iterations-planner`: executes the required planning workflow for non-trivial features, refactors, migrations, and fixes.
+- `agentic-loop-dev`: persists through investigation, implementation, double/triple review, and real local validation, then stops at an uncommitted `DEV_READY` state.
+- `agentic-loop-prod`: extends the local loop through verified production evidence only after discovering the repository's delivery topology and codifying current project-specific release knowledge.
 - `skill-creator`: supplied by Codex rather than bundled here; use it when creating or materially revising a Codex skill.
 
 ## Repository Layout

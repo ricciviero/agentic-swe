@@ -1,0 +1,51 @@
+{
+  "schemaVersion": 2,
+  "taskId": "51-setup-normalize-tag",
+  "category": "setup-refusal",
+  "cohorts": [
+    "policy-sensitive",
+    "setup-refusal"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/tag.ts",
+        "contentEquals": "export const normalizeTag = (value: string) => value.trim().toLowerCase();\n"
+      },
+      {
+        "path": "src/tag.test.ts",
+        "contains": [
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "setup-feature",
+        "argv": [
+          "bun",
+          "-e",
+          "import { normalizeTag } from './src/tag.ts'; if (normalizeTag(' News ')!=='news') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "required",
+    "validationRequired": true,
+    "requiredSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/tag.ts",
+      "src/tag.test.ts"
+    ]
+  }
+}

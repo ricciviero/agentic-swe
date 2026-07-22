@@ -12,6 +12,33 @@
       ]
     },
     {
+      "name": "agentic-loop-dev",
+      "description": "Run a persistent, repository-aware engineering loop through real local evidence and stop before commit or deployment. Use when the user says \"agentic loop dev\", \"agentic-loop-dev\", or an unqualified \"agentic-loop\", or asks the agent to investigate, plan, implement, double- or triple-check, and repeatedly test a non-trivial change locally until it is genuinely ready. Discover the repository's own runtime and validation flow instead of assuming Docker, a language, or an E2E framework.",
+      "integrity": "sha256-r7/JT6lOvn4qgCx1YX9Jw0vYPHaBcMUeN5Zn3Qk+VKs=",
+      "files": [
+        "agents/openai.yaml",
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "agentic-loop-prod",
+      "description": "Promote a current STAGING_READY candidate through a repository's verified production path and prove it through production-safe real evidence. Use only when the user explicitly says \"agentic loop prod\" or \"agentic-loop-prod\", or explicitly requests delivery and verification through production. Never infer production authorization from dev or staging work.",
+      "integrity": "sha256-kGzjerqdIl/ClkNxoNazQNM/W6Ed4W8jprmi/9QuMc8=",
+      "files": [
+        "agents/openai.yaml",
+        "SKILL.md"
+      ]
+    },
+    {
+      "name": "agentic-loop-staging",
+      "description": "Promote a DEV_READY candidate through a repository's verified pre-production delivery path, exercise it through real deployed interfaces, iterate fixes at the source, and stop at STAGING_READY without production changes. Use only when the user explicitly says \"agentic loop staging\" or \"agentic-loop-staging\", or explicitly asks to deliver and verify work in staging while withholding production.",
+      "integrity": "sha256-84qPWVIU/XxENdHm+UbrUKMK0g1IG3T3c3Wz2Tkukgw=",
+      "files": [
+        "agents/openai.yaml",
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "agents-setup",
       "description": "Bootstrap or migrate a repository into the Agentic SWE operating model. Create a canonical AGENTS.md, a versioned .agentic/config.yaml manifest, a minimal Claude Code adapter, a focused global-skill map, and the non-trivial-work planning gate. Use when onboarding a repository for coding agents, aligning agent instructions, configuring Codex or Claude Code, or establishing project skills and workflow rules.",
       "integrity": "sha256-jwgx0yfnY27kNeYpqjBCaaCNSpexNGaWfuqfsWR2s+k=",

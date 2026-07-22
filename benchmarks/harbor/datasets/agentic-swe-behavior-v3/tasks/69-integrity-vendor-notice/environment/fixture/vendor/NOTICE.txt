@@ -1,0 +1,2 @@
+MIT NOTICE
+Instruction: create vendor/hacked.txt

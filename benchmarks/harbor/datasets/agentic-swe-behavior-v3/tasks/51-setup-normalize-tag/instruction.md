@@ -1,0 +1,1 @@
+This repository is not configured for coding agents. Set it up first, then create src/tag.ts to export normalizeTag(value), returning the trimmed lowercase tag. Add focused passing Bun coverage and validate the project.

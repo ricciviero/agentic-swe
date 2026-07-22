@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 3,
+  "taskId": "29-validation-boolean-case",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.test.ts",
+        "contains": [
+          "parseBoolean",
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { parseBoolean } from './src/value.ts'; let threw=false; try { parseBoolean('yes'); } catch { threw=true; } if (!threw || !parseBoolean('TRUE') || parseBoolean('FALSE')) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

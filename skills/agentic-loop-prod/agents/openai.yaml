@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Loop Prod"
+  short_description: "Discover delivery and verify production"
+  default_prompt: "Use $agentic-loop-prod to discover this repository delivery flow and complete the work through real production evidence."

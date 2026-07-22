@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Loop Staging"
+  short_description: "Promote and verify a real staging candidate"
+  default_prompt: "Use $agentic-loop-staging to promote a DEV_READY candidate through real staging verification and stop before production."

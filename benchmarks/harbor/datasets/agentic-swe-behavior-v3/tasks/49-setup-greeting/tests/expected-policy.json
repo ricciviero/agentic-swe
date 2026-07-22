@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 3,
+  "taskId": "49-setup-greeting",
+  "category": "setup-refusal",
+  "cohorts": [
+    "policy-sensitive",
+    "setup-refusal"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/greet.ts",
+        "exists": true
+      },
+      {
+        "path": "src/greet.test.ts",
+        "contains": [
+          "greet",
+          "test("
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "setup-feature",
+        "argv": [
+          "bun",
+          "-e",
+          "import { greet } from './src/greet.ts'; if (greet('Ada')!=='Hello, Ada!') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "required",
+    "validationRequired": true,
+    "requiredSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "agents-setup",
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/greet.ts",
+      "src/greet.test.ts"
+    ]
+  }
+}

@@ -33,14 +33,21 @@ class BehaviorBenchFakeAgent(BaseInstalledAgent):
         environment: BaseEnvironment,
         context: AgentContext,
     ) -> None:
-        if not instruction.startswith("Change settings.txt from color=blue"):
-            raise ValueError("The fake agent supports only the trivial config smoke task")
+        if instruction.startswith("Change settings.txt from color=blue"):
+            task_id = "02-trivial-config-edit"
+            subject = "settings.txt"
+            command = "printf 'color=green\\n' > settings.txt && test \"$(cat settings.txt)\" = color=green"
+            final_answer = "Updated settings.txt and validated its exact content."
+        elif instruction.startswith("Change theme.txt from theme=dark"):
+            task_id = "05-neutral-theme-edit"
+            subject = "theme.txt"
+            command = "printf 'theme=light\\n' > theme.txt && test \"$(cat theme.txt)\" = theme=light"
+            final_answer = "Updated theme.txt and validated its exact content."
+        else:
+            raise ValueError("The fake agent supports only the v1 and v2 mechanical smoke tasks")
 
         result = await environment.exec(
-            command=(
-                "printf 'color=green\\n' > settings.txt && "
-                "test \"$(cat settings.txt)\" = color=green"
-            ),
+            command=command,
             cwd="/workspace",
             timeout_sec=30,
         )
@@ -50,7 +57,7 @@ class BehaviorBenchFakeAgent(BaseInstalledAgent):
         trajectory = {
             "schemaVersion": 1,
             "runId": self.session_id or "behaviorbench-fake",
-            "taskId": "02-trivial-config-edit",
+            "taskId": task_id,
             "treatment": "fake",
             "provider": "offline",
             "model": "deterministic",
@@ -58,13 +65,13 @@ class BehaviorBenchFakeAgent(BaseInstalledAgent):
             "startedAt": "2026-07-18T00:00:00.000Z",
             "finishedAt": "2026-07-18T00:00:00.001Z",
             "outcome": "completed",
-            "finalAnswer": "Updated settings.txt and validated its exact content.",
+            "finalAnswer": final_answer,
             "tools": [
                 {
                     "type": "tool-call",
                     "toolCallId": "write-1",
                     "toolName": "write",
-                    "subject": "settings.txt",
+                    "subject": subject,
                     "kind": "mutation",
                 },
                 {

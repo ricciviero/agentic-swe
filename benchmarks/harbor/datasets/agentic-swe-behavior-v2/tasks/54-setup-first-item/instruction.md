@@ -1,0 +1,1 @@
+This repository is not configured for coding agents. Set it up first, then create src/first.ts to export generic first(values), returning the first item or null for an empty array. Add focused passing Bun coverage and validate the project.

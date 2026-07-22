@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "taskId": "31-evidence-even-negative",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.ts",
+        "contentEquals": "export const isEven = (value: number) => Number.isInteger(value) && value % 2 === 0;\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { isEven } from './src/value.ts'; if (!isEven(-4) || isEven(3) || isEven(2.5)) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": false,
+    "requiredSkills": [],
+    "allowedSkills": [],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

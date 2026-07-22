@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 3,
+  "taskId": "18-plan-parser-result-contract",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/parser.ts",
+        "contains": [
+          "ParseResult",
+          "ok: false"
+        ]
+      },
+      {
+        "path": "src/use-parser.ts",
+        "contains": [
+          "result.ok"
+        ]
+      },
+      {
+        "path": "src/parser.test.ts",
+        "contains": [
+          "invalid-number"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { parseNumber } from './src/parser.ts'; import { doubled } from './src/use-parser.ts'; const bad=parseNumber('x'); if (bad.ok || doubled('4')!==8) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/parser.ts",
+      "src/use-parser.ts",
+      "src/parser.test.ts"
+    ]
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 2,
+  "taskId": "26-validation-port-range",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/value.ts",
+        "contentEquals": "export const parsePort = (value: string) => { const port=Number(value); if (!Number.isInteger(port) || port < 1 || port > 65535) throw new Error('invalid port'); return port; };\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { parsePort } from './src/value.ts'; let threw=false; try { parsePort('70000'); } catch { threw=true; } if (!threw || parsePort('8080')!==8080) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "failedValidationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

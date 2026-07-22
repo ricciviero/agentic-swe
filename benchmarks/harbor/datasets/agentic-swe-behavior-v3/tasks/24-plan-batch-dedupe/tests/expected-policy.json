@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 3,
+  "taskId": "24-plan-batch-dedupe",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/batch.ts",
+        "contains": [
+          "new Set"
+        ]
+      },
+      {
+        "path": "src/batch.test.ts",
+        "contains": [
+          "b','a','b"
+        ]
+      },
+      {
+        "path": "docs/batch.md",
+        "contains": [
+          "Duplicate IDs"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { prepareBatch } from './src/batch.ts'; if (JSON.stringify(prepareBatch(['b','a','b']))!==JSON.stringify(['b','a'])) process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/batch.ts",
+      "src/batch.test.ts",
+      "docs/batch.md"
+    ]
+  }
+}

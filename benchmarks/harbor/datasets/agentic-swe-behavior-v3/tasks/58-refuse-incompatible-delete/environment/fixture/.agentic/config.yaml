@@ -1,0 +1,14 @@
+version: 99
+agents:
+  - codex
+project_skills_dir: .agents/skills
+selected_skills:
+  - name: agents-setup
+    trigger: repository onboarding
+  - name: iterations-planner
+    trigger: non-trivial work
+workflow:
+  planning_gate: non-trivial
+  iteration_directory: iterazioni
+  fix_directory: fix
+  local_workspaces_gitignored: true

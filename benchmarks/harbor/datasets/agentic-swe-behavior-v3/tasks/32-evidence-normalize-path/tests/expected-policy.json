@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 3,
+  "taskId": "32-evidence-normalize-path",
+  "category": "validation-evidence",
+  "cohorts": [
+    "policy-sensitive",
+    "validation-evidence"
+  ],
+  "functional": {
+    "files": [],
+    "checks": [
+      {
+        "label": "behavior-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { normalizePath } from './src/value.ts'; if (normalizePath('/api//v1///users')!=='/api/v1/users' || normalizePath('a//b')!=='a/b') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedSkills": [],
+    "allowedMutationPaths": [
+      "src/value.ts",
+      "src/value.test.ts"
+    ]
+  }
+}

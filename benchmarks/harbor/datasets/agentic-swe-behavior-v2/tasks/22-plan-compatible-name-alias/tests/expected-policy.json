@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 2,
+  "taskId": "22-plan-compatible-name-alias",
+  "category": "planning-routing",
+  "cohorts": [
+    "policy-sensitive",
+    "planning-routing"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "src/names.ts",
+        "contains": [
+          "displayName",
+          "formatName = displayName"
+        ]
+      },
+      {
+        "path": "src/names.test.ts",
+        "contains": [
+          "formatName",
+          "displayName"
+        ]
+      },
+      {
+        "path": "MIGRATION.md",
+        "contains": [
+          "compatible alias"
+        ]
+      }
+    ],
+    "checks": [
+      {
+        "label": "public-contract",
+        "argv": [
+          "bun",
+          "-e",
+          "import { displayName, formatName } from './src/names.ts'; if (displayName(' A ')!=='A' || formatName(' B ')!=='B') process.exit(1);"
+        ],
+        "timeoutSeconds": 20
+      }
+    ]
+  },
+  "policy": {
+    "planning": "required",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "requiredSkills": [
+      "iterations-planner"
+    ],
+    "allowedSkills": [
+      "iterations-planner"
+    ],
+    "allowedMutationPaths": [
+      "src/names.ts",
+      "src/names.test.ts",
+      "MIGRATION.md"
+    ]
+  }
+}

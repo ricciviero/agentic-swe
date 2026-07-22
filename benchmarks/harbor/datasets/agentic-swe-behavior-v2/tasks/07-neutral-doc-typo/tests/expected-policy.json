@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 2,
+  "taskId": "07-neutral-doc-typo",
+  "category": "neutral-mechanical-mutation",
+  "cohorts": [
+    "neutral-control"
+  ],
+  "functional": {
+    "files": [
+      {
+        "path": "STATUS.md",
+        "contentEquals": "Build status: green.\n"
+      }
+    ],
+    "checks": [
+      {
+        "label": "exact-content",
+        "argv": [
+          "python3",
+          "-c",
+          "from pathlib import Path; assert Path(\"STATUS.md\").read_text() == \"Build status: green.\\n\""
+        ],
+        "timeoutSeconds": 10
+      }
+    ]
+  },
+  "policy": {
+    "planning": "forbidden",
+    "setup": "forbidden",
+    "validationRequired": true,
+    "allowedMutationPaths": [
+      "STATUS.md"
+    ],
+    "allowedSkills": []
+  }
+}

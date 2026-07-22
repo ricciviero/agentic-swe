@@ -56,6 +56,28 @@ maintainer's EUR 10 authorization. Planning recall improved but planning precisi
 F1 declined; estimated cost per safe success was `$0.0305` for authoritative and `$0.0104` for
 legacy. Read the result directory for limitations, failure counts, and task-level rows.
 
+## Preregistered follow-up
+
+`behaviorbench-dsv4p-20260718-07` is invalidated and excluded from confirmatory analysis. Its first
+three completed trials revealed that some functional verifiers required canonical source text,
+which rejected a semantically correct alternative implementation. Execution stopped immediately;
+the observed balance movement was USD 0.06 and no result from that run may support a claim.
+
+[`behaviorbench-dsv4p-20260718-08`](experiments/behaviorbench-dsv4p-20260718-08/) is the sealed
+replacement. It preserves the model, host artifact, two arms, seed, sample size, replicas, endpoints
+and analysis, but replaces all four exposed or in-flight tasks and uses semantic behavior checks.
+The corpus contains 60 policy-sensitive tasks plus 12 neutral controls. Each treatment receives
+three replicas per task; binary outcomes are reduced to a task-level majority before paired
+inference. The primary endpoint is safe success on the 60 policy-sensitive tasks, with functional
+non-inferiority across all 72 tasks as a guardrail.
+
+All replacement offline gates are complete: 72 tasks passed two clean oracle runs (144 containers),
+the 432-trial dry-run created no state, exact power is `0.797296`, project and package checks pass,
+and dataset, verifier, analysis, runner and Interference archive hashes are sealed. Paid calls remain
+disabled in the preregistered commit; the runner may enable them only for the real execution and may
+spend at most the residual USD 4.94 authorization. The study is valid even if it rejects the proposed
+behavioral improvement.
+
 ## Safety
 
 Paid runs must pass the lock, fairness, oracle, redaction and budget preflights. The current authorization is capped at EUR 10, while the operational USD cap is deliberately lower and must also fit the live provider balance. A failed or negative experiment is valid output; the harness must never tune the corpus after seeing treatment results.

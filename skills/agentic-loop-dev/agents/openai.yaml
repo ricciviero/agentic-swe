@@ -1,0 +1,4 @@
+interface:
+  display_name: "Agentic Loop Dev"
+  short_description: "Persistent loop through real local evidence"
+  default_prompt: "Use $agentic-loop-dev to complete this work through real local validation without committing or deploying it."
