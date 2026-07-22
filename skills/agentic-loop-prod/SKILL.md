@@ -1,180 +1,105 @@
 ---
 name: agentic-loop-prod
-description: Run a persistent, repository-aware engineering loop through verified production evidence. Use only when the user explicitly says "agentic loop prod" or "agentic-loop-prod", or explicitly requests the full investigate-to-production loop. First complete the real local dev loop, then discover and codify the repository's actual delivery topology before any remote mutation. Never assume branch names, CI/CD provider, staging, deployment commands, rollback, or environment URLs.
+description: Promote a current STAGING_READY candidate through a repository's verified production path and prove it through production-safe real evidence. Use only when the user explicitly says "agentic loop prod" or "agentic-loop-prod", or explicitly requests delivery and verification through production. Never infer production authorization from dev or staging work.
 ---
 
 # Agentic Loop Prod
 
 ## Contract
 
-Extend `agentic-loop-dev` from `DEV_READY` through the repository's real release
-path and production verification. Continue across recoverable test, build, and
-deployment failures until the named scope has complete production evidence.
+Extend `agentic-loop-staging` from a current `STAGING_READY` candidate through
+the repository's verified production delivery path. Continue across recoverable
+release, deployment, and verification failures until the named scope has complete
+production evidence.
 
-Use only with an explicit production-qualified request. The request does not
-grant permissions, override branch protection, invent credentials, or expand
-scope. Effective actions remain bounded by repository policy, host controls, and
-the user's authority.
+Use only with an explicit production-qualified request. The request never grants
+capabilities, bypasses branch protection, invents credentials, or expands scope;
+repository policy, host controls, and user authority still apply.
 
-## Required skills
+## Required routing
 
-Read and apply:
+Read and apply `agentic-loop-dev`, `agentic-loop-staging`, the target repository's
+project staging and production skills, and the smallest relevant release,
+runtime, cloud, notification, test, and commit skills. Use `agents-setup` when
+the repository is unconfigured and `skill-creator` when verified durable delivery
+knowledge is missing or stale.
 
-- `agentic-loop-dev` for the complete local loop;
-- `agents-setup` when the target repository is unconfigured;
-- `skill-creator` for required project delivery skills;
-- the target repository's selected release, deployment, runtime, E2E, cloud, and notification skills;
-- `git-commit` only when commit work is authorized and local gates are green.
+Do not substitute this workflow for project-specific operational knowledge.
+Before mutation, verify instructions, `.agentic/config.yaml`, remotes, dirty
+state, branch protection, CI/CD, migration and seed policy, rollback, health,
+logs, artifact identity, production-safe tests, cleanup, and environment ownership.
 
-Do not substitute this global workflow for repository-specific delivery
-knowledge.
+## Staging prerequisite
 
-## Delivery discovery gate
+Require a current `STAGING_READY` report and candidate manifest for the exact
+scope and revision set. If it is missing or stale, first run the complete dev and
+staging loops under the explicit production-qualified request; production remains
+blocked until staging is green. Re-run affected earlier gates after every source,
+base, migration, configuration, or manifest change.
 
-Complete this gate read-only before commit, push, merge, or environment changes.
-
-### 1. Discover the topology
-
-Inspect applicable instructions, `.agentic/config.yaml`, project skills, remotes,
-branch relationships, protected-branch policy, CI/CD definitions, build files,
-infrastructure code, deployment scripts, migration tooling, environment docs,
-health checks, rollback automation, notifications, and deployed-test configs.
-
-Determine with evidence:
-
-- source branch and promotion targets;
-- whether environments are branch-based, artifact-based, preview-based, or manual;
-- CI/CD provider and the exact observable terminal states;
-- artifact identity and how to prove which revision is deployed;
-- migration, seed, feature-flag, and post-deploy actions;
-- health, logs, rollback, and incident boundaries;
-- real API/UI/provider test entry points and safe test identities;
-- cleanup rules, shared-environment constraints, and ephemeral-environment lifecycle.
-
-Never assume GitHub Actions, GitLab, AWS, Kubernetes, Docker, `dev/staging/prod`,
-or even the existence of a pre-production environment.
-
-### 2. Classify delivery knowledge
-
-Choose exactly one state:
-
-1. **Current project skill exists**: verify its claims against repository files and current read-only external evidence, then use it.
-2. **Delivery exists but the project skill is missing or stale**: create or update the canonical project skill before remote mutation.
-3. **Delivery infrastructure is absent or materially undecided**: stop the production loop and report the missing capability. Ask for explicit scope before designing or building a pipeline.
-4. **Delivery cannot be verified with available access**: record known facts and unknowns, then stop before the first action that depends on an unknown.
-
-Do not write an aspirational skill for states 3 or 4.
-
-### 3. Create the project delivery skill
-
-For state 2, use `skill-creator` and the repository's configured project-skill
-layout. If the repository is unconfigured, run `agents-setup` first. Preserve
-the canonical source and create only the Codex/Claude adapters the project uses.
-
-Prefer one focused release skill. Split runtime/deployment or deployed-E2E into
-additional skills only when they are independently reusable and materially
-different.
-
-Record only verified facts:
-
-- concrete triggers and scope boundary;
-- branch/environment or artifact/environment map;
-- safe preflight and promotion sequence;
-- pipeline commands/API and terminal-state checks;
-- exact revision/artifact verification;
-- migrations and post-deploy actions;
-- health, logs, rollback, and failure routing;
-- real deployed tests, fixtures, and cleanup;
-- production constraints and ephemeral-environment shutdown.
-
-Mark unknowns as blockers. Never store secrets, private credentials, or
-machine-local authority. Validate the skill and register it in the project's
-approved skill map when the project contract requires that mapping.
+Confirm that the production candidate is exactly the staging-proven manifest.
+Review diffs, secrets, generated files, migrations, target-only changes, and
+rollback readiness before promotion.
 
 ## State machine
 
-Build environment names from the verified project skill:
-
 ```text
-AGENTIC_LOOP_DEV -> DEV_READY -> SOURCE_DELIVERY -> PREPROD -> PREPROD_REAL
-       ^                                            |             |
-       +-------------- fix at source ---------------+-- failure --+
+AGENTIC_LOOP_STAGING -> STAGING_READY -> PRODUCTION_DELIVERY -> PRODUCTION_REAL
+        ^                                      |                    |
+        +-------- fix at source, re-run dev and staging ------------+
 
-PREPROD_REAL -> PRODUCTION_DELIVERY -> PRODUCTION_REAL -> DOCS/CLOSE -> STOP
-       ^                    |                 |
-       +---- fix at source -+---- failure ----+
+PRODUCTION_REAL -> DOCS/EVIDENCE -> PROD_VERIFIED -> STOP
 ```
 
-If no pre-production gate exists, do not silently collapse it into production.
-Report the missing safety layer and follow the verified project policy only
-after any required explicit decision.
+Do not create a production-only hotfix path or patch a running host. On failure,
+follow verified rollback policy when immediate safety requires it, then fix at
+the source and repeat every invalidated dev, staging, and production gate.
 
-## Local prerequisite
+## Production delivery
 
-Execute `agentic-loop-dev` completely on the current scope. Re-run the relevant
-local gates if the base revision changed during delivery discovery or branch
-reconciliation. Do not promote a locally incomplete candidate.
+Promote the exact manifest through the project's real protected path. Wait for
+observable terminal success and prove each deployed revision or artifact. For a
+multi-repository release, require the project's reconciliation deployment so the
+environment is not a mixed candidate.
 
-Before delivery:
+Verify migrations, post-deploy actions, health, process/container state, relevant
+logs, notification outcomes, and rollback viability. A green pipeline or health
+endpoint alone does not prove the requirement.
 
-1. review the diff, secrets, generated files, migrations, and unrelated user changes;
-2. include required operational records and durable documentation;
-3. run the repository's diff and preflight checks;
-4. create intentional commits using the repository's message policy;
-5. push only through the verified, non-forced source path.
+## Production-safe real gate
 
-## Pre-production gate
+Exercise every required journey through production's real public interface and
+real deployed dependencies, using dedicated ephemeral identities/data and the
+project's approved safety limits. Do not count network interception, stub servers,
+synthetic responses, in-memory substitutes, or mocked providers as real evidence
+for the replaced boundary.
 
-Using the project delivery skill:
-
-1. run conflict, migration, artifact, and target-only-change preflights;
-2. promote the exact candidate through the actual pipeline;
-3. wait for the terminal state and verify the deployed revision/artifact;
-4. inspect health, migrations, logs, and required post-deploy actions;
-5. run real deployed API, UI/public-interface, persistence, and provider checks;
-6. exercise relevant error, authorization, viewport, job, and retry paths;
-7. clean every test identity and record, and verify cleanup.
-
-On failure, collect evidence, return to the verified source branch, rerun the
-complete local loop for the correction, and repeat delivery. Do not patch only
-the target environment or target branch.
-
-## Production gate
-
-Promote the exact pre-production candidate using the verified project flow.
-Confirm pipeline terminal state, artifact identity, health, migrations, logs,
-and rollback readiness. Repeat every production-safe real check needed to prove
-the requirement, using dedicated ephemeral data and verified cleanup.
-
-An artifact arriving in production does not prove the requirement. API success
-does not prove UI behavior. Synthetic fixture data does not prove a provider.
-
-On failure, follow the project's verified rollback policy when immediate safety
-requires it, then fix at the source and repeat local and distributed gates. Do
-not create an undocumented production-only hotfix path.
+For each journey, record identity/role, entry point, client/browser and viewport,
+deployed revisions, visible behavior, persistence/readback, created identifiers,
+and verified cleanup. Include relevant authorization, validation, loading/empty/
+error/retry, accessibility, responsive, job, and provider paths. A skipped test
+is not green. Never turn an unsafe production write into an implicit experiment.
 
 ## Production terminal
 
-Only after complete production evidence:
+After independent coverage and adversarial review passes, update iteration/fix
+records and affected delivery documentation through the verified repository flow.
+Report commits, artifacts, pipeline runs, deployed revision proof, health/log/
+migration evidence, real journey results, cleanup, rollback status, and honest
+limitations.
 
-1. update iteration/fix records with commits, artifacts, environments, and test results;
-2. update documentation and any project delivery skill made stale by actual behavior;
-3. propagate documentation through the verified repository flow;
-4. post release/testing guidance only when the scope includes an issue or external tracker;
-5. never close an issue unless repository policy and the user explicitly require it;
-6. stop ephemeral environments and verify their terminal state without touching shared fallback infrastructure;
-7. report cleanup, rollback status, and limitations.
+Use this matrix:
 
-Use this final matrix with the target repository's real environment names:
+| Requirement | Surface | Status | Local evidence | Staging evidence | Production evidence | Cleanup |
+| --- | --- | --- | --- | --- | --- | --- |
 
-| Requirement | Surface | Status | Local evidence | Pre-production evidence | Production evidence |
-| --- | --- | --- | --- | --- | --- |
-
-Do not declare completion while any required row is incomplete.
+Declare `PROD_VERIFIED` only when every required row is complete. Never close an
+issue or stop shared infrastructure unless repository policy and the user's scope
+explicitly require it.
 
 ## Blockers
 
-Treat recoverable test, build, and deploy failures as loop inputs. Stop only for
-missing authority, required unavailable secrets/external systems, a product or
-delivery decision that changes scope, absent delivery infrastructure, or an
+Treat recoverable build, release, and test failures as loop inputs. Stop only for
+missing authority or secrets, unavailable required external systems, a scope-
+changing product/delivery decision, absent delivery infrastructure, or an
 unrecoverable platform state. Report the exact reached state and evidence.

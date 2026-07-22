@@ -42,6 +42,13 @@ Do not load release or deployment skills for mutations in this profile.
 6. Identify the public path under test: UI, API, CLI, library API, worker, data pipeline, provider, or a combination.
 7. Create or reconcile the required iteration/fix record and extract a scope ledger with observable acceptance criteria.
 
+For user-facing work, express the scope ledger as user journeys before
+implementation. Give each journey a priority and record its public entry point,
+real integration boundaries, expected persistence or downstream readback,
+relevant viewport/input mode, and planned evidence. Fix the denominator before
+testing so coverage cannot be inflated by splitting easy assertions or silently
+dropping difficult journeys.
+
 Never assume `docker compose`, `up.sh`, localhost ports, a database, Playwright,
 or a particular branch name. Prefer a verified repository command over an
 invented one.
@@ -98,6 +105,35 @@ Add a third pass for security, payments, migrations, ranking, external
 providers, broad refactors, or changes spanning more than two layers. Return to
 implementation for every gap and repeat until a pass finds none.
 
+## User-journey and experience gate
+
+For changes that users operate through a UI or other public interface:
+
+1. Exercise every critical in-scope journey and a documented majority of the
+   remaining locally executable journeys through the real public interface. A
+   repository may require a stricter percentage or browser matrix.
+2. Do not count a test as real for any boundary it replaces with network
+   interception, a stub server, a synthetic response, an in-memory substitute,
+   or an equivalent mock. Keep those tests as supplementary edge-case evidence.
+3. For a write, observe the user-visible result and read the new state through
+   the intended consumer or another real authenticated public path. A successful
+   request alone is incomplete evidence.
+4. Cover the relevant desktop and narrow/mobile layouts and additional browser
+   engines when compatibility, authentication, or the brief makes them material.
+5. Test keyboard access, visible focus, accessible names, semantic structure,
+   readable contrast, and the absence of unintended horizontal overflow where
+   they apply to the changed journey.
+6. Review loading, empty, error, success, disabled, permission, retry, and
+   interruption states. Use inline, actionable feedback for normal task flows;
+   do not accept a polished happy-path screenshot as proof of complete UX.
+7. Compare the changed surface with the product's existing visual system at the
+   relevant states and viewports. Record screenshots or equivalent inspectable
+   artifacts when visual behavior is part of acceptance.
+
+Treat visual quality as an evidence-backed gate, not an absolute claim of
+perfection. Record unexercised journeys and environmental limits explicitly; a
+skip, unsupported browser, or unavailable real dependency is not green.
+
 ## Real local gate
 
 Use the repository's discovered startup and validation commands. Build a missing
@@ -113,6 +149,10 @@ Run, as applicable:
 5. real persistence and write-to-read checks;
 6. provider sandbox/live checks when the requirement depends on an external provider;
 7. viewport, media, accessibility, job, retry, and cleanup checks required by the scope.
+
+For user-facing scope, calculate real-journey coverage from the ledger, not from
+test or assertion counts. All critical rows and the required majority must be
+green before the real local gate passes.
 
 Classify evidence precisely:
 
@@ -139,8 +179,9 @@ Only after the complete local gate is green:
 6. report `DEV_READY`, exact commands/results, and honest limitations.
 
 Stop before commit, push, merge, remote environment changes, release comments,
-or deployment. A production continuation requires a separate explicit request
-or `agentic loop prod`.
+or deployment. A staging continuation requires a separate explicit staging
+request or `agentic-loop-staging`; a production continuation requires a separate
+explicit production-qualified request and `agentic-loop-prod`.
 
 Use this final matrix:
 

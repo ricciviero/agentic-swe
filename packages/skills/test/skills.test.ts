@@ -10,7 +10,7 @@ import {
 
 test("published skill manifest is complete, ordered, and unique", () => {
   const skills = listSkills();
-  assert.equal(skills.length, 42);
+  assert.equal(skills.length, 43);
   assert.deepEqual(
     skills.map((skill) => skill.name),
     [...skills.map((skill) => skill.name)].sort(),
@@ -18,6 +18,7 @@ test("published skill manifest is complete, ordered, and unique", () => {
   assert.equal(new Set(skills.map((skill) => skill.name)).size, skills.length);
   assert(getSkillMetadata("agents-setup"));
   assert(getSkillMetadata("agentic-loop-dev"));
+  assert(getSkillMetadata("agentic-loop-staging"));
   assert(getSkillMetadata("agentic-loop-prod"));
   assert(getSkillMetadata("redesign-existing-projects"));
   assert.throws(() => {
