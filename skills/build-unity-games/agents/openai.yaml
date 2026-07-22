@@ -1,0 +1,4 @@
+interface:
+  display_name: "Unity Game Development"
+  short_description: "Build and automate Unity games end to end"
+  default_prompt: "Use $build-unity-games to create, automate, test, and build this Unity game."

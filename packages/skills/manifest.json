@@ -149,6 +149,18 @@
       ]
     },
     {
+      "name": "build-unity-games",
+      "description": "Build, modify, automate, test, run, and package Unity games with C# and minimal manual Editor work. Use for Unity projects, gameplay systems, MonoBehaviours, ScriptableObjects, scenes, prefabs, Input System, physics, UI, Editor tooling, the official Unity CLI, the Unity Pipeline package, Edit Mode or Play Mode tests, player builds, and agent-driven Unity demo development.",
+      "integrity": "sha256-IyJjbghajnWFOR0c+00O+Wiqpw6WC7M/ZQrttLHBSpY=",
+      "files": [
+        "agents/openai.yaml",
+        "references/official-unity-cli.md",
+        "references/project-architecture.md",
+        "references/testing-and-builds.md",
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "bun-typescript",
       "description": "Use when building CLIs, tools, terminal apps, or servers with Bun + TypeScript: Bun runtime APIs (Bun.spawn/spawnSync, Bun.$ shell, Bun.file/Bun.write/FileSink, Bun.serve), bun build, bun build --compile for standalone single-file executables (cross-compile, --minify, --sourcemap, --bytecode), bun test (Jest-style matchers, mocks, lifecycle, coverage), package.json bin entries and shebangs for CLIs, recommended Bun tsconfig, bun install/workspaces, performance, and Bun-vs-Node gotchas. Trigger on: Bun, bun build, bun test, bun install, Bun.spawn, Bun.$, Bun.file, Bun.serve, single-file executable, standalone binary, TypeScript CLI with Bun, bun shebang, bunfig.toml, @types/bun.",
       "integrity": "sha256-3V9WF43crulBNW5PQ1P85FOXM5cy+amHiA6/FqDg+hs=",

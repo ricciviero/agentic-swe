@@ -10,7 +10,7 @@ import {
 
 test("published skill manifest is complete, ordered, and unique", () => {
   const skills = listSkills();
-  assert.equal(skills.length, 43);
+  assert.equal(skills.length, 44);
   assert.deepEqual(
     skills.map((skill) => skill.name),
     [...skills.map((skill) => skill.name)].sort(),

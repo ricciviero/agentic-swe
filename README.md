@@ -204,7 +204,9 @@ agentic-swe verify .
 
 ## Included Skills
 
-The public bundle currently contains 42 skills across frontend and mobile development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
+The public bundle currently contains 44 skills across frontend, mobile, and game development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
+
+For Unity projects, [`build-unity-games`](skills/build-unity-games/) covers agent-owned gameplay implementation, deterministic scene and prefab automation, the official Unity CLI and Pipeline package, Edit Mode and Play Mode tests, and player builds.
 
 Personal or machine-specific skills are intentionally excluded from this public bundle, including `ericsson-reports`, `improve-aura`, `melix-llm-lab`, `obsidian-bases`, `telegram-deploy-notify`, and `vps-github-autodeploy`.
 
