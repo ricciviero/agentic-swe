@@ -1,6 +1,6 @@
 ---
 name: rust-engineer
-description: Senior-level Rust engineering across backend (Axum, SQLx, Tokio), native desktop (Tauri 2, egui, iced, Slint), GPU rendering (wgpu, Bevy), WASM frontend (Leptos, Dioxus), and high-performance local inference engines (Candle, Burn, mistral.rs, cudarc, Metal, SIMD, custom CPU/GPU kernels). Use for Rust, Cargo, ownership, lifetimes, unsafe, Tokio, Axum, SQLx, Tauri, wgpu, Bevy, Leptos, Dioxus, Candle, CUDA, Metal, ONNX, GGUF, safetensors, KV cache, paged attention, quantization, SIMD, profiling, or Cargo quality tooling.
+description: Senior-level Rust engineering across full-stack web applications (Leptos SSR, Axum, SQLx, browser sessions, progressive enhancement, realtime, testing, and deployment), backend services, native desktop, GPU rendering, WASM frontends, and local inference engines. Use for Rust, Cargo, ownership, lifetimes, unsafe, Tokio, Axum, SQLx, Leptos, Dioxus, Tauri, egui, iced, Slint, wgpu, Bevy, Candle, Burn, mistral.rs, CUDA, Metal, ONNX, GGUF, safetensors, KV cache, quantization, SIMD, profiling, or Cargo quality tooling.
 ---
 
 # Rust Engineer
@@ -13,10 +13,11 @@ Inspect `Cargo.toml`, workspace layout, feature flags, MSRV, CI, clippy configur
 
 ## Routing
 
+- Full-stack web application, SaaS, SSR, browser authentication, progressively enhanced forms, realtime UI, or web deployment: read [references/fullstack-web.md](references/fullstack-web.md) before designing or editing. Then apply the backend and frontend rules below.
 - HTTP services: Tokio, Axum, SQLx, `tracing`, typed errors, migrations, and integration tests.
 - Native desktop: choose Tauri for web-tech product UI; use egui, iced, or Slint only when their native-widget tradeoffs fit the product.
 - GPU and interactive rendering: use wgpu for portable rendering or compute; use Bevy when ECS and game-style tooling are desirable.
-- WASM frontend: use the existing framework; choose Leptos for fine-grained Rust-first web UI and Dioxus only when its multi-platform model is useful.
+- Isolated WASM frontend: use the existing framework; choose Leptos for fine-grained Rust-first web UI and Dioxus only when its multi-platform model is useful.
 - Local inference: define model format, tokenizer, batch model, KV-cache strategy, memory budget, and benchmark before choosing Candle, mistral.rs, custom kernels, CUDA, Metal, or wgpu compute.
 
 ## Core Rust Rules
@@ -42,6 +43,16 @@ Inspect `Cargo.toml`, workspace layout, feature flags, MSRV, CI, clippy configur
 - Use SQLx migrations or the repository's migration tool. Never generate production schema implicitly.
 - Apply authentication, authorization, pagination, idempotency, and observability at the correct boundary.
 
+## Full-Stack Web
+
+- Default to Leptos SSR with hydration on Axum for a new Rust-first product; start from the official Axum template instead of inventing build plumbing.
+- Use Leptos server functions for first-party UI operations and versioned REST endpoints for external consumers. Both must call the same application services.
+- Make core navigation, reads, and form submissions work as progressively enhanced HTML where product requirements allow it.
+- For browser login, prefer an opaque server-side session in a hardened cookie. Do not put long-lived credentials in browser storage.
+- Treat cookie-authenticated mutations, including server functions, as CSRF-sensitive.
+- Keep database rows, transport DTOs, view models, and domain types separate.
+- Choose SSE for one-way notifications and WebSockets only when the client also needs to send a live stream.
+
 ## Inference and GPU Work
 
 - Start with a small, correct baseline before adding quantization, fused kernels, speculative decoding, or continuous batching.
@@ -53,4 +64,5 @@ Inspect `Cargo.toml`, workspace layout, feature flags, MSRV, CI, clippy configur
 
 - Run `cargo fmt`, `cargo clippy`, targeted tests, and the relevant build before completion.
 - Use `cargo nextest`, `cargo deny`, sanitizers, Miri, or fuzzing when they fit the changed risk surface.
+- For full-stack web work, validate server routes, real database behavior, SSR/hydration, and the critical browser journey; do not stop at unit tests.
 - Keep feature flags, target-specific code, and unsafe boundaries narrow and tested.

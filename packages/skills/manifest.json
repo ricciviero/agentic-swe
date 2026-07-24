@@ -506,9 +506,11 @@
     },
     {
       "name": "rust-engineer",
-      "description": "Senior-level Rust engineering across backend (Axum, SQLx, Tokio), native desktop (Tauri 2, egui, iced, Slint), GPU rendering (wgpu, Bevy), WASM frontend (Leptos, Dioxus), and high-performance local inference engines (Candle, Burn, mistral.rs, cudarc, Metal, SIMD, custom CPU/GPU kernels). Use for Rust, Cargo, ownership, lifetimes, unsafe, Tokio, Axum, SQLx, Tauri, wgpu, Bevy, Leptos, Dioxus, Candle, CUDA, Metal, ONNX, GGUF, safetensors, KV cache, paged attention, quantization, SIMD, profiling, or Cargo quality tooling.",
-      "integrity": "sha256-FsURDvK7boH+URp1aETsstIrnhVD9CqLPjhPZ6xtfKg=",
+      "description": "Senior-level Rust engineering across full-stack web applications (Leptos SSR, Axum, SQLx, browser sessions, progressive enhancement, realtime, testing, and deployment), backend services, native desktop, GPU rendering, WASM frontends, and local inference engines. Use for Rust, Cargo, ownership, lifetimes, unsafe, Tokio, Axum, SQLx, Leptos, Dioxus, Tauri, egui, iced, Slint, wgpu, Bevy, Candle, Burn, mistral.rs, CUDA, Metal, ONNX, GGUF, safetensors, KV cache, quantization, SIMD, profiling, or Cargo quality tooling.",
+      "integrity": "sha256-GwVXMDrK2PZ3JwcALFuVFgLyYNn6nuquFjJwiyFrlZ8=",
       "files": [
+        "agents/openai.yaml",
+        "references/fullstack-web.md",
         "SKILL.md"
       ]
     },
