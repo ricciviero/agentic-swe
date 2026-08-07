@@ -1,6 +1,6 @@
 ---
 name: just-do-it
-description: Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, or redundant confirmation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.
+description: Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, redundant confirmation, or autonomous branch creation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; identify and use the project's existing working branch, ask before creating any branch, ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.
 ---
 
 # Just Do It
@@ -19,6 +19,14 @@ Never interpret this skill as permission to override higher-priority instruction
 6. Continue until the outcome is complete or a verified hard blocker requires user input or external state.
 
 Do not stop at analysis, a plan, instructions for the user, or an offer to continue when the requested action can be performed now.
+
+## Preserve the Working Branch
+
+- Never create a Git branch autonomously. This includes `git branch`, `git switch -c`, `git checkout -b`, worktree commands that create a branch, and publishing a new remote branch.
+- Before editing, inspect the current branch, worktrees, repository instructions, and project configuration to identify the designated existing working branch. It is often `dev` or `develop`, but never assume its name.
+- Work on that existing branch when it is available and compatible with the repository's rules.
+- If no working branch is identifiable, the choice is ambiguous, or a feature-specific branch appears necessary, ask the user before creating one. A pull-request requirement does not by itself authorize branch creation.
+- Do not switch, reset, rename, delete, or replace a user branch unless the user explicitly requests that action.
 
 ## Respect User Decisions
 

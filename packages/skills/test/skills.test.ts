@@ -33,6 +33,7 @@ test("published skill manifest is complete, ordered, and unique", () => {
 test("just-do-it publishes its execution discipline and response patterns", async () => {
   const skill = await loadSkill("just-do-it");
   assert.match(skill.description, /user-directed work/i);
+  assert.match(skill.body, /Never create a Git branch autonomously/);
   assert.match(skill.body, /## Prove Blockers/);
   assert.match(await readSkillFile(skill.name, "references/response-patterns.md"), /## Decision Table/);
   assert.equal(await verifySkillIntegrity(skill.name), true);

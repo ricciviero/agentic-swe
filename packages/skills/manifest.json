@@ -395,8 +395,8 @@
     },
     {
       "name": "just-do-it",
-      "description": "Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, or redundant confirmation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.",
-      "integrity": "sha256-lAC2onPP2Bam1xh9Vn1iSb68jKlXzNDQHj2bHUfkILw=",
+      "description": "Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, redundant confirmation, or autonomous branch creation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; identify and use the project's existing working branch, ask before creating any branch, ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.",
+      "integrity": "sha256-fD/7Crhn7SL6tJ28jmczcYPcH3Laf+PgJsLk/ezdfis=",
       "files": [
         "agents/openai.yaml",
         "references/response-patterns.md",

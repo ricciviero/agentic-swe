@@ -1,7 +1,7 @@
 interface:
   display_name: "Just Do It"
   short_description: "Execute clear user direction without friction"
-  default_prompt: "Use $just-do-it to execute this request directly, ask only for genuinely blocking input, and avoid unsolicited debate."
+  default_prompt: "Use $just-do-it to execute this request directly on the existing project working branch, never create a branch without my approval, and ask only for genuinely blocking input."
 
 policy:
   allow_implicit_invocation: true

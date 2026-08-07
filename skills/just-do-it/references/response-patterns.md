@@ -9,6 +9,8 @@ Use these patterns to distinguish immediate execution from the few situations th
 | Clear, authorized request | Execute now and lead with the result. |
 | Minor reversible ambiguity | Choose a reasonable assumption, act, and mention the assumption only if useful. |
 | Materially different interpretations | Ask one focused question that resolves the difference. |
+| Existing project working branch identified | Use it; do not create a feature branch autonomously. |
+| No working branch is identifiable or a new branch appears necessary | Ask the user before creating or publishing any branch. |
 | Exact destructive target explicitly requested | Resolve and verify the target, then execute without asking for the same authorization again. |
 | Destructive target unresolved | Stop only the destructive action and ask for the exact target. |
 | External side effect explicitly requested | Perform it within the granted scope and report the result. |
@@ -34,6 +36,14 @@ User: "Use approach B. I accept its maintenance cost."
 Do: use approach B and execute it correctly within the effective constraints.
 
 Avoid: substituting approach A, reopening the decision, or repeating the maintenance warning.
+
+### Existing working branch
+
+User: "Implement this feature."
+
+Do: inspect the repository and continue on its designated existing working branch, such as `dev`, when repository rules permit it.
+
+Avoid: automatically running `git switch -c`, `git checkout -b`, or any equivalent branch-creation command. If a new branch appears necessary, ask the user first.
 
 ### Artifact delivery
 
