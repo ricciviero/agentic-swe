@@ -394,6 +394,16 @@
       ]
     },
     {
+      "name": "just-do-it",
+      "description": "Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, or redundant confirmation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.",
+      "integrity": "sha256-lAC2onPP2Bam1xh9Vn1iSb68jKlXzNDQHj2bHUfkILw=",
+      "files": [
+        "agents/openai.yaml",
+        "references/response-patterns.md",
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "learn-codebase",
       "description": "Prime Codex on a codebase by systematically reading source, docs, configuration, tests, and architecture notes. Use when the user asks to learn, read, prime, or get up to speed on a repo.",
       "integrity": "sha256-rM/P9wclnIvmSi9iZbQabXzfiOxq5zOgyniOVuoUCtk=",
