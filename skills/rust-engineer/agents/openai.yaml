@@ -1,0 +1,4 @@
+interface:
+  display_name: "Rust Engineer"
+  short_description: "Build robust Rust systems and web apps"
+  default_prompt: "Use $rust-engineer to design, implement, or review this Rust engineering task."

@@ -204,7 +204,7 @@ agentic-swe verify .
 
 ## Included Skills
 
-The public bundle currently contains 44 skills across frontend, mobile, and game development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
+The public bundle currently contains 45 skills across frontend, mobile, and game development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
 
 For Unity projects, [`build-unity-games`](skills/build-unity-games/) covers agent-owned gameplay implementation, deterministic scene and prefab automation, the official Unity CLI and Pipeline package, Edit Mode and Play Mode tests, and player builds.
 
@@ -214,9 +214,14 @@ Notable workflow skills:
 
 - `agents-setup`: bootstraps or migrates a repository into the Agentic SWE contract and creates the focused skill map.
 - `iterations-planner`: executes the required planning workflow for non-trivial features, refactors, migrations, and fixes.
+- `just-do-it`: executes clear user direction without unsolicited debate, invented blockers, or redundant confirmation while preserving effective authority and permission boundaries.
 - `agentic-loop-dev`: persists through investigation, implementation, double/triple review, and real local validation, then stops at an uncommitted `DEV_READY` state.
 - `agentic-loop-prod`: extends the local loop through verified production evidence only after discovering the repository's delivery topology and codifying current project-specific release knowledge.
 - `skill-creator`: supplied by Codex rather than bundled here; use it when creating or materially revising a Codex skill.
+
+Notable engineering skills:
+
+- `rust-engineer`: covers idiomatic Rust plus a production-oriented full-stack web path with Leptos SSR, Axum, SQLx/PostgreSQL, browser sessions and CSRF, server functions versus public REST APIs, realtime transport, browser testing, and deployment.
 
 ## Repository Layout
 

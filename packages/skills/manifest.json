@@ -406,6 +406,16 @@
       ]
     },
     {
+      "name": "just-do-it",
+      "description": "Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, redundant confirmation, or autonomous branch creation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; identify and use the project's existing working branch, ask before creating any branch, ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.",
+      "integrity": "sha256-fD/7Crhn7SL6tJ28jmczcYPcH3Laf+PgJsLk/ezdfis=",
+      "files": [
+        "agents/openai.yaml",
+        "references/response-patterns.md",
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "learn-codebase",
       "description": "Prime Codex on a codebase by systematically reading source, docs, configuration, tests, and architecture notes. Use when the user asks to learn, read, prime, or get up to speed on a repo.",
       "integrity": "sha256-rM/P9wclnIvmSi9iZbQabXzfiOxq5zOgyniOVuoUCtk=",
@@ -518,9 +528,11 @@
     },
     {
       "name": "rust-engineer",
-      "description": "Senior-level Rust engineering across backend (Axum, SQLx, Tokio), native desktop (Tauri 2, egui, iced, Slint), GPU rendering (wgpu, Bevy), WASM frontend (Leptos, Dioxus), and high-performance local inference engines (Candle, Burn, mistral.rs, cudarc, Metal, SIMD, custom CPU/GPU kernels). Use for Rust, Cargo, ownership, lifetimes, unsafe, Tokio, Axum, SQLx, Tauri, wgpu, Bevy, Leptos, Dioxus, Candle, CUDA, Metal, ONNX, GGUF, safetensors, KV cache, paged attention, quantization, SIMD, profiling, or Cargo quality tooling.",
-      "integrity": "sha256-FsURDvK7boH+URp1aETsstIrnhVD9CqLPjhPZ6xtfKg=",
+      "description": "Senior-level Rust engineering across full-stack web applications (Leptos SSR, Axum, SQLx, browser sessions, progressive enhancement, realtime, testing, and deployment), backend services, native desktop, GPU rendering, WASM frontends, and local inference engines. Use for Rust, Cargo, ownership, lifetimes, unsafe, Tokio, Axum, SQLx, Leptos, Dioxus, Tauri, egui, iced, Slint, wgpu, Bevy, Candle, Burn, mistral.rs, CUDA, Metal, ONNX, GGUF, safetensors, KV cache, quantization, SIMD, profiling, or Cargo quality tooling.",
+      "integrity": "sha256-GwVXMDrK2PZ3JwcALFuVFgLyYNn6nuquFjJwiyFrlZ8=",
       "files": [
+        "agents/openai.yaml",
+        "references/fullstack-web.md",
         "SKILL.md"
       ]
     },
