@@ -29,6 +29,12 @@ Before mutation, verify instructions, `.agentic/config.yaml`, remotes, dirty
 state, branch protection, CI/CD, migration and seed policy, rollback, health,
 logs, artifact identity, production-safe tests, cleanup, and environment ownership.
 
+Inherit the persistent-development-branch invariant from the dev and staging
+loops. Never create a release, hotfix, feature, fix, or task branch. Production
+promotion must use only the persistent staging and production branches declared
+by the project; every source correction returns through the persistent
+development branch and repeats the invalidated dev and staging gates.
+
 ## Staging prerequisite
 
 Require a current `STAGING_READY` report and candidate manifest for the exact
@@ -40,6 +46,22 @@ base, migration, configuration, or manifest change.
 Confirm that the production candidate is exactly the staging-proven manifest.
 Review diffs, secrets, generated files, migrations, target-only changes, and
 rollback readiness before promotion.
+
+## Operational configuration gate
+
+For every in-scope operator-adjustable setting, require staging evidence for the
+complete persistence, authenticated API, back-office UI, authorization, effective
+readback, and restart-survival journey. In production, verify the deployed control
+surface and effective value through production-safe reads. Perform a write-and-
+restore check only when project policy explicitly permits it and the change is
+safe; otherwise rely on the exact staging-proven write path plus production
+readback.
+
+Do not use a shell edit, direct database write, environment change, or restart as
+the normal production control path. For approved infrastructure secrets,
+bootstrap defaults, emergency overrides, and startup settings, verify documented
+precedence and ensure operators can distinguish configured, effective, overridden,
+and restart-pending state without exposing secrets.
 
 ## State machine
 
@@ -68,11 +90,27 @@ endpoint alone does not prove the requirement.
 
 ## Production-safe real gate
 
-Exercise every required journey through production's real public interface and
-real deployed dependencies, using dedicated ephemeral identities/data and the
+Carry forward the staging-proven Manual Acceptance Ledger for the exact manifest
+and add a production-safety classification to every row: `PRODUCTION_SAFE`,
+`STAGING_ONLY`, `HUMAN_ONLY`, or `EXTERNAL_BLOCKED`. Exercise every required
+`PRODUCTION_SAFE` row through production's real public interface and real
+deployed dependencies, using dedicated ephemeral identities/data and the
 project's approved safety limits. Do not count network interception, stub servers,
 synthetic responses, in-memory substitutes, or mocked providers as real evidence
 for the replaced boundary.
+
+Reuse safe executable real-journey coverage against production rather than
+replacing it with an ad hoc checklist. Never interpret this gate as authority for
+an unsafe write. A `STAGING_ONLY` write may rely on the exact staging-proven path
+plus production readback only when project policy explicitly defines that
+substitution; otherwise the required row remains red. Preserve `HUMAN_ONLY` and
+`EXTERNAL_BLOCKED` rows as honest limitations rather than inferred evidence.
+
+Do not transfer the first production-safe acceptance pass to the user. Deliver
+manual steps only as replay guidance after every production-executable row has
+an agent-recorded result. If a new replay step first appears during production
+verification or handoff preparation, invalidate the verification claim, add the
+row at the source, and repeat every affected dev, staging, and production gate.
 
 For each journey, record identity/role, entry point, client/browser and viewport,
 deployed revisions, visible behavior, persistence/readback, created identifiers,
@@ -90,8 +128,8 @@ limitations.
 
 Use this matrix:
 
-| Requirement | Surface | Status | Local evidence | Staging evidence | Production evidence | Cleanup |
-| --- | --- | --- | --- | --- | --- | --- |
+| Requirement | Ledger row | Class | Production safety | Surface | Status | Local evidence | Staging evidence | Production evidence | Cleanup |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
 Declare `PROD_VERIFIED` only when every required row is complete. Never close an
 issue or stop shared infrastructure unless repository policy and the user's scope

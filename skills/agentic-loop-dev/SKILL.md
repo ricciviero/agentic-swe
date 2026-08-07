@@ -19,6 +19,14 @@ profile.
 This workflow requests no capability by itself. Apply the repository's
 instructions, host permissions, and user-selected mode at every action.
 
+## Persistent development branch invariant
+
+- Never create a branch tied to a feature, fix, task, issue, document, iteration, or agent run.
+- Work only on the repository's explicitly designated persistent development branch. Discover its exact name from repository policy; do not assume it is `dev` and do not substitute the default, staging, or production branch.
+- If the designated development branch is missing or ambiguous, stop before implementation and request a project decision. Do not invent a temporary branch as a workaround.
+- If the worktree is on another branch, reconcile it safely with the designated development branch before editing. A dirty worktree or unrelated user changes are a blocker to an automatic switch, not permission to continue on the wrong branch.
+- Long-lived personal branches are allowed only when project policy explicitly declares them; never create, delete, reset, or use one as the loop's delivery source without an explicit rule.
+
 ## Route required skills
 
 Use the smallest relevant set after discovery:
@@ -36,7 +44,7 @@ Do not load release or deployment skills for mutations in this profile.
 
 1. Establish the repository root and read every applicable instruction file.
 2. Read `.agentic/config.yaml` when present and honor its planning paths and selected skills.
-3. Inspect branch, remotes, dirty state, nested repositories, and user changes to preserve.
+3. Inspect branch, remotes, dirty state, nested repositories, user changes to preserve, and the persistent development branch required by project policy. Prove that the worktree is on that branch before implementation.
 4. Acquire the current brief, issue, comments, attachments, or requirement source named by the user.
 5. Discover the real local topology from documentation and source: manifests, task runners, container files, migrations, seeds, test configs, and startup scripts.
 6. Identify the public path under test: UI, API, CLI, library API, worker, data pipeline, provider, or a combination.
@@ -85,6 +93,61 @@ contract or an untested user path.
 
 Keep the plan and scope ledger current when discovery changes the work.
 
+## Manual-to-E2E parity gate
+
+Before implementation, derive a Manual Acceptance Ledger from the exact replay
+a user or consumer would follow to prove the change from a clean, reproducible
+state. For each row record the role or identity, public entry point, actions,
+observable result, real boundaries, downstream readback, relevant client or
+viewport, cleanup, and planned evidence. Classify every row as:
+
+- `AUTOMATABLE`: safe, deterministic, repeatable, and suitable for an executable real-journey test;
+- `AGENT_EXECUTABLE`: safely exercisable by the agent through the real public path, but not reasonably expressible as durable automation;
+- `HUMAN_ONLY`: dependent on subjective human judgment or an intrinsically personal action;
+- `EXTERNAL_BLOCKED`: dependent on unavailable authority, credentials, hardware, or an external system.
+
+Treat every safe, deterministic, repeatable in-scope row as `AUTOMATABLE` unless
+the operational record gives a concrete reason otherwise. Before `DEV_READY`,
+each `AUTOMATABLE` row must have executable real-journey coverage and an
+agent-recorded passing run; each `AGENT_EXECUTABLE` row must have an
+agent-recorded real execution. `HUMAN_ONLY` and `EXTERNAL_BLOCKED` rows remain
+explicit limitations and cannot be counted as green evidence for a required
+terminal gate.
+
+Mocks, intercepted responses, direct persistence edits, and substitute services
+may supplement the ledger but cannot certify the real boundary they replace.
+The agent owns the first acceptance pass. A manual checklist may be delivered
+only as replay guidance after its agent-executable rows have recorded results.
+If a new replay step first appears while preparing handoff guidance or after a
+readiness claim, invalidate that state, add the row, implement the required
+coverage, and rerun every affected gate.
+
+## Operational configuration gate
+
+Classify every new or changed setting before implementation. A runtime or
+business setting that an operator is expected to change during normal service is
+incomplete unless the delivered path includes:
+
+- durable canonical persistence;
+- an authenticated and role-authorized API;
+- an understandable control surface in the product's existing admin or back-office UI;
+- validation plus loading, error, success, and permission feedback;
+- readback of the effective value, including any active override or pending state;
+- safe live application, or an explicit restart-required state when live application is technically unsafe.
+
+Do not accept an environment variable, container edit, direct database update,
+or restart command as the normal operator experience. Environment variables and
+deployment secret stores remain valid for infrastructure-managed secrets,
+bootstrap defaults, documented emergency overrides, and startup/infrastructure
+settings. Record precedence and lifecycle whenever persisted state and an
+override can coexist. Product-managed credentials require secure storage,
+masked readback, and a rotation path; never expose plaintext secrets in UI, API
+responses, logs, or evidence.
+
+Do not invent an admin surface for a compile-time or internal-only constant.
+When a value is intentionally not operator-adjustable, record that boundary in
+the plan so it cannot silently become an ENV-only operational feature.
+
 ## Implement
 
 - Implement from the source-of-truth layer toward consumers.
@@ -109,9 +172,9 @@ implementation for every gap and repeat until a pass finds none.
 
 For changes that users operate through a UI or other public interface:
 
-1. Exercise every critical in-scope journey and a documented majority of the
-   remaining locally executable journeys through the real public interface. A
-   repository may require a stricter percentage or browser matrix.
+1. Exercise every required `AUTOMATABLE` and `AGENT_EXECUTABLE` ledger row,
+   including every critical in-scope journey, through the real public
+   interface. Apply any stricter repository percentage or browser matrix.
 2. Do not count a test as real for any boundary it replaces with network
    interception, a stub server, a synthetic response, an in-memory substitute,
    or an equivalent mock. Keep those tests as supplementary edge-case evidence.
@@ -151,8 +214,9 @@ Run, as applicable:
 7. viewport, media, accessibility, job, retry, and cleanup checks required by the scope.
 
 For user-facing scope, calculate real-journey coverage from the ledger, not from
-test or assertion counts. All critical rows and the required majority must be
-green before the real local gate passes.
+test or assertion counts. Every required automatable or agent-executable row and
+any stricter repository-required coverage must be green before the real local
+gate passes.
 
 Classify evidence precisely:
 
@@ -185,8 +249,8 @@ explicit production-qualified request and `agentic-loop-prod`.
 
 Use this final matrix:
 
-| Requirement | Surface | Status | Local evidence |
-| --- | --- | --- | --- |
+| Requirement | Ledger row | Class | Surface | Status | Local evidence |
+| --- | --- | --- | --- | --- | --- |
 
 Do not claim `DEV_READY` while any required row is incomplete.
 
