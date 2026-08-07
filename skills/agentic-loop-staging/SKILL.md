@@ -30,6 +30,12 @@ health/log/revision checks, rollback, test identities, cleanup, and environment
 ownership. Never assume environment names, branch names, GitHub Actions, Docker,
 AWS, URLs, or a promotion topology.
 
+Inherit the persistent-development-branch invariant from `agentic-loop-dev`.
+Never create a feature/fix/task branch for delivery or for a correction found in
+staging. Promote only from the persistent source branch declared by the project
+to its declared staging target. If either branch or mapping is missing or
+ambiguous, stop before source mutation instead of inventing a branch.
+
 If the staging flow is real but undocumented, verify it read-only and create the
 project skill first. If it is absent, materially undecided, or unverifiable with
 available authority, stop before the first dependent mutation.
@@ -48,6 +54,22 @@ loop, do not push or merge production branches, dispatch production workflows,
 deploy production artifacts, run production migrations, mutate production data,
 or run write tests against production. Recheck these invariants before reporting
 `STAGING_READY`.
+
+## Operational configuration gate
+
+For every in-scope operator-adjustable setting, prove the normal staging journey
+through the authenticated API and the real back-office UI. Use a representative
+authorized role to change the value, observe validation and confirmation, read
+the effective state, and verify persistence across the relevant process restart
+or redeployment. Verify that an unauthorized identity cannot change it and that
+masked secrets are not disclosed.
+
+Shell edits, direct database writes, deployment-variable changes, and restarts do
+not prove the normal operator journey. If an environment value is intentionally
+an infrastructure secret, bootstrap default, emergency override, or startup
+setting, verify its documented precedence and that effective-state readback makes
+any active override or restart requirement clear. Restore staging configuration
+and test data when the project requires cleanup.
 
 ## State machine
 
@@ -70,7 +92,9 @@ rerun affected local gates, create a new manifest, and promote again.
 Require fresh `DEV_READY` evidence for the exact candidate. Review diffs,
 secrets, unrelated changes, generated files, migrations, and operational records.
 Commit and push only when the explicit request and project policy authorize them;
-use the verified non-forced path and satisfy protected-branch checks.
+use the verified non-forced path from the persistent development branch and
+satisfy protected-branch checks. Fixes discovered during staging return to that
+same persistent branch; do not open a task-specific branch.
 
 Promote the complete manifest through the actual pipeline. Wait for observable
 terminal success, then prove each deployed revision or artifact. For a multi-
@@ -80,11 +104,26 @@ migrations, post-deploy actions, container/process state, and relevant logs.
 
 ## Real deployed gate
 
-Build a fixed ledger of in-scope user journeys. Every critical journey and the
-project-required majority of the rest must be exercised through staging's real
-public interface and real deployed dependencies. Network interception, stub
+Carry forward the dev loop's fixed Manual Acceptance Ledger and bind it to the
+exact deployed candidate manifest. Every required `AUTOMATABLE` and
+`AGENT_EXECUTABLE` row, including every critical journey, must be exercised
+through staging's real public interface and real deployed dependencies. A local
+pass does not substitute for staging evidence. Network interception, stub
 servers, synthetic responses, in-memory substitutes, and mocked providers remain
 supplementary evidence and do not count as real for the replaced boundary.
+
+Reuse the executable real-journey coverage from dev against staging whenever the
+environment supports it; do not replace repeatable automation with an ad hoc
+manual check. Preserve `HUMAN_ONLY` and `EXTERNAL_BLOCKED` classifications as
+explicit limitations unless staging evidence genuinely changes them. If a new
+replay step first appears during staging or handoff preparation, add it to the
+source ledger, implement the missing coverage on the persistent development
+branch, re-prove invalidated dev gates, create a new manifest, and redeploy.
+
+Do not transfer the first deployed acceptance pass to the user. Deliver a manual
+checklist only as replay guidance after every staging-executable row has an
+agent-recorded result. A skipped, blocked, or partially exercised required row
+keeps the staging gate red.
 
 For each applicable journey, capture:
 
@@ -107,8 +146,8 @@ migration evidence, real journey results, artifacts, cleanup, and limitations.
 
 Use this matrix:
 
-| Requirement | Surface | Status | Local evidence | Staging evidence | Cleanup |
-| --- | --- | --- | --- | --- | --- |
+| Requirement | Ledger row | Class | Surface | Status | Local evidence | Staging evidence | Cleanup |
+| --- | --- | --- | --- | --- | --- | --- | --- |
 
 Declare `STAGING_READY` only when every required row is complete and production
 invariants are unchanged. Then stop. Production requires a separate explicit
