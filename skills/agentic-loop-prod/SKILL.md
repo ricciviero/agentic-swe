@@ -112,6 +112,14 @@ an agent-recorded result. If a new replay step first appears during production
 verification or handoff preparation, invalidate the verification claim, add the
 row at the source, and repeat every affected dev, staging, and production gate.
 
+Carry forward the staging-proven Capability Preservation Ledger. Production
+verification must prove the compliant replacement on the exact manifest for
+every `PRODUCTION_SAFE` capability; the disappearance of the unsafe
+representation is necessary but never sufficient. Do not resurrect an unsafe
+surface or reclassify an unsafe action to obtain parity. A missing replacement
+or an unapproved decommission decision invalidates `PROD_VERIFIED` and returns
+through the authorized dev and staging flow.
+
 For each journey, record identity/role, entry point, client/browser and viewport,
 deployed revisions, visible behavior, persistence/readback, created identifiers,
 and verified cleanup. Include relevant authorization, validation, loading/empty/
