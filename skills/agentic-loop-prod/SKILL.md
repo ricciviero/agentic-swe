@@ -118,6 +118,35 @@ and verified cleanup. Include relevant authorization, validation, loading/empty/
 error/retry, accessibility, responsive, job, and provider paths. A skipped test
 is not green. Never turn an unsafe production write into an implicit experiment.
 
+### Pre-PROD_VERIFIED self-challenge
+
+Run the pre-handoff challenge again against the exact production manifest. This
+gate does not expand production authority or make an unsafe action safe:
+
+1. Draft the complete manual production verification and recovery answer you
+   would give the user, including manifest proof, health/log/migration checks,
+   roles and production-safe journeys, permissions, readback, browser/client
+   coverage, observability, cleanup, rollback readiness, and limitations.
+2. Map every instruction to the carried ledger, its production-safety class,
+   and one agent-recorded result for the exact production revision. Staging
+   evidence alone is not production evidence unless project policy explicitly
+   defines that substitution for a `STAGING_ONLY` action.
+3. Ask of every unmatched or partial instruction: “Why did I not run this E2E
+   in production?” If the row is `PRODUCTION_SAFE`, in scope, explicitly
+   authorized, and executable, invalidate verification and execute it through
+   the real public or operational path. If it changes source or manifest,
+   return through dev and staging before promoting again.
+4. Never execute or reclassify a destructive, user-impacting, or otherwise
+   unsafe action merely to satisfy the question. Preserve it as `STAGING_ONLY`,
+   `HUMAN_ONLY`, or `EXTERNAL_BLOCKED`; if the requirement cannot be proven
+   under approved policy, the production gate remains red.
+5. Repeat until no authorized `PRODUCTION_SAFE` instruction lacks evidence.
+   Only then deliver manual guidance as replay plus explicit limitations.
+
+If the user asks this question after `PROD_VERIFIED` and reveals a safe missing
+step, invalidate the claim and repeat every affected dev, staging, and
+production gate. Do not narrow the guide or infer new production permission.
+
 ## Production terminal
 
 After independent coverage and adversarial review passes, update iteration/fix
@@ -131,9 +160,10 @@ Use this matrix:
 | Requirement | Ledger row | Class | Production safety | Surface | Status | Local evidence | Staging evidence | Production evidence | Cleanup |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 
-Declare `PROD_VERIFIED` only when every required row is complete. Never close an
-issue or stop shared infrastructure unless repository policy and the user's scope
-explicitly require it.
+Declare `PROD_VERIFIED` only when 100% of the required `PRODUCTION_SAFE` rows and
+every other required row are complete and the production self-challenge is dry.
+Never close an issue or stop shared infrastructure unless repository policy and
+the user's scope explicitly require it.
 
 ## Blockers
 

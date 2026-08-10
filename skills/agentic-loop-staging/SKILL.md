@@ -125,6 +125,34 @@ checklist only as replay guidance after every staging-executable row has an
 agent-recorded result. A skipped, blocked, or partially exercised required row
 keeps the staging gate red.
 
+### Pre-STAGING_READY self-challenge
+
+Run the dev loop's pre-handoff challenge again against the exact deployed
+manifest before `STAGING_READY`; local evidence cannot answer it for staging:
+
+1. Draft the complete manual staging validation answer you would give the user,
+   including manifest/revision proof, roles and identities, positive and
+   negative journeys, permissions, writes and downstream readback, failure and
+   retry states, relevant browsers/viewports/input modes, operational checks,
+   cleanup, and proof that production remained unchanged.
+2. Map every instruction to one fixed ledger row and one agent-recorded staging
+   result for the exact live candidate. Nearby local evidence, a health check,
+   or a successful pipeline is not a match.
+3. Ask of each unmatched or partial instruction: “Why did I not run this E2E on
+   staging?” If it is safe, in scope, authorized, and staging-executable,
+   invalidate readiness, add the row at the source, implement durable coverage,
+   rerun invalidated dev gates, freeze a new manifest, redeploy, and execute it.
+4. Do not get green by shortening the guide, weakening the denominator, or
+   relabeling a safe step as human. Repeat until a complete pass is dry.
+5. Deliver the guide only as replay of already executed staging journeys;
+   identify `HUMAN_ONLY` and `EXTERNAL_BLOCKED` limits separately. A required
+   blocked row remains red.
+
+Staging coverage is complete only when 100% of the in-scope `AUTOMATABLE` and
+`AGENT_EXECUTABLE` rows have matching evidence on the exact deployed manifest.
+If the user asks the challenge question after a readiness claim and exposes a
+safe missing step, reopen the source ledger and every invalidated terminal.
+
 For each applicable journey, capture:
 
 - public entry point, identity/role, browser or client, viewport/input mode;
@@ -149,7 +177,8 @@ Use this matrix:
 | Requirement | Ledger row | Class | Surface | Status | Local evidence | Staging evidence | Cleanup |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 
-Declare `STAGING_READY` only when every required row is complete and production
+Declare `STAGING_READY` only when 100% of the in-scope executable rows and every
+other required row are complete, the self-challenge is dry, and production
 invariants are unchanged. Then stop. Production requires a separate explicit
 production-qualified request and `agentic-loop-prod`.
 
