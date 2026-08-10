@@ -120,6 +120,13 @@ replay step first appears during staging or handoff preparation, add it to the
 source ledger, implement the missing coverage on the persistent development
 branch, re-prove invalidated dev gates, create a new manifest, and redeploy.
 
+Carry forward the dev Capability Preservation Ledger without changing its
+denominator. For every affected capability, staging must prove the compliant
+replacement—not merely the absence of the prior unsafe surface—through the real
+public path on the exact deployed manifest. A missing replacement or an
+unapproved decommission decision invalidates both `DEV_READY` and
+`STAGING_READY`; fix it at the source, freeze a new candidate, and redeploy.
+
 Do not transfer the first deployed acceptance pass to the user. Deliver a manual
 checklist only as replay guidance after every staging-executable row has an
 agent-recorded result. A skipped, blocked, or partially exercised required row

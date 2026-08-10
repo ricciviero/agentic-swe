@@ -93,6 +93,24 @@ contract or an untested user path.
 
 Keep the plan and scope ledger current when discovery changes the work.
 
+## Capability preservation gate
+
+For audit, compliance, privacy, security, accessibility, redesign, and cleanup
+work, freeze a Capability Preservation Ledger before changing a user-facing
+surface:
+
+| Capability | Prior user job | Non-conforming representation | Compliant replacement | Authorization/data boundary | Parity evidence or decommission decision |
+| --- | --- | --- | --- | --- | --- |
+
+Removing or hiding a non-conforming representation does not authorize removing
+the capability it served. Containment may temporarily make an unsafe surface
+unreachable, but completion requires either a compliant replacement that
+preserves the user job with real-journey parity evidence, or an explicit product
+decision that names and accepts decommissioning that capability. A green build,
+a deleted route, or proof that the unsafe representation is unreachable is not
+capability parity. If an unmatched capability is discovered later, invalidate
+`DEV_READY`, reopen the plan, and restore it through the compliant contract.
+
 ## Manual-to-E2E parity gate
 
 Before implementation, derive a Manual Acceptance Ledger from the exact replay

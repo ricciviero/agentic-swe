@@ -40,6 +40,19 @@ test("just-do-it publishes its execution discipline and response patterns", asyn
   assert.equal(await verifySkillIntegrity(skill.name), true);
 });
 
+test("delivery loops preserve capabilities across compliant remediation", async () => {
+  const development = await loadSkill("agentic-loop-dev");
+  const staging = await loadSkill("agentic-loop-staging");
+  const production = await loadSkill("agentic-loop-prod");
+
+  assert.match(development.body, /## Capability preservation gate/);
+  assert.match(development.body, /A green build,[\s\S]*is not\s+capability parity/);
+  assert.match(staging.body, /Carry forward the dev Capability Preservation Ledger/);
+  assert.match(staging.body, /absence of the prior unsafe surface/);
+  assert.match(production.body, /Carry forward the staging-proven Capability Preservation Ledger/);
+  assert.match(production.body, /Do not resurrect an unsafe\s+surface/);
+});
+
 test("host can resolve skill metadata, body, files, and integrity", async () => {
   const skill = await loadSkill("iterations-planner");
   assert.match(skill.description, /planning gate/i);
