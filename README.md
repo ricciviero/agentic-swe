@@ -216,8 +216,18 @@ Notable workflow skills:
 - `iterations-planner`: executes the required planning workflow for non-trivial features, refactors, migrations, and fixes.
 - `just-do-it`: executes clear user direction without unsolicited debate, invented blockers, or redundant confirmation while preserving effective authority and permission boundaries.
 - `agentic-loop-dev`: persists through investigation, implementation, double/triple review, and real local validation, then stops at an uncommitted `DEV_READY` state.
-- `agentic-loop-prod`: extends the local loop through verified production evidence only after discovering the repository's delivery topology and codifying current project-specific release knowledge.
+- `agentic-loop-staging`: promotes an exact `DEV_READY` candidate, reconciles the deployed manifest, and repeats the required real journeys before declaring `STAGING_READY`.
+- `agentic-loop-prod`: extends the verified staging candidate through production-safe evidence only after discovering the repository's delivery topology and codifying current project-specific release knowledge.
 - `skill-creator`: supplied by Codex rather than bundled here; use it when creating or materially revising a Codex skill.
+
+All three delivery loops derive a fixed Manual Acceptance Ledger before
+handoff, map every manual guide step to an executable or explicitly constrained
+row, and run a terminal self-challenge: if a safe UI journey could have been
+executed end to end by the agent but was not, readiness is reopened. A green
+build or a few happy paths are not substitutes for complete real-journey
+coverage. Staging binds evidence to the exact deployed manifest; production
+keeps the same denominator while executing only actions allowed by the
+production authority and safety classification.
 
 Notable engineering skills:
 

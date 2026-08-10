@@ -14,7 +14,7 @@
     {
       "name": "agentic-loop-dev",
       "description": "Run a persistent, repository-aware engineering loop through real local evidence and stop before commit or deployment. Use when the user says \"agentic loop dev\", \"agentic-loop-dev\", or an unqualified \"agentic-loop\", or asks the agent to investigate, plan, implement, double- or triple-check, and repeatedly test a non-trivial change locally until it is genuinely ready. Discover the repository's own runtime and validation flow instead of assuming Docker, a language, or an E2E framework.",
-      "integrity": "sha256-tq48PiHTdTU3bTTiO108h4ClxhdrBfET+WjLAiXHFJA=",
+      "integrity": "sha256-qnTF6Vjs61cLw6YqCUZ2yry7oHLdax+I2LjFzEvgChw=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"
@@ -23,7 +23,7 @@
     {
       "name": "agentic-loop-prod",
       "description": "Promote a current STAGING_READY candidate through a repository's verified production path and prove it through production-safe real evidence. Use only when the user explicitly says \"agentic loop prod\" or \"agentic-loop-prod\", or explicitly requests delivery and verification through production. Never infer production authorization from dev or staging work.",
-      "integrity": "sha256-UuPc3pGzfXh/QGG5NsJz7drGQSQ+CgmAn38lQARUYhU=",
+      "integrity": "sha256-TBGxh9PSq+GBOPBmz8F/ok0JjsU9jkf3bUXE8tGawwE=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"
@@ -32,7 +32,7 @@
     {
       "name": "agentic-loop-staging",
       "description": "Promote a DEV_READY candidate through a repository's verified pre-production delivery path, exercise it through real deployed interfaces, iterate fixes at the source, and stop at STAGING_READY without production changes. Use only when the user explicitly says \"agentic loop staging\" or \"agentic-loop-staging\", or explicitly asks to deliver and verify work in staging while withholding production.",
-      "integrity": "sha256-hVei7RAwzWyKaKg65Xq6qK5tw6K91vGYuJqa35+1PF8=",
+      "integrity": "sha256-OEXj77fXo7rcUwzk1Mt05H7TxMs6PLHBwdzx4IqctyU=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"

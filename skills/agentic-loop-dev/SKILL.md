@@ -122,6 +122,43 @@ If a new replay step first appears while preparing handoff guidance or after a
 readiness claim, invalidate that state, add the row, implement the required
 coverage, and rerun every affected gate.
 
+For a UI row, parity means replaying the user's actions through visible,
+accessible controls (`click`, `fill`, `select`, keyboard, upload, download) on
+the real application. `page.evaluate(fetch(...))`, a browser request client, a
+direct API call, a database mutation, or a route interception may provide
+supplementary boundary evidence, but none can stand in for a user action that
+the product exposes in the UI. Derive the handoff's manual replay guide before
+closure and compare it line by line with the executed ledger: if the honest
+answer to “why did the agent not run this step E2E?” is “it safely could have,”
+`DEV_READY` is invalid.
+
+### Pre-handoff self-challenge
+
+Run this challenge automatically before `DEV_READY`; do not wait for the user
+to ask how to test the work manually:
+
+1. Draft the exact end-to-end manual replay answer you would give the user,
+   including setup, roles, data, happy and negative paths, permissions,
+   write-to-read checks, relevant browsers/viewports/input modes, and cleanup.
+2. Map every instruction in that answer to one ledger row and one recorded
+   execution result. Do not map prose to an assertion count or a nearby test.
+3. Ask of every unmatched or partially matched instruction: “Why did I not run
+   this E2E?” If the answer is “I safely could have,” classify it as
+   `AUTOMATABLE` or `AGENT_EXECUTABLE`, invalidate any readiness claim, return
+   to PLAN/REAL_LOCAL, and execute it through the real public interface.
+4. Rerun affected static, integration, experience, and real-journey gates after
+   every defect found by the replay. Do not obtain green by shortening the
+   manual guide, weakening the denominator, or relabeling a safe step as human.
+5. Repeat until a full pass finds no executable instruction without matching
+   evidence. Only then provide the guide as a human replay of journeys the
+   agent has already executed, with `HUMAN_ONLY` and `EXTERNAL_BLOCKED` limits
+   listed separately.
+
+If the user asks the challenge question after a readiness claim and exposes a
+safe unexecuted step, treat that as new evidence of an incomplete gate: reopen
+the loop and correct both the implementation evidence and this skill when the
+failure mode is reusable.
+
 ## Operational configuration gate
 
 Classify every new or changed setting before implementation. A runtime or
@@ -192,6 +229,10 @@ For changes that users operate through a UI or other public interface:
 7. Compare the changed surface with the product's existing visual system at the
    relevant states and viewports. Record screenshots or equivalent inspectable
    artifacts when visual behavior is part of acceptance.
+8. Retain inspectable artifacts from a passing run for the critical roles,
+   states, and viewports. Open and review those artifacts; merely generating
+   them is not visual evidence. Mask credentials, secrets, personal data, and
+   unrelated sensitive values before artifacts are retained.
 
 Treat visual quality as an evidence-backed gate, not an absolute claim of
 perfection. Record unexercised journeys and environmental limits explicitly; a
@@ -214,9 +255,9 @@ Run, as applicable:
 7. viewport, media, accessibility, job, retry, and cleanup checks required by the scope.
 
 For user-facing scope, calculate real-journey coverage from the ledger, not from
-test or assertion counts. Every required automatable or agent-executable row and
-any stricter repository-required coverage must be green before the real local
-gate passes.
+test or assertion counts. Coverage is complete only when 100% of the in-scope
+`AUTOMATABLE` and `AGENT_EXECUTABLE` rows are green; repository rules may add
+more rows or a broader browser matrix, but cannot weaken this denominator.
 
 Classify evidence precisely:
 
