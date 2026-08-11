@@ -185,7 +185,7 @@ The core installer is non-destructive:
 
 The skill linker remains a source-checkout compatibility entry point and never overwrites an existing skill. Package consumers should resolve metadata and bodies through `@agenticswe/skills`, which avoids cloning or embedding the catalog. Use `--dry-run` before either installer and `agentic-swe uninstall --target all` to remove only owned global adapters.
 
-When contributing from a source checkout, every push is followed by a local skill reconciliation gate. Discover all configured roots plus `~/.agents/skills`, `${CODEX_HOME:-~/.codex}/skills`, `${CLAUDE_HOME:-~/.claude}/skills`, and other roots evidenced by adapters or links. Links that resolve to this checkout need verification only; repository-owned copies must be synchronized to the pushed commit and verified by content or manifest integrity. Unowned or ambiguous paths are preserved and reported rather than overwritten.
+When contributing from a source checkout, every push is followed by a local skill reconciliation gate. Discover all configured roots plus `~/.agents/skills`, `${CODEX_HOME:-~/.codex}/skills`, `${CLAUDE_HOME:-~/.claude}/skills`, and other roots evidenced by adapters or links. Links that resolve to this checkout need verification only; repository-owned copies must be synchronized to the pushed commit and verified by content or manifest integrity. Unowned or ambiguous paths are preserved and reported as exclusions rather than overwritten; a matching directory name alone is not ownership evidence.
 
 ## Project Bootstrap
 

@@ -33,7 +33,7 @@ Every successful push must be followed by local skill reconciliation against the
 
 1. Discover all configured and conventional user skill roots. Inspect active agent configuration plus `~/.agents/skills`, `${CODEX_HOME:-~/.codex}/skills`, `${CLAUDE_HOME:-~/.claude}/skills`, and any additional root evidenced by adapters or existing links; resolve and deduplicate the paths.
 2. For every installed skill that overlaps this repository, verify symlinks against the matching canonical `skills/<skill-name>/` directory and synchronize repository-owned copies from that canonical source. Use a dry run first when a supported installer or linker provides one.
-3. Preserve unowned, user-modified, and ambiguous local paths. Do not overwrite them; report each exact conflict and do not claim the push complete while a matching installation remains silently stale.
+3. Preserve unowned, user-modified, and ambiguous local paths; a matching name alone is not ownership evidence. Report them as exclusions. Do not claim the push complete only when an installation proven to be repository-owned remains stale or conflicting.
 4. Verify links by resolved target and copied installations by content or manifest integrity. Run `quick_validate.py` for every changed installed Codex skill.
 5. Report the pushed commit, every root inspected, the skills updated or already current, and any unresolved conflict.
 
