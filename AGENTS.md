@@ -60,6 +60,14 @@ Maintain a public, reusable, agent-agnostic behavior framework for software-engi
 - Update `agents/openai.yaml` when a Codex skill's user-facing metadata no longer matches its `SKILL.md`.
 - For a multi-skill change, a workflow change, or a release with several deliverables, use `iterations-planner` before editing.
 
+## Local skill synchronization
+
+- After every successful push, treat delivery as incomplete until the user's local installations of repository skills have been discovered, reconciled to the exact pushed commit, and verified. Apply this gate even when the push did not change `skills/`; verify that no local installation drifted instead of assuming it is current.
+- Discover skill roots from active agent configuration and environment first, then inspect every applicable conventional location, including `~/.agents/skills`, `${CODEX_HOME:-~/.codex}/skills`, `${CLAUDE_HOME:-~/.claude}/skills`, and any additional root evidenced by configuration, adapters, or existing links. Do not stop after finding the first root, and deduplicate roots by resolved path.
+- Keep `skills/<skill-name>/` in this repository canonical. A local symlink is current only when its resolved target is the matching canonical skill directory. A repository-owned copied installation must be synchronized from the canonical source with the supported installer/linker or a targeted copy operation; never edit the installed copy as the source of truth.
+- Never overwrite an unowned, user-modified, or ambiguous local skill path. A matching directory name alone does not prove repository ownership. Record such paths as excluded; block delivery only when evidence shows that a stale or conflicting installation is owned by this repository and should track its canonical skill, then leave delivery incomplete until that conflict is resolved or the user explicitly chooses how to reconcile it.
+- Verify every reconciled link by resolved target and every reconciled copy by content or manifest integrity. Validate changed installed Codex skills with `quick_validate.py`, and report the pushed commit, roots inspected, skills updated or already current, verification evidence, and unresolved conflicts.
+
 ## Scope discipline
 
 - Keep one skill focused on one durable capability.
