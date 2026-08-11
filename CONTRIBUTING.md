@@ -27,6 +27,16 @@ artifact, threshold, or treatment creates a new experiment ID rather than rewrit
 
 Use `skill-creator` for a new or materially revised Codex skill. Keep `SKILL.md` concise, retain `name` and `description` frontmatter, update `agents/openai.yaml` only when its user-facing metadata becomes stale, and validate every changed skill.
 
+## Post-push local skill gate
+
+Every successful push must be followed by local skill reconciliation against the exact pushed commit. Delivery is not complete until this gate is satisfied, even when the push did not modify `skills/`.
+
+1. Discover all configured and conventional user skill roots. Inspect active agent configuration plus `~/.agents/skills`, `${CODEX_HOME:-~/.codex}/skills`, `${CLAUDE_HOME:-~/.claude}/skills`, and any additional root evidenced by adapters or existing links; resolve and deduplicate the paths.
+2. For every installed skill that overlaps this repository, verify symlinks against the matching canonical `skills/<skill-name>/` directory and synchronize repository-owned copies from that canonical source. Use a dry run first when a supported installer or linker provides one.
+3. Preserve unowned, user-modified, and ambiguous local paths. Do not overwrite them; report each exact conflict and do not claim the push complete while a matching installation remains silently stale.
+4. Verify links by resolved target and copied installations by content or manifest integrity. Run `quick_validate.py` for every changed installed Codex skill.
+5. Report the pushed commit, every root inspected, the skills updated or already current, and any unresolved conflict.
+
 ## Pull requests
 
 - Branch from the current `main`; do not push directly to the protected branch.
@@ -38,7 +48,7 @@ Use `skill-creator` for a new or materially revised Codex skill. Keep `SKILL.md`
 - Explain behavior or compatibility changes and include validation evidence.
 - Keep generated assets, package metadata, documentation, and the compatibility matrix aligned.
 - Describe any benchmark-facing change, whether it invalidates prior evidence, and which offline gates were rerun.
-- Do not publish packages, create release tags, or change external installations as part of an ordinary contribution.
+- Do not publish packages, create release tags, or change remote/external installations as part of an ordinary contribution. Repository-owned user-local skill installations are the only standing exception and must be reconciled after each push through the post-push local skill gate above.
 
 ## Release policy
 
