@@ -1,206 +1,65 @@
-# Spring Boot - Reference Configurations
+# Spring Boot Configuration
 
-## application.yml (base template)
+Use examples only after selecting the actual database, Boot major, authentication contract, and deployment layout. Read boot-4-compatibility.md for Boot 4; do not copy independently pinned dependency versions from another major.
+
+## Environment and Profiles
+
+Use normal Spring externalized configuration for infrastructure-managed endpoints, credentials, bootstrap settings, and startup options. Keep development, test, and production values explicit. A Compose env file passes environment variables to the container; Spring does not automatically parse arbitrary shell dotenv syntax as application properties.
+
+Product-managed runtime settings need canonical persistence, authorized APIs, effective-state readback, and an operator UI where applicable. Do not substitute an env edit or direct SQL update for that normal workflow.
+
+This fragment illustrates a PostgreSQL application only when PostgreSQL has been chosen:
 
 ```yaml
-server:
-  port: ${SERVER_PORT:5000}
-
 spring:
-  application:
-    name: ${APP_NAME:my-service}
   datasource:
-    url: jdbc:postgresql://${DB_HOST:localhost}:${DB_PORT:5432}/${DB_NAME}
-    username: ${DB_USER}
-    password: ${DB_PASSWORD}
-    hikari:
-      maximum-pool-size: 10
-      minimum-idle: 2
+    url: ${SPRING_DATASOURCE_URL}
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: validate          # never use "update" in production
+      ddl-auto: validate
     show-sql: false
-    properties:
-      hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: true
-  config:
-    import: optional:file:.env[.properties]   # read local .env files
+  flyway:
+    enabled: true
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health
   endpoint:
     health:
       show-details: when-authorized
-
-springdoc:
-  api-docs:
-    path: /api-docs
-  swagger-ui:
-    path: /swagger-ui.html
 ```
 
----
+Select matching Flyway/database dependencies in the build; the configuration fragment does not install them. Let the JDBC driver/Hibernate detect the dialect unless a real compatibility reason requires an override. Configure pool sizing from workload and resource limits, not an arbitrary template.
 
-## JPA Auditing
+Expose Actuator information/metrics only as required and protect them through the application's security and deployment network. Health details must not disclose credentials or internal exceptions.
 
-```java
-@Configuration
-@EnableJpaAuditing
-public class JpaConfig {}
+## Migrations and Local Data
 
-@MappedSuperclass
-@EntityListeners(AuditingEntityListener.class)
-public abstract class BaseEntity {
+Use the existing migration system in every environment. On an empty database, migrations create the schema before JPA validation. Do not add a second schema in Docker entrypoint SQL. Database/user provisioning may be separate, but table ownership must remain unambiguous.
 
-    @CreatedDate
-    @Column(nullable = false, updatable = false)
-    private Instant createdAt;
+Keep development seeds identifiable and outside the normal production path. Never rewrite applied/shared migrations. Verify both empty initialization and upgrades of existing data for migration changes.
 
-    @LastModifiedDate
-    @Column(nullable = false)
-    private Instant updatedAt;
-}
-```
+## API Contracts
 
----
+Keep controllers thin and API DTOs distinct from persistence entities. Apply validation matching actual constraints, including nullable/unset semantics. Do not turn an example number, prefix, or field into a product requirement.
 
-## OpenApiConfig (template)
+Preserve the established error response contract. For a new API, Spring ProblemDetail is an option; use stable domain codes and sanitized messages. Do not expose exception traces, SQL, or arbitrary exception messages.
 
-```java
-@Configuration
-public class OpenApiConfig {
+Document the actual authentication scheme in OpenAPI rather than automatically declaring bearer JWT. Select springdoc 3.x for Boot 4 and 2.x for Boot 3, verifying the specific compatibility matrix. Keep generated/documentation endpoints protected or intentionally exposed according to the project's policy.
 
-    @Bean
-    public OpenAPI openAPI() {
-        return new OpenAPI()
-            .info(new Info()
-                .title("API Documentation")
-                .version("v1"))
-            .addSecurityItem(new SecurityRequirement().addList("bearer-jwt"))
-            .components(new Components()
-                .addSecuritySchemes("bearer-jwt",
-                    new SecurityScheme()
-                        .type(SecurityScheme.Type.HTTP)
-                        .scheme("bearer")
-                        .bearerFormat("JWT")));
-    }
+## Integration Tests
 
-    @Bean
-    public GroupedOpenApi usersGroup() {
-        return GroupedOpenApi.builder()
-            .group("users")
-            .pathsToMatch("/api/v1/users/**")
-            .build();
-    }
-}
-```
+Use Boot-compatible test starters and the project's isolated test database. Testcontainers can provide a matching real database when selected; use current module names and Boot service connections or existing DynamicPropertySource conventions. Avoid a second embedded database whose behavior diverges from the supported dialect.
 
----
+Real HTTP integration tests use an isolated profile and random server port. Verify contract, validation, authorization, and domain failures for affected endpoints. Unit/slice tests complement HTTP tests; choose the relevant surface rather than copying every test annotation from another Boot major.
 
-## GlobalExceptionHandler (template)
+## Sources
 
-```java
-@RestControllerAdvice
-public class GlobalExceptionHandler {
-
-    @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> handleNotFound(EntityNotFoundException ex,
-                                                         HttpServletRequest request) {
-        return ResponseEntity.status(HttpStatus.NOT_FOUND)
-            .body(ErrorResponse.of("NOT_FOUND", ex.getMessage(), request.getRequestURI()));
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<ErrorResponse> handleValidation(MethodArgumentNotValidException ex,
-                                                           HttpServletRequest request) {
-        String message = ex.getBindingResult().getFieldErrors().stream()
-            .map(f -> f.getField() + ": " + f.getDefaultMessage())
-            .collect(Collectors.joining(", "));
-        return ResponseEntity.badRequest()
-            .body(ErrorResponse.of("VALIDATION_ERROR", message, request.getRequestURI()));
-    }
-
-    public record ErrorResponse(Instant timestamp, String code, String message, String path) {
-        public static ErrorResponse of(String code, String message, String path) {
-            return new ErrorResponse(Instant.now(), code, message, path);
-        }
-    }
-}
-```
-
----
-
-## Testcontainers (base setup)
-
-```java
-@SpringBootTest
-@Testcontainers
-class UserServiceIntegrationTest {
-
-    @Container
-    static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:16-alpine");
-
-    @DynamicPropertySource
-    static void configureProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", postgres::getJdbcUrl);
-        registry.add("spring.datasource.username", postgres::getUsername);
-        registry.add("spring.datasource.password", postgres::getPassword);
-    }
-
-    // ...test methods
-}
-```
-
----
-
-## pom.xml - essential dependencies
-
-```xml
-<dependencies>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-web</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-data-jpa</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-validation</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-security</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-actuator</artifactId>
-    </dependency>
-    <dependency>
-        <groupId>org.postgresql</groupId>
-        <artifactId>postgresql</artifactId>
-        <scope>runtime</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.springdoc</groupId>
-        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-        <version>2.3.0</version>
-    </dependency>
-    <!-- Test -->
-    <dependency>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-test</artifactId>
-        <scope>test</scope>
-    </dependency>
-    <dependency>
-        <groupId>org.testcontainers</groupId>
-        <artifactId>postgresql</artifactId>
-        <scope>test</scope>
-    </dependency>
-</dependencies>
-```
+- [Externalized configuration](https://docs.spring.io/spring-boot/reference/features/external-config.html)
+- [Database initialization](https://docs.spring.io/spring-boot/how-to/data-initialization.html)
+- [Testing](https://docs.spring.io/spring-boot/reference/testing/)
+- [springdoc](https://springdoc.org/)

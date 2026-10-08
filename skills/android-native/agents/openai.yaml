@@ -1,0 +1,4 @@
+interface:
+  display_name: "Native Android"
+  short_description: "Build Kotlin Android UI and native Expo modules"
+  default_prompt: "Use $android-native to implement or review this Kotlin Android task while preserving the app's architecture and compatible native toolchain."

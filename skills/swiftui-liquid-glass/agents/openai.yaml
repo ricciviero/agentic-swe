@@ -1,4 +1,4 @@
 interface:
-  display_name: "SwiftUI Liquid Glass"
-  short_description: "Apply iOS Liquid Glass APIs"
-  default_prompt: "Use $swiftui-liquid-glass to adopt or review iOS Liquid Glass UI."
+  display_name: "iOS Liquid Glass"
+  short_description: "Use native Liquid Glass in SwiftUI and Expo"
+  default_prompt: "Use $swiftui-liquid-glass to implement or review native iOS Liquid Glass in this SwiftUI or Expo interface with availability and accessibility fallbacks."

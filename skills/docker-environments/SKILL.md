@@ -1,6 +1,6 @@
 ---
 name: docker-environments
-description: Docker and Docker Compose environment setup for full-stack projects. Use this skill whenever the user asks to dockerize, containerize, create docker-compose, set up dev/prod environments, or configure Docker for any combination of frontend, backend, and database. Trigger on any mention of Docker, Dockerfile, docker-compose, container, hot reload in Docker, multistage build, or dev/prod environment setup. Also trigger when the user mentions dockerizing an existing project or adding Docker support. Always ask for the deployment target (private server/VPS, AWS, or undecided). Produce AWS-ready artifacts only when the user chooses AWS, and delegate deployment/runtime decisions to the aws skill. When in doubt, use this skill for any Docker or Docker Compose task.
+description: Configure or review Dockerfiles and Docker Compose for local development and production web services. Use for containerized frontend/backend/database environments, real hot reload, multistage builds, networking, secrets, readiness, and single-host deployment layouts. Determine the actual target before provider-specific work.
 ---
 
 # Docker Environments Agent
@@ -10,6 +10,11 @@ Use this skill to dockerize, containerize, or configure Docker/Docker Compose fo
 ## Load References
 
 Inspect the project stack and the installed Docker and Compose versions before generating stack-specific Dockerfiles, Compose files, environment files, or startup scripts.
+
+- For compiled backend hot reload and Angular/static frontend builds, read [web-development.md](references/web-development.md).
+- For production images, Compose environment handling, persistence, and releases on one host, read [single-host-production.md](references/single-host-production.md).
+
+Read only relevant references. A request to research Docker or understand a mockup does not authorize generating files or starting containers.
 
 ## First Questions
 
@@ -22,6 +27,8 @@ Always determine these before writing files:
 - Whether hot reload is required in development.
 
 If the target is AWS, generate AWS-ready container artifacts only where appropriate and delegate runtime/deploy choices to `$aws`.
+
+Use information already supplied by the user; ask only for missing decisions that materially affect the requested files. A private host or an EC2 running Compose is a single-host deployment; do not silently replace it with ECS or a managed database. Keep undecided production choices explicit.
 
 ## Default Project Shape
 
@@ -41,9 +48,10 @@ Prefer this structure unless the repo already has a better convention:
 - Mount source code for local hot reload; production images copy built artifacts only.
 - Keep secrets out of images. Use env files, orchestrator secrets, or deployment-specific secret stores.
 - Log to stdout/stderr; do not rely on files inside containers for runtime logs.
-- Make databases reproducible with init/migration/seed behavior suitable for the stack.
+- Reproduce empty databases through the project's canonical migration system. Separate development seeds from production data; init scripts must not duplicate migration-owned tables.
 - Add health checks when service readiness matters.
-- Validate with `docker compose config` and a real `docker compose up --build` when feasible.
+- A dependency being started does not mean it is ready; use the appropriate readiness condition. Health status alone does not make Compose automatically restart an unhealthy running service.
+- Validate requested configuration with `docker compose config`; for implementation work, exercise a real startup when authorized and feasible. Do not run an unrelated application to validate documentation changes.
 
 ## Delivery Checklist
 
