@@ -1,4 +1,4 @@
 interface:
   display_name: "Docker Environments"
-  short_description: "Dockerize full-stack projects"
-  default_prompt: "Use $docker-environments to add Docker and Compose support to this project."
+  short_description: "Docker and Compose for local and production web"
+  default_prompt: "Use $docker-environments to configure or review local and production Docker environments for the actual stack and deployment target."

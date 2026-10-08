@@ -1,90 +1,30 @@
 ---
 name: swiftui-liquid-glass
-description: Implement, review, or improve SwiftUI features using the iOS 26+ Liquid Glass API. Use when asked to adopt Liquid Glass in new SwiftUI UI, refactor an existing feature to Liquid Glass, or review Liquid Glass usage for correctness, performance, and design alignment.
+description: Implement or review native iOS Liquid Glass in SwiftUI or React Native/Expo. Use for glass API availability, native containers and button styles, accessibility, fallbacks, and design alignment. Ordinary SwiftUI or Expo UI work without Liquid Glass belongs to its platform skill.
 ---
 
-# SwiftUI Liquid Glass
+# iOS Liquid Glass
 
-## Overview
-Use this skill to build or review SwiftUI features that fully align with the iOS 26+ Liquid Glass API. Prioritize native APIs (`glassEffect`, `GlassEffectContainer`, glass button styles) and Apple design guidance. Keep usage consistent, interactive where needed, and performance aware.
+Use native Liquid Glass APIs appropriate to the actual rendering layer and supported OS/build toolchain. Preserve the application's chosen stack and visual requirements.
 
-## Workflow Decision Tree
-Choose the path that matches the request:
+## Choose the Rendering Layer
 
-### 1) Review an existing feature
-- Inspect where Liquid Glass should be used and where it should not.
-- Verify correct modifier order, shape usage, and container placement.
-- Check for iOS 26+ availability handling and sensible fallbacks.
+- SwiftUI: read [liquid-glass.md](references/liquid-glass.md) for glassEffect, containers, button styles, and availability.
+- React Native/Expo: read [react-native-expo.md](references/react-native-expo.md) for expo-glass-effect versus Expo UI SwiftUI controls and SDK-specific navigation.
 
-### 2) Improve a feature using Liquid Glass
-- Identify target components for glass treatment (surfaces, chips, buttons, cards).
-- Refactor to use `GlassEffectContainer` where multiple glass elements appear.
-- Introduce interactive glass only for tappable or focusable elements.
+Do not paste SwiftUI modifiers into React Native views or represent an ordinary blur as native Liquid Glass.
 
-### 3) Implement a new feature using Liquid Glass
-- Design the glass surfaces and interactions first (shape, prominence, grouping).
-- Add glass modifiers after layout/appearance modifiers.
-- Add morphing transitions only when the view hierarchy changes with animation.
+## Design and Availability
 
-## Core Guidelines
-- Prefer native Liquid Glass APIs over custom blurs.
-- Use `GlassEffectContainer` when multiple glass elements coexist.
-- Apply `.glassEffect(...)` after layout and visual modifiers.
-- Use `.interactive()` for elements that respond to touch/pointer.
-- Keep shapes consistent across related elements for a cohesive look.
-- Gate with `#available(iOS 26, *)` and provide a non-glass fallback.
+- Inspect deployment target, Xcode/SDK, and rendering layer before editing. Native iOS Liquid Glass requires iOS 26+ and supported build tooling; the app can retain an earlier deployment target with an explicit fallback.
+- Use glass primarily for controls/navigation floating above content, following Apple guidance. Avoid applying it to every content card/row or stacking glass layers.
+- Respect Reduce Transparency, contrast, motion settings, text scaling, and readable foreground content. Availability alone does not establish accessibility.
+- Use a glass container for related surfaces that should interact or morph; unrelated elements do not need one shared container simply because more than one exists.
+- Apply glass after the intended SwiftUI layout/appearance modifiers. Keep shapes and grouping coherent; interactive effects belong to interactive controls.
+- Add morphing transitions only for a required animated state change, with stable IDs and an appropriate namespace.
 
-## Review Checklist
-- **Availability**: `#available(iOS 26, *)` present with fallback UI.
-- **Composition**: Multiple glass views wrapped in `GlassEffectContainer`.
-- **Modifier order**: `glassEffect` applied after layout/appearance modifiers.
-- **Interactivity**: `interactive()` only where user interaction exists.
-- **Transitions**: `glassEffectID` used with `@Namespace` for morphing.
-- **Consistency**: Shapes, tinting, and spacing align across the feature.
+## Verification
 
-## Implementation Checklist
-- Define target elements and desired glass prominence.
-- Wrap grouped glass elements in `GlassEffectContainer` and tune spacing.
-- Use `.glassEffect(.regular.tint(...).interactive(), in: .rect(cornerRadius: ...))` as needed.
-- Use `.buttonStyle(.glass)` / `.buttonStyle(.glassProminent)` for actions.
-- Add morphing transitions with `glassEffectID` when hierarchy changes.
-- Provide fallback materials and visuals for earlier iOS versions.
+Verify the actual native effect on a compatible device/simulator, earlier-OS fallback when supported, and relevant accessibility settings. Use release profiling for a performance claim. For a review or documentation-only task, report findings without starting or changing an unrelated application.
 
-## Quick Snippets
-Use these patterns directly and tailor shapes/tints/spacing.
-
-```swift
-if #available(iOS 26, *) {
-    Text("Hello")
-        .padding()
-        .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 16))
-} else {
-    Text("Hello")
-        .padding()
-        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 16))
-}
-```
-
-```swift
-GlassEffectContainer(spacing: 24) {
-    HStack(spacing: 24) {
-        Image(systemName: "scribble.variable")
-            .frame(width: 72, height: 72)
-            .font(.system(size: 32))
-            .glassEffect()
-        Image(systemName: "eraser.fill")
-            .frame(width: 72, height: 72)
-            .font(.system(size: 32))
-            .glassEffect()
-    }
-}
-```
-
-```swift
-Button("Confirm") { }
-    .buttonStyle(.glassProminent)
-```
-
-## Resources
-- Reference guide: `references/liquid-glass.md`
-- Prefer Apple docs for up-to-date API details.
+Prefer the current Apple and selected Expo SDK documentation when an API or status differs from an example.

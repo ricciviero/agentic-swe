@@ -206,7 +206,7 @@ agentic-swe verify .
 
 ## Included Skills
 
-The public bundle currently contains 45 skills across frontend, mobile, and game development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
+The public bundle currently contains 46 skills across frontend, mobile, and game development, backend and cloud engineering, agent workflows, delivery automation, and design engineering. Browse [`skills/`](skills/) for the full collection.
 
 For Unity projects, [`build-unity-games`](skills/build-unity-games/) covers agent-owned gameplay implementation, deterministic scene and prefab automation, the official Unity CLI and Pipeline package, Edit Mode and Play Mode tests, and player builds.
 
@@ -234,6 +234,13 @@ production authority and safety classification.
 Notable engineering skills:
 
 - `rust-engineer`: covers idiomatic Rust plus a production-oriented full-stack web path with Leptos SSR, Axum, SQLx/PostgreSQL, browser sessions and CSRF, server functions versus public REST APIs, realtime transport, browser testing, and deployment.
+- `spring-boot-backend`: covers Java/Spring version compatibility, managed dependencies, API boundaries, configuration, and canonical database migrations, including Boot 4 considerations.
+- `angular-developer`: covers supported Angular/Node/TypeScript combinations, standalone components, signals, and form choices that preserve existing project conventions and domain values.
+- `docker-environments`: covers local development and single-host production, compiled Java reload, static frontend images, Compose networking/configuration, and durable data.
+
+For mobile projects, [`react-native-expo`](skills/react-native-expo/) covers SDK-compatible iOS/Android development and native UI, while [`android-native`](skills/android-native/) covers Kotlin, Jetpack Compose, and native Expo modules. [`swiftui-liquid-glass`](skills/swiftui-liquid-glass/) covers native glass in SwiftUI and Expo.
+
+Version and toolchain examples in these skills are dated compatibility snapshots. Inspect the project's selected versions and current official documentation before scaffolding or upgrading; backend Java, Angular tooling, and Android's build JDK have independent compatibility requirements.
 
 ## Repository Layout
 

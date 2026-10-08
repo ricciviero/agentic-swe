@@ -1,243 +1,37 @@
-# React Native (Expo) – Configurazioni di Riferimento
+# Expo Configuration and Native Generation
 
-## axiosConfig.ts (template base)
+## Discover Before Editing
 
-```typescript
-import axios from "axios";
-import type { ApiError } from "@/types/api";
+Inspect app.json or app.config.*, the lockfile, Router entrypoint, config plugins, build profiles, and whether ios/ and android/ are generated or manually maintained. Preserve bundle/package identifiers and existing account ownership. Changing an app identifier is a release decision.
 
-const apiClient = axios.create({
-  baseURL: `${process.env.EXPO_PUBLIC_API_BASE_URL}/api/v1`,
-  timeout: 10_000,
-  headers: {
-    "Content-Type": "application/json",
-  },
-});
+Use a stable SDK compatible with the project's requirements. Each SDK targets a specific React Native/React set. Native library installation, minimum OS support, and build toolchains must match that set; version examples are not instructions to migrate every app.
 
-apiClient.interceptors.request.use((config) => {
-  // es. aggiungere token da SecureStore
-  return config;
-});
+## Public Configuration and Secrets
 
-apiClient.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    const apiError: ApiError = {
-      status: error.response?.status ?? 0,
-      message: error.response?.data?.message ?? "Errore di rete",
-      code: error.response?.data?.errorCode,
-    };
-    return Promise.reject(apiError);
-  }
-);
+- EXPO_PUBLIC_API_BASE_URL can provide the public API endpoint when that is the project's convention. Do not append /api/v1 in multiple layers or silently invent an API prefix.
+- EXPO_PUBLIC_* values are inlined into the JavaScript bundle and readable by app users. EAS secret visibility does not make a value embedded in the app confidential.
+- Keep signing credentials and build-only secrets in appropriate build/deployment secret storage. Keep backend credentials on the server.
+- Validate required configuration at startup or build time and produce an actionable configuration error instead of requests to undefined.
+- Distinguish a local physical device, Android emulator, iOS simulator, and browser when selecting a development API address. localhost refers to the process/device using it; Compose service names resolve only inside the Docker network.
+- Keep HTTP development exceptions limited to the needed development environment. Production API connections use the intended HTTPS endpoint.
 
-export default apiClient;
-```
+## CNG and Config Plugins
 
----
+With Continuous Native Generation, app config, installed packages, plugins, and local native modules are durable inputs; native projects are reproducible outputs. Read the current SDK's prebuild behavior before running it: regeneration can discard hand-edited native files.
 
-## Tipo ApiError
+Use config plugins for declarative native configuration. Use a local Expo module when a needed native API has no suitable supported library. A native dependency/plugin change requires a new development build; Metro reload cannot add native code to an existing binary.
 
-```typescript
-// src/types/api/index.ts
-export type ApiError = {
-  status: number;
-  message: string;
-  code?: string;
-};
-```
+If the repo intentionally maintains native projects manually, preserve that workflow. Do not switch ownership modes or delete native directories without a requested migration and a recovery plan.
 
----
+## Dependency Changes
 
-## Service pattern
+Use the existing package manager and lockfile. expo install selects compatible versions for SDK-managed packages. For other packages, verify New Architecture support, required native configuration, platform support, and maintained releases. Run dependency checks after changing the set rather than installing independent latest native versions.
 
-```typescript
-// src/services/users/index.ts
-import apiClient from "@/services/apiClient";
-import type { UserResponse, CreateUserRequest } from "@/types/domain";
+## Official Sources
 
-export const getUsers = async (): Promise<UserResponse[]> => {
-  const { data } = await apiClient.get<UserResponse[]>("/users");
-  return data;
-};
-
-export const createUser = async (
-  payload: CreateUserRequest
-): Promise<UserResponse> => {
-  const { data } = await apiClient.post<UserResponse>("/users", payload);
-  return data;
-};
-```
-
----
-
-## Store pattern (Zustand)
-
-```typescript
-// src/stores/useUserStore.ts
-import { create } from "zustand";
-import type { UserResponse } from "@/types/domain";
-
-type UserStore = {
-  users: UserResponse[];
-  loading: boolean;
-  error: string | null;
-  setUsers: (users: UserResponse[]) => void;
-  setLoading: (loading: boolean) => void;
-  setError: (error: string | null) => void;
-};
-
-export const useUserStore = create<UserStore>((set) => ({
-  users: [],
-  loading: false,
-  error: null,
-  setUsers: (users) => set({ users }),
-  setLoading: (loading) => set({ loading }),
-  setError: (error) => set({ error }),
-}));
-```
-
----
-
-## Hook pattern
-
-```typescript
-// src/hooks/useUsers.ts
-import { useState } from "react";
-import { getUsers } from "@/services/users";
-import type { UserResponse } from "@/types/domain";
-import type { ApiError } from "@/types/api";
-
-export const useUsers = () => {
-  const [users, setUsers] = useState<UserResponse[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-
-  const fetchUsers = async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await getUsers();
-      setUsers(data);
-    } catch (err) {
-      const apiError = err as ApiError;
-      setError(apiError.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  return { users, loading, error, fetchUsers };
-};
-```
-
----
-
-## _layout.tsx con Tab Navigator (template)
-
-```typescript
-// src/app/(tabs)/_layout.tsx
-import { Tabs } from "expo-router";
-import { Ionicons } from "@expo/vector-icons";
-
-export default function TabLayout() {
-  return (
-    <Tabs screenOptions={{ tabBarActiveTintColor: "#007AFF" }}>
-      <Tabs.Screen
-        name="home"
-        options={{
-          title: "Home",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="home" size={24} color={color} />
-          ),
-        }}
-      />
-      <Tabs.Screen
-        name="profile"
-        options={{
-          title: "Profilo",
-          tabBarIcon: ({ color }) => (
-            <Ionicons name="person" size={24} color={color} />
-          ),
-        }}
-      />
-    </Tabs>
-  );
-}
-```
-
----
-
-## SecureStore (token storage)
-
-```typescript
-// src/lib/storage/tokenStorage.ts
-import * as SecureStore from "expo-secure-store";
-
-const TOKEN_KEY = "auth_token";
-
-export const saveToken = async (token: string): Promise<void> => {
-  await SecureStore.setItemAsync(TOKEN_KEY, token);
-};
-
-export const getToken = async (): Promise<string | null> => {
-  return SecureStore.getItemAsync(TOKEN_KEY);
-};
-
-export const removeToken = async (): Promise<void> => {
-  await SecureStore.deleteItemAsync(TOKEN_KEY);
-};
-```
-
----
-
-## StyleSheet pattern
-
-```typescript
-import { StyleSheet } from "react-native";
-import { COLORS, SPACING, FONT_SIZE } from "@/constants";
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: COLORS.background,
-    padding: SPACING.md,
-  },
-  title: {
-    fontSize: FONT_SIZE.xl,
-    fontWeight: "600",
-    color: COLORS.text,
-  },
-});
-```
-
----
-
-## Constants (template base)
-
-```typescript
-// src/constants/index.ts
-export const COLORS = {
-  primary: "#007AFF",
-  background: "#FFFFFF",
-  text: "#1C1C1E",
-  error: "#FF3B30",
-  muted: "#8E8E93",
-} as const;
-
-export const SPACING = {
-  xs: 4,
-  sm: 8,
-  md: 16,
-  lg: 24,
-  xl: 32,
-} as const;
-
-export const FONT_SIZE = {
-  sm: 12,
-  md: 14,
-  lg: 16,
-  xl: 20,
-  xxl: 24,
-} as const;
-```
+- [App config](https://docs.expo.dev/workflow/configuration/)
+- [Environment variables](https://docs.expo.dev/guides/environment-variables/)
+- [SDK compatibility](https://docs.expo.dev/versions/latest/)
+- [Continuous Native Generation](https://docs.expo.dev/workflow/continuous-native-generation/)
+- [Config plugins](https://docs.expo.dev/config-plugins/introduction/)
+- [New Architecture](https://docs.expo.dev/guides/new-architecture/)

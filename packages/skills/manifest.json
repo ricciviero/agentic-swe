@@ -58,14 +58,25 @@
       ]
     },
     {
+      "name": "android-native",
+      "description": "Implement or review native Android code using Kotlin, Jetpack Compose, Android platform APIs, Gradle, or native modules used by Expo/React Native. Use for Android-native screens, lifecycle/state, permissions, build compatibility, and Kotlin integration work. Ordinary React Native screens and Expo UI TypeScript belong to react-native-expo.",
+      "integrity": "sha256-QyWrTKhLiPBGzL6l5LBPWoBECfA8mf/ABijB5AuQU/w=",
+      "files": [
+        "agents/openai.yaml",
+        "references/expo-native-modules.md",
+        "SKILL.md"
+      ]
+    },
+    {
       "name": "angular-developer",
       "description": "Senior-level Angular frontend development with standalone components and signals. Use this skill whenever the user asks to create, modify, or review Angular code, components, services, routing, data fetching, TypeScript types, Tailwind styling, or frontend architecture. Trigger on any mention of Angular, standalone component, signals, Angular routing, HttpClient, guards, interceptors, or TypeScript frontend in Angular context. Also trigger when the user mentions route, service, component, guard, pipe, or state management in an Angular context. When in doubt, use this skill for any Angular frontend task.",
-      "integrity": "sha256-bLEztHZ3AwxH6uzxPAxOzuNgzoaekYgkn5irbZCQ2tI=",
+      "integrity": "sha256-6+CprIt4a6VHPpw+Mbvy+rpDCSoo9V8LVsaLHPCv1zY=",
       "files": [
         "agents/openai.yaml",
         "references/angular-animations.md",
         "references/angular-aria.md",
         "references/cli.md",
+        "references/compatibility.md",
         "references/component-harnesses.md",
         "references/component-styling.md",
         "references/components.md",
@@ -288,10 +299,12 @@
     },
     {
       "name": "docker-environments",
-      "description": "Docker and Docker Compose environment setup for full-stack projects. Use this skill whenever the user asks to dockerize, containerize, create docker-compose, set up dev/prod environments, or configure Docker for any combination of frontend, backend, and database. Trigger on any mention of Docker, Dockerfile, docker-compose, container, hot reload in Docker, multistage build, or dev/prod environment setup. Also trigger when the user mentions dockerizing an existing project or adding Docker support. Always ask for the deployment target (private server/VPS, AWS, or undecided). Produce AWS-ready artifacts only when the user chooses AWS, and delegate deployment/runtime decisions to the aws skill. When in doubt, use this skill for any Docker or Docker Compose task.",
-      "integrity": "sha256-fA3t7hI2OhxE5XV59svB8ufyvwenAG/VYtbB7GBL11Q=",
+      "description": "Configure or review Dockerfiles and Docker Compose for local development and production web services. Use for containerized frontend/backend/database environments, real hot reload, multistage builds, networking, secrets, readiness, and single-host deployment layouts. Determine the actual target before provider-specific work.",
+      "integrity": "sha256-mJiFeBQAg9DTtQVA4NL1YB/gLJm+mZZwV/trEiXD/Qs=",
       "files": [
         "agents/openai.yaml",
+        "references/single-host-production.md",
+        "references/web-development.md",
         "SKILL.md"
       ]
     },
@@ -499,11 +512,14 @@
     },
     {
       "name": "react-native-expo",
-      "description": "Senior-level React Native mobile development with Expo and TypeScript. Use this skill whenever the user asks to create, modify, or review React Native code, Expo Router navigation, mobile components, hooks, services, or stores. Trigger on any mention of React Native, Expo, Expo Router, mobile app, iOS, Android, or TypeScript mobile. Also trigger when the user mentions mobile navigation, StyleSheet, SafeArea, or mobile-specific patterns like useEffect with API calls. When in doubt, use this skill for any React Native or Expo mobile task.",
-      "integrity": "sha256-BCcmepU5LbMd1s3T4bAYONT6cBOBGqFG2eTy7PvaCOc=",
+      "description": "Build, configure, or review React Native apps using Expo and TypeScript for iOS and Android. Use for Expo Router, development builds, CNG/config plugins, native UI through Expo UI, mobile APIs, data access, and release workflows. Native Swift-only or Kotlin-only tasks belong to the corresponding native skill.",
+      "integrity": "sha256-Hy8/WYl8+h/lylzEWH1Xw2mn2tZTDtDDoQLbJq5OoJc=",
       "files": [
         "agents/openai.yaml",
+        "references/data-and-libraries.md",
+        "references/development-and-release.md",
         "references/expo-config.md",
+        "references/native-ui.md",
         "SKILL.md"
       ]
     },
@@ -568,10 +584,11 @@
     },
     {
       "name": "spring-boot-backend",
-      "description": "Senior-level Spring Boot backend development in Java. Use this skill whenever the user asks to create, modify, or review Java/Spring Boot code, REST APIs, JPA entities, DTOs, repositories, services, or controllers. Trigger on any mention of Spring Boot, Spring Data, Hibernate, Java backend, Maven, REST API in Java, or Java microservices. Also trigger when the user mentions entity, service layer, repository pattern, or DTO in a Java context. When in doubt, use this skill for any Java backend task.",
-      "integrity": "sha256-Y5Nc+eWUShhXvr13J3fUDmqou6f5PSYF5d5wC+Z0y80=",
+      "description": "Implement or review Java Spring Boot APIs, persistence, security, services, and tests. Use for Spring Boot compatibility, REST contracts, Spring Data/JPA, migrations, Maven/Gradle, and backend architecture; preserve the project's selected versions and conventions.",
+      "integrity": "sha256-pT7Jh1UZjM6GLMZBbnEAgZYRd7glTzU51PC7LDzmMhQ=",
       "files": [
         "agents/openai.yaml",
+        "references/boot-4-compatibility.md",
         "references/spring-config.md",
         "SKILL.md"
       ]
@@ -587,11 +604,12 @@
     },
     {
       "name": "swiftui-liquid-glass",
-      "description": "Implement, review, or improve SwiftUI features using the iOS 26+ Liquid Glass API. Use when asked to adopt Liquid Glass in new SwiftUI UI, refactor an existing feature to Liquid Glass, or review Liquid Glass usage for correctness, performance, and design alignment.",
-      "integrity": "sha256-sopwSsrSnN4yF4kUKkJ6oc38Ut6MitosScMN25amP2o=",
+      "description": "Implement or review native iOS Liquid Glass in SwiftUI or React Native/Expo. Use for glass API availability, native containers and button styles, accessibility, fallbacks, and design alignment. Ordinary SwiftUI or Expo UI work without Liquid Glass belongs to its platform skill.",
+      "integrity": "sha256-9XvPH4ZuWFU3yyoD1GW4KHuaWqsyvCLyUaaUg3vVMXI=",
       "files": [
         "agents/openai.yaml",
         "references/liquid-glass.md",
+        "references/react-native-expo.md",
         "SKILL.md"
       ]
     },

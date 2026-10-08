@@ -11,12 +11,15 @@ Use this skill for Angular frontend work with standalone components, signals, ro
 
 Inspect the existing Angular workspace and the official documentation matching its installed version before relying on version-specific APIs, CLI behavior, or migration details.
 
+For version/toolchain selection or a new Angular workspace, read [references/compatibility.md](references/compatibility.md). Keep the Angular/CLI/Node/TypeScript/Material set compatible; do not infer it from another frontend in the same repository.
+
 Use the focused Angular references when the task is narrower:
 
 - Components, inputs, outputs, host elements, styling: read the matching files in `references/`.
 - Signals, effects, linked signals, resources: read `signals-overview.md`, `effects.md`, `linked-signal.md`, or `resource.md`.
 - Routing, guards, resolvers, navigation, outlets, loading strategies: read the relevant router reference.
 - Forms: read `reactive-forms.md`, `signal-forms.md`, or `template-driven-forms.md`.
+- Keep the existing form system unless a change is requested. Signal Forms availability/stability depends on the Angular version; do not force a migration or convert meaningful nullable fields to zero/empty values merely to fit an example.
 - Tests: read `testing-fundamentals.md`, `component-harnesses.md`, `router-testing.md`, or `e2e-testing.md`.
 - Tailwind or ARIA: read `tailwind-css.md` or `angular-aria.md`.
 
