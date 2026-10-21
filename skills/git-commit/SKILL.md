@@ -49,6 +49,16 @@ BREAKING CHANGE: `extends` key behavior changed
 
 ## Workflow
 
+### 0. Verify the Fixed Working Branch
+
+Use the fixed existing branch established by the user or repository policy;
+do not assume its name or infer it from the current/default branch. Ask before
+staging or committing if it is unknown or ambiguous. A commit or push request
+does not authorize creating a branch: no local, remote, temporary, PR, or
+worktree branch without a specific user instruction. Preserve dirty work and
+branch protections; do not switch to another branch or detached HEAD as a
+workaround. If publication requires a new branch, report that constraint.
+
 ### 1. Analyze Diff
 
 ```bash

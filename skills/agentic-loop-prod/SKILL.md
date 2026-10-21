@@ -30,10 +30,16 @@ state, branch protection, CI/CD, migration and seed policy, rollback, health,
 logs, artifact identity, production-safe tests, cleanup, and environment ownership.
 
 Inherit the persistent-development-branch invariant from the dev and staging
-loops. Never create a release, hotfix, feature, fix, or task branch. Production
-promotion must use only the persistent staging and production branches declared
-by the project; every source correction returns through the persistent
-development branch and repeats the invalidated dev and staging gates.
+loops. Local work stays on the fixed existing branch designated by the user or
+project; do not assume its name, and ask before mutation when it is missing or
+ambiguous. Never create a local or remote branch, including release, hotfix,
+feature, fix, task, temporary, PR, or worktree branches, without a specific user
+instruction. Generic production, commit, push, or release approval is not that
+instruction. Preserve dirty work and protections; report a required-new-branch
+conflict without bypassing it. Production promotion must use only the persistent
+staging and production branches declared by the project; every source correction
+returns through the persistent development branch and repeats the invalidated
+dev and staging gates.
 
 ## Staging prerequisite
 

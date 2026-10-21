@@ -26,6 +26,9 @@ Do not add this overhead for a clearly mechanical microtask.
 ## Core Rules
 
 - Read `.agentic/config.yaml` when present. Use its iteration and fix directories rather than assuming default names.
+- Establish the fixed existing local working branch from explicit user direction or repository policy before writing planning records. Do not assume its name; ask when it is missing or ambiguous and continue only read-only discovery meanwhile.
+- Keep planning and later implementation on that fixed branch. Do not open a branch per task, fix, or iteration, including a remote, temporary, PR, or worktree branch, unless the user specifically instructs its creation. Generic approval to proceed, commit, push, or release is not that instruction.
+- Preserve dirty work and branch protection; never use another branch or detached HEAD as a workaround.
 - `iterazioni/` and `fix/` are the default local developer workspaces and must be gitignored unless the repository explicitly chooses otherwise.
 - Every iteration has a numbered folder containing `task.md` and `plan.md`.
 - Every fix has a numbered folder containing `bug.md` and `fix.md`.

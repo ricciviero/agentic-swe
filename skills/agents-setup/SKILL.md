@@ -15,6 +15,8 @@ Bootstrap a repository into the Agentic SWE operating model without making any a
 - Store project-specific skills canonically in `.agents/skills/<skill-name>/`.
 - Add `.codex/skills/` and `.claude/skills/` adapters only when the target agent requires a dedicated discovery path.
 - Do not overwrite existing instructions or agent configuration before reading and reconciling them.
+- Resolve the project's fixed existing local working branch from explicit user direction or repository policy. Do not assume `dev`, the current branch, or the default branch; ask the user when the choice is missing or ambiguous.
+- Keep local work on that branch. Never create a local, remote, temporary, PR, or worktree branch without a specific user instruction; a generic setup, implementation, commit, push, or release request is not that instruction. Preserve dirty work and do not bypass branch protection.
 
 The global Agentic SWE protocol routes unconfigured non-trivial work here. This skill performs the bootstrap procedure; it is not the always-loaded behavior layer.
 
@@ -34,7 +36,7 @@ Read [references/project-bootstrap.md](references/project-bootstrap.md) for the 
 
 ## Setup Flow
 
-1. Establish the project purpose, stack, operational boundaries, and active coding agents.
+1. Establish the project purpose, stack, operational boundaries, active coding agents, and fixed existing working branch. Ask for the branch when it cannot be determined reliably.
 2. Reconcile existing instructions into one canonical `AGENTS.md`; preserve existing files unless the user approves their removal.
 3. Create or reconcile `.agentic/config.yaml` from the generated Agentic SWE template. Record only the selected global skills and concrete triggers; do not add keys outside the published v1 schema.
 4. Add the `Agentic Workflow` section to `AGENTS.md`, including the planning gate and validation expectations.

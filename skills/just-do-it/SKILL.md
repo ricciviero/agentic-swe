@@ -23,9 +23,9 @@ Do not stop at analysis, a plan, instructions for the user, or an offer to conti
 ## Preserve the Working Branch
 
 - Never create a Git branch autonomously. This includes `git branch`, `git switch -c`, `git checkout -b`, worktree commands that create a branch, and publishing a new remote branch.
-- Before editing, inspect the current branch, worktrees, repository instructions, and project configuration to identify the designated existing working branch. It is often `dev` or `develop`, but never assume its name.
-- Work on that existing branch when it is available and compatible with the repository's rules.
-- If no working branch is identifiable, the choice is ambiguous, or a feature-specific branch appears necessary, ask the user before creating one. A pull-request requirement does not by itself authorize branch creation.
+- Before editing, inspect the current branch, worktrees, repository instructions, and project configuration to identify the fixed existing working branch established by explicit user direction or policy. It may be `dev`, `develop`, `main`, or another name; never assume one or infer the choice from the current/default branch.
+- Keep local work on that fixed branch across tasks. Do not use another branch or detached HEAD as an implementation workaround.
+- If the fixed branch is missing or ambiguous, ask which existing branch to use before mutating; read-only inspection may continue. Create a branch only on a specific user instruction, not a generic instruction to proceed, implement, commit, push, or release. A pull-request requirement is not branch-creation authority; report a protection conflict without bypassing it.
 - Do not switch, reset, rename, delete, or replace a user branch unless the user explicitly requests that action.
 
 ## Respect User Decisions

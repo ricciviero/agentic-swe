@@ -14,7 +14,7 @@
     {
       "name": "agentic-loop-dev",
       "description": "Run a persistent, repository-aware engineering loop through real local evidence and stop before commit or deployment. Use when the user says \"agentic loop dev\", \"agentic-loop-dev\", or an unqualified \"agentic-loop\", or asks the agent to investigate, plan, implement, double- or triple-check, and repeatedly test a non-trivial change locally until it is genuinely ready. Discover the repository's own runtime and validation flow instead of assuming Docker, a language, or an E2E framework.",
-      "integrity": "sha256-duL0YImFhvOpLdWtLfAzc5rsdK0UsTeI3YBgVVM6xGQ=",
+      "integrity": "sha256-uzt4KkVRV+OaD4yzDOlzZPLgLSMar3Jjw+EQWibq21c=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"
@@ -23,7 +23,7 @@
     {
       "name": "agentic-loop-prod",
       "description": "Promote a current STAGING_READY candidate through a repository's verified production path and prove it through production-safe real evidence. Use only when the user explicitly says \"agentic loop prod\" or \"agentic-loop-prod\", or explicitly requests delivery and verification through production. Never infer production authorization from dev or staging work.",
-      "integrity": "sha256-vrBhwl0sx2fozPMoGUunMQIiV7kZUUcXZx9XR5pL7eA=",
+      "integrity": "sha256-KMej/nvxgCEnh9scT8Sieebq77F4BSS6yk1nm2JFvb4=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"
@@ -32,7 +32,7 @@
     {
       "name": "agentic-loop-staging",
       "description": "Promote a DEV_READY candidate through a repository's verified pre-production delivery path, exercise it through real deployed interfaces, iterate fixes at the source, and stop at STAGING_READY without production changes. Use only when the user explicitly says \"agentic loop staging\" or \"agentic-loop-staging\", or explicitly asks to deliver and verify work in staging while withholding production.",
-      "integrity": "sha256-jmdCFF0X9PZRUc/F5DsQ8kQB129eH8i9e4I54N8s1V0=",
+      "integrity": "sha256-jHeGoKVswPvZAQbsMKXSaK7iyNs7OLEm4LEgEcYdOyY=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"
@@ -41,7 +41,7 @@
     {
       "name": "agents-setup",
       "description": "Bootstrap or migrate a repository into the Agentic SWE operating model. Create a canonical AGENTS.md, a versioned .agentic/config.yaml manifest, a minimal Claude Code adapter, a focused global-skill map, and the non-trivial-work planning gate. Use when onboarding a repository for coding agents, aligning agent instructions, configuring Codex or Claude Code, or establishing project skills and workflow rules.",
-      "integrity": "sha256-jwgx0yfnY27kNeYpqjBCaaCNSpexNGaWfuqfsWR2s+k=",
+      "integrity": "sha256-wnbe/nsQATUFq8iYmXFPEWRWobMraFhXAdZtlVGoovQ=",
       "files": [
         "agents/openai.yaml",
         "references/project-bootstrap.md",
@@ -292,7 +292,7 @@
     {
       "name": "do",
       "description": "Execute a phased implementation plan in Codex. Use when the user asks to execute, run, carry out, or implement an existing plan, especially a plan created by make-plan.",
-      "integrity": "sha256-K7Ef6tVgeMI8ETJ02agJIvjoTiY4CrFa0s0JYAY/B1c=",
+      "integrity": "sha256-zwy3P6Zx/LGexUrxP2H4e2IqYH+Tkt77KHXegq9Pv5E=",
       "files": [
         "SKILL.md"
       ]
@@ -393,7 +393,7 @@
     {
       "name": "git-commit",
       "description": "Execute git commit with conventional commit message analysis, intelligent staging, and message generation. Use when user asks to commit changes, create a git commit, or mentions \"/commit\". Supports: (1) Auto-detecting type and scope from changes, (2) Generating conventional commit messages from diff, (3) Interactive commit with optional type/scope/description overrides, (4) Intelligent file staging for logical grouping",
-      "integrity": "sha256-2uCqgnxQmVuUpN4Jddu5wccNL5/RkI0JtDJ6SKiFxQQ=",
+      "integrity": "sha256-HKTAKFhTCVxUR2GyuuchGwlaHuR78A8x2tkmyceJEKc=",
       "files": [
         "agents/openai.yaml",
         "SKILL.md"
@@ -402,7 +402,7 @@
     {
       "name": "iterations-planner",
       "description": "Execute the Agentic SWE planning gate for non-trivial feature work and bug fixes. Organize local, gitignored iteration folders with task.md and plan.md, or fix folders with bug.md and fix.md; preserve the original brief, define acceptance criteria, and keep plans concrete. Use for multi-deliverable briefs, backlog planning, iteration planning, /iterations, /fix, regressions, bug-fix planning, or when the global protocol or agents-setup classifies work as non-trivial.",
-      "integrity": "sha256-48jB1/Q/fSMJSg/u+scL56mnyq64tYil/OLiQGvN7K0=",
+      "integrity": "sha256-QQdo3S2bdNdXvoLNvzan4DKSODtGgHd7N3NhLL2eURc=",
       "files": [
         "agents/openai.yaml",
         "references/iteration-workflow.md",
@@ -421,7 +421,7 @@
     {
       "name": "just-do-it",
       "description": "Execute clear user-directed work with minimal friction, without unsolicited debate, paternalism, invented restrictions, redundant confirmation, or autonomous branch creation. Use for implementation, file and command operations, artifact delivery, and other tasks where the user has given sufficient direction and the agent should act immediately; identify and use the project's existing working branch, ask before creating any branch, ask only for input or authority that materially blocks the result, verify claimed constraints, and complete the nearest viable action when the exact request is unavailable.",
-      "integrity": "sha256-fD/7Crhn7SL6tJ28jmczcYPcH3Laf+PgJsLk/ezdfis=",
+      "integrity": "sha256-BUBjjRQpgmnxljaYHSvOmVgA09HIpg87GXW6TQMIy54=",
       "files": [
         "agents/openai.yaml",
         "references/response-patterns.md",
@@ -431,7 +431,7 @@
     {
       "name": "learn-codebase",
       "description": "Prime Codex on a codebase by systematically reading source, docs, configuration, tests, and architecture notes. Use when the user asks to learn, read, prime, or get up to speed on a repo.",
-      "integrity": "sha256-rM/P9wclnIvmSi9iZbQabXzfiOxq5zOgyniOVuoUCtk=",
+      "integrity": "sha256-c1kFXKmMlioYdjkl/ebj46IT4YSTJ19lwImywzxxo3k=",
       "files": [
         "SKILL.md"
       ]
@@ -439,7 +439,7 @@
     {
       "name": "make-plan",
       "description": "Create a detailed, phased implementation plan with documentation discovery for Codex. Use when the user asks to plan a feature, task, refactor, migration, or multi-step implementation before coding.",
-      "integrity": "sha256-+LgZ/4JLa8b7LjuxYp/J2OPNYaVvIg5qnHcRtPXHgiw=",
+      "integrity": "sha256-JNjS110GRAzQy4N6fQcP/vdeoPyJqk2nUG9IX89eEDw=",
       "files": [
         "SKILL.md"
       ]

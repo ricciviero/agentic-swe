@@ -21,11 +21,12 @@ instructions, host permissions, and user-selected mode at every action.
 
 ## Persistent development branch invariant
 
-- Never create a branch tied to a feature, fix, task, issue, document, iteration, or agent run.
-- Work only on the repository's explicitly designated persistent development branch. Discover its exact name from repository policy; do not assume it is `dev` and do not substitute the default, staging, or production branch.
-- If the designated development branch is missing or ambiguous, stop before implementation and request a project decision. Do not invent a temporary branch as a workaround.
+- Work locally only on the fixed existing branch designated by explicit user direction or repository policy. It may be `dev`, `develop`, `main`, or another name; do not assume one or infer it from the current/default or delivery branch.
+- Never create a local or remote branch without a specific user instruction. This includes feature, fix, task, issue, document, iteration, agent-run, temporary, PR, release, hotfix, and branch-creating worktree paths. Generic implementation, commit, push, or release approval is not that instruction.
+- If the designated branch is missing or ambiguous, ask which branch to use before mutation. Continue only read-only discovery meanwhile; do not invent or silently choose a branch.
 - If the worktree is on another branch, reconcile it safely with the designated development branch before editing. A dirty worktree or unrelated user changes are a blocker to an automatic switch, not permission to continue on the wrong branch.
-- Long-lived personal branches are allowed only when project policy explicitly declares them; never create, delete, reset, or use one as the loop's delivery source without an explicit rule.
+- Do not use another branch or detached HEAD as an implementation workaround. A PR or protection requirement does not authorize creating a branch or bypassing checks; report the constraint and preserve the work.
+- A specific branch-creation instruction applies only to its named scope; it does not authorize future task branches or waive other repository and host restrictions.
 
 ## Route required skills
 

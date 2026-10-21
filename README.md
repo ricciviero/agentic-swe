@@ -66,6 +66,21 @@ At session start, the protocol makes the workflow decision before implementation
 
 `agents-setup` is the bootstrap and migration procedure. `iterations-planner` owns local task, plan, bug, and fix records. They are no longer the only place where the workflow decision lives.
 
+### Fixed local working branch
+
+The global workflow skills keep local work on one existing branch established
+by explicit user direction or repository policy. `dev`, `develop`, and `main`
+are examples, not defaults. If the choice is missing or ambiguous, ask before
+mutation and continue only read-only discovery in the meantime.
+
+Never create a local or remote branch without a specific user instruction,
+including temporary, feature/fix, release/hotfix, PR, and branch-creating
+worktree paths. Generic approval to implement, commit, push, or release does
+not authorize one. Preserve dirty work and branch protections; report a delivery
+path that requires a new branch without silently creating it or bypassing checks.
+This is an agent workflow instruction, not a new Git command guard in the
+reference evaluator. It does not change per-project policy or grant permissions.
+
 ## Framework and Host Boundary
 
 Agentic SWE is the behavioral core, not a complete coding agent and not a system-prompt bundle. It owns the portable decisions that should remain stable across hosts:

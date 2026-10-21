@@ -31,8 +31,13 @@ ownership. Never assume environment names, branch names, GitHub Actions, Docker,
 AWS, URLs, or a promotion topology.
 
 Inherit the persistent-development-branch invariant from `agentic-loop-dev`.
-Never create a feature/fix/task branch for delivery or for a correction found in
-staging. Promote only from the persistent source branch declared by the project
+Local work stays on the fixed existing branch designated by the user or project;
+do not assume its name, and ask before mutation when it is missing or ambiguous.
+Never create a local/remote/temporary/PR/worktree branch without a specific user
+instruction, including for staging corrections. A generic staging, commit,
+push, or release request is not that instruction. Preserve dirty work and
+protections; report a required-new-branch conflict without bypassing it.
+Promote only from the persistent source branch declared by the project
 to its declared staging target. If either branch or mapping is missing or
 ambiguous, stop before source mutation instead of inventing a branch.
 
@@ -94,7 +99,7 @@ secrets, unrelated changes, generated files, migrations, and operational records
 Commit and push only when the explicit request and project policy authorize them;
 use the verified non-forced path from the persistent development branch and
 satisfy protected-branch checks. Fixes discovered during staging return to that
-same persistent branch; do not open a task-specific branch.
+same persistent branch; do not open a task-specific branch without that specific user instruction.
 
 Promote the complete manifest through the actual pipeline. Wait for observable
 terminal success, then prove each deployed revision or artifact. For a multi-

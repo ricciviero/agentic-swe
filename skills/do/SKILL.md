@@ -9,6 +9,8 @@ Execute a phased plan end to end while preserving the project's rules and the us
 
 ## Codex Constraints
 
+- Execute local work only on the fixed existing branch designated by the user or repository policy. Do not assume its name or select a new branch for each phase; ask before editing if the choice is unknown or ambiguous.
+- Never create local/remote branches, including temporary PR/worktree branches, without a specific user instruction. A generic instruction to execute the plan, commit, push, or release is not branch-creation authority. Preserve dirty work and branch protections; do not use detached HEAD or another branch as a workaround.
 - Do not spawn subagents unless the user explicitly asked for sub-agents, delegation, or parallel agent work.
 - If subagents are allowed, give them bounded, independent tasks with disjoint write scopes.
 - Do not overwrite unrelated user changes. Inspect `git status` before editing and work around existing changes.
