@@ -20,6 +20,8 @@ For large repositories, prioritize files that define boundaries and conventions 
 
 ## Codex Workflow
 
+- Identify the project's fixed existing working branch from explicit user direction or repository policy, without assuming its name or changing branches for discovery. If it remains ambiguous, ask before any later mutation; read-only inspection may continue.
+- Local implementation, when separately requested, stays on that fixed branch. Never create a local/remote/temporary/PR/worktree branch without a specific user instruction; learning or generic implementation approval is not branch-creation authority. Preserve dirty work and protections.
 - Use `rg --files`, `find`, `sed`, `wc`, and `git` commands.
 - Read files in chunks when large.
 - Do not claim full understanding until the relevant files have actually been opened.

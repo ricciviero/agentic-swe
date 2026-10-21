@@ -9,6 +9,8 @@ Create an implementation plan that another Codex session, or the current one lat
 
 ## Codex Constraints
 
+- Resolve the fixed existing local working branch from explicit user direction or repository policy; never assume `dev` or use the current/default branch as proof. Ask when it is unknown or ambiguous, before writing a plan or changing files.
+- Keep local work on that branch. Never create a local/remote branch, including temporary PR/worktree branches, without a specific user instruction. A generic plan, implementation, commit, push, or release request is not that instruction. Preserve dirty work and protection checks.
 - Do not spawn subagents unless the user explicitly asked for sub-agents, delegation, or parallel agent work.
 - When subagents are allowed, use them only for bounded fact gathering or independent verification. Keep final synthesis local.
 - Prefer direct repository inspection with `rg`, `sed`, `find`, `git`, and existing docs.

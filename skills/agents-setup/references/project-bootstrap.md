@@ -11,8 +11,19 @@ Collect only information that cannot be reliably inferred from the repository:
 3. Which agents must work in the repository: Codex, Claude Code, or both.
 4. Whether requirements, a decision log, project memory, and an operational README are wanted.
 5. Which folders must remain local and gitignored.
+6. The fixed existing local working branch, if explicit user direction or repository policy does not already identify it reliably.
 
 Inspect the codebase before asking questions that its files already answer. Do not invent product facts, deployment details, or ownership rules.
+
+The working branch may be `dev`, `develop`, `main`, or another explicitly
+designated branch; these are examples, not defaults. Keep it fixed across tasks.
+Do not infer the choice from the current/default branch or from a delivery
+environment. If it is missing or ambiguous, ask which existing branch to use
+before editing and continue only read-only discovery in the meantime. Never
+create a local or remote branch, including a temporary PR/worktree branch,
+without a specific user instruction. Generic setup, implementation, commit,
+push, or release approval does not authorize one. Preserve dirty work and
+branch protections; record only the branch actually established, not a guess.
 
 ## Global Skill Discovery
 
